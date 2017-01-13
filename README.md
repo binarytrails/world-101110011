@@ -26,7 +26,7 @@ Group project involving use of OpenGL
 
 [OGRE](http://www.ogre3d.org)
 
-## Linking Libraries (Using Static GLEW Library)
+## Linking Static GLEW Library
 
 ### Mac OSX
 
