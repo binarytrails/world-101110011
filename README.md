@@ -1,14 +1,15 @@
 # COMP371
-Group project involving use of OpenGL
+
+Group project with OpenGL in C++.
 
 ## Group Members
 
-| Name      		|  Email      				|
-|:-----------------:|:-------------------------:|
-| Tarik Abou-Saddik | tarik.abousaddik@gmail.com|
-| Seva Ivanov       |							|
-|					|							|
-|					|							|
+| Name                   |  Email                     |
+|:----------------------:|:-------------------------: |
+| Tarik Abou-Saddik      | tarik.abousaddik@gmail.com |
+| Vsevolod (Seva) Ivanov | seva@tumahn.net            |
+|                        |                            |
+|                        |                            |
 
 ## Helpful Links
 
@@ -26,16 +27,42 @@ Group project involving use of OpenGL
 
 [OGRE](http://www.ogre3d.org)
 
-## Linking Libraries (Using Static GLEW Library)
+## Setup
+
+### Arch Linux
+
+Install these :
+
+    sudo pacman -S glew glfw-x11 mesa-demos
+
+Compile with :
+
+    CXX=g++
+    CXXFLAGS=-std=c++11 -g -Wall -Wextra -Wfatal-errors -pedantic \
+             -lGLEW -lglfw -lGL -lX11 -lpthread -lXrandr -lXi
+
+Get setup info :
+
+    glxinfo
+
+Test your setup :
+
+    glxgears
+
+## Linking Static GLEW Library
 
 ### Mac OSX
 
-	-lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+    -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
 
-### Linux
+### Linux (general)
 
-	 -lGLEW -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi
+     -lGLEW -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi
 
+## Coding Style
 
+### Identation
 
+It's a standard to use spaces over tabs. For readability, I recommend 4 spaces which is a widely used standard.
 
+http://www.learncpp.com/cpp-tutorial/16-whitespace-and-basic-formatting/
