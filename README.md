@@ -8,7 +8,7 @@ Group project with OpenGL in C++.
 |:----------------------:|:-------------------------: |
 | Tarik Abou-Saddik      | tarik.abousaddik@gmail.com |
 | Vsevolod (Seva) Ivanov | seva@tumahn.net            |
-|                        |                            |
+| Eric                   | ericchiassonmorgan@gmail.com|
 |                        |                            |
 
 ## Helpful Links
