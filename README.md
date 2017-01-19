@@ -30,7 +30,7 @@ Group project involving use of OpenGL
 
 ### Mac OSX
 
-	-lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo'
+	-lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
 
 ### Linux
 
