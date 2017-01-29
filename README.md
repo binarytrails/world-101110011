@@ -34,7 +34,7 @@ Group project with OpenGL in C++.
 
 Install these :
 
-    sudo pacman -S glew glfw-x11 mesa-demos
+    sudo pacman -S glew glm glfw-x11 mesa-demos
 
 Compile with :
 
