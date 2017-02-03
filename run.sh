@@ -1,1 +1,1 @@
-build/./game.out
+build/./world.out
