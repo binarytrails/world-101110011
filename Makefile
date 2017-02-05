@@ -4,18 +4,24 @@
 
 CXX=g++
 CXXFLAGS=-std=c++11 -g -Wall -Wextra -Wfatal-errors -pedantic \
+		-lGLEW -lGL -lX11 -lpthread -lXrandr -lXi\
 		-I./src
-CXXFLAGS_ARCH = -lGLEW -lglfw -lGL -lX11 -lpthread -lXrandr -lXi
-CXXFLAGS_LINUX = -lGLEW -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi
+
+GLFW_ARCH=-lglfw
+GLFW_LINUX = -lglfw3
+
+CXX_FILES=src/*.cpp
 
 all:
 	mkdir -p build
 
 arch: all
-	${CXX} ${CXXFLAGS} ${CXXFLAGS_ARCH} src/Main.cpp -o build/world.out
+	${CXX} ${CXXFLAGS} ${GLFW_ARCH} ${CXX_FILES}\
+		-o build/world.out
 
 linux: all
-	${CXX} ${CXXFLAGS} ${CXXFLAGS_LINUX} src/Main.cpp -o build/world.out
+	${CXX} ${CXXFLAGS} ${GLFW_LINUX} ${CXX_FILES}\
+		-o build/world.out
 
 clean:
 	rm -rf build/
