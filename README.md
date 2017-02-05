@@ -2,15 +2,43 @@
 
 Group project with OpenGL in C++.
 
-## Group Members
+## Setup
 
-| Name                   |  Email                     |
-|:----------------------:|:-------------------------: |
-| Tarik Abou-Saddik      | tarik.abousaddik@gmail.com |
-| Vsevolod (Seva) Ivanov | seva@tumahn.net            |
-| Eric                   | ericchiassonmorgan@gmail.com|
-| Alice                  | alicebarkhouse@gmail.com   |
-| Sami					 | Sami@boubaker.me			  |
+### GNU / Linux
+
+Install the missing libs and compile with:
+
+    make linux
+
+### Arch Linux
+
+Install these :
+
+    sudo pacman -S glew glm glfw-x11 mesa-demos
+
+Compile with :
+
+    make linux
+
+Get setup info :
+
+    glxinfo
+
+Test your setup :
+
+    glxgears
+
+### Mac OSX
+
+    -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+
+## Coding Style
+
+### Identation
+
+It's a standard to use spaces over tabs. For readability, I recommend 4 spaces which is a widely used standard.
+
+http://www.learncpp.com/cpp-tutorial/16-whitespace-and-basic-formatting/
 
 ## Helpful Links
 
@@ -28,42 +56,12 @@ Group project with OpenGL in C++.
 
 [OGRE](http://www.ogre3d.org)
 
-## Setup
+## Group Members
 
-### Arch Linux
-
-Install these :
-
-    sudo pacman -S glew glm glfw-x11 mesa-demos
-
-Compile with :
-
-    CXX=g++
-    CXXFLAGS=-std=c++11 -g -Wall -Wextra -Wfatal-errors -pedantic \
-             -lGLEW -lglfw -lGL -lX11 -lpthread -lXrandr -lXi
-
-Get setup info :
-
-    glxinfo
-
-Test your setup :
-
-    glxgears
-
-## Linking Static GLEW Library
-
-### Mac OSX
-
-    -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
-
-### Linux (general)
-
-     -lGLEW -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi
-
-## Coding Style
-
-### Identation
-
-It's a standard to use spaces over tabs. For readability, I recommend 4 spaces which is a widely used standard.
-
-http://www.learncpp.com/cpp-tutorial/16-whitespace-and-basic-formatting/
+| Name                   |  Email                     |
+|:----------------------:|:-------------------------: |
+| Tarik Abou-Saddik      | tarik.abousaddik@gmail.com |
+| Vsevolod (Seva) Ivanov | seva@tumahn.net            |
+| Eric                   | ericchiassonmorgan@gmail.com|
+| Alice                  | alicebarkhouse@gmail.com   |
+| Sami					 | Sami@boubaker.me			  |
