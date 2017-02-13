@@ -1,4 +1,9 @@
-// Adapted from learnopengl.com
+/*
+ * @file
+ * @author Vsevolod (Seva) Ivanov
+ * @brief adapted from learnopengl.com
+*/
+
 #include <Shader.hpp>
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
