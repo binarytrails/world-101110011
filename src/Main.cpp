@@ -11,15 +11,18 @@
 
 #include "Window.hpp"
 #include "Shader.hpp"
+#include "Camera.hpp"
 // TODO Mesh class
 
 Window* window;
+Camera* camera;
 
 // Callbacks TODO forward declaration
 
 int main()
 {
     window = new Window(1280, 720, "Procedural world");
+    camera = new Camera();
 
     // TODO callbacks bindings
 
@@ -47,6 +50,8 @@ int main()
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // background color
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        // view = camera.view();
+
         // activate shader
         //ourShader.Use();
 
@@ -58,6 +63,7 @@ int main()
     //glDeleteVertexArrays(1, &vaoId);
     //glDeleteBuffers(1, &vboId);
 
+    delete camera;
     delete window;
     return 0;
 }
