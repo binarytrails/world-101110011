@@ -2,6 +2,25 @@
 
 Group project with OpenGL in C++.
 
+## State of Things
+
+- Seva
+    - Project architecture
+        - ~~Makefile~~
+        - ~~Window~~
+        - ~~Shader~~
+        - ~~Camera~~
+        - World
+        - Abstract Mesh
+    - Skybox
+    - Procedurally generated terrain
+    
+- Tarik
+
+- Eric
+
+- Sami
+
 ## Setup
 
 ### GNU / Linux
@@ -56,12 +75,11 @@ http://www.learncpp.com/cpp-tutorial/16-whitespace-and-basic-formatting/
 
 [OGRE](http://www.ogre3d.org)
 
-## Group Members
+## Authors
 
 | Name                   |  Email                     |
 |:----------------------:|:-------------------------: |
 | Tarik Abou-Saddik      | tarik.abousaddik@gmail.com |
 | Vsevolod (Seva) Ivanov | seva@tumahn.net            |
 | Eric                   | ericchiassonmorgan@gmail.com|
-| Alice                  | alicebarkhouse@gmail.com   |
 | Sami					 | Sami@boubaker.me			  |
