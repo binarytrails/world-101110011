@@ -59,9 +59,17 @@ It's a standard to use spaces over tabs. For readability, I recommend 4 spaces w
 
 http://www.learncpp.com/cpp-tutorial/16-whitespace-and-basic-formatting/
 
-## Helpful Links
+## Help
 
-[OpenGL Tutorial Website](https://learnopengl.com)
+### IRC
+
+> Internet Relay Chat (IRC) is an application layer protocol that facilitates communication in the form of text.
+
+The channel #opengl on the irc.freenode.net server is quite active!
+
+### Links
+
+[Modern OpenGL Tutorial Website](https://learnopengl.com)
 
 [OpenGL Tutorial Videos](https://www.youtube.com/watch?v=6c1QYZAEP2M&list=PLRwVmtr-pp06qT6ckboaOhnm9FxmzHpbY)
 
