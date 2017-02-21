@@ -1,6 +1,7 @@
 /*
  * @file
  * @author Vsevolod (Seva) Ivanov
+ * @brief Adapted from http://learnopengl.com
 */
 
 #pragma once

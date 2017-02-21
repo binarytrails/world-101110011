@@ -1,7 +1,7 @@
 /*
  * @file
  * @author Vsevolod (Seva) Ivanov
- * @brief adapted from learnopengl.com
+ * @brief Adapted from http://learnopengl.com
 */
 
 #include <Shader.hpp>
