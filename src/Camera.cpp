@@ -30,12 +30,22 @@ void Camera::moveBackward()
     this->eye -= this->speed * this->at;
 }
 
-void Camera::moveLeft()
+void Camera::moveUp()
 {
-    this->eye += glm::normalize(glm::cross(this->at, this->up)) * this->speed;
+    this->eye += this->speed * this->up;
 }
 
 void Camera::moveRight()
 {
     this->eye -= glm::normalize(glm::cross(this->at, this->up)) * this->speed;
+}
+
+void Camera::moveDown()
+{
+    this->eye -= this->speed * this->up;
+}
+
+void Camera::moveLeft()
+{
+    this->eye += glm::normalize(glm::cross(this->at, this->up)) * this->speed;
 }
