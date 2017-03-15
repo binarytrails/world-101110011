@@ -10,7 +10,7 @@ Group project with OpenGL in C++.
         - ~~Window~~
         - ~~Shader~~
         - ~~Camera~~
-        - World
+        - ~~World~~
         - ~~Abstract Mesh~~
     - Skybox
     - Procedurally generated terrain
