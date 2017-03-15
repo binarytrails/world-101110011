@@ -11,9 +11,17 @@ public:
     int vSize;
     int iSize;
     
+    //Two points used to form a hitbox
+    bool sizeFirst = true;
+    float sizeMin[3] = {0, 0, 0};
+    float sizeMax[3] = {0, 0, 0};
+    
     virtual ~GLObject();
-private:
-
+protected:
+    int vCursor = 0;
+    int iCursor = 0;
+    void addPoint(float x, float y, float z);
+    void addindice(int p1, int p2, int p3);
 };
 
 #endif /* GLOBJECT_H */

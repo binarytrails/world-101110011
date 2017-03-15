@@ -5,7 +5,7 @@
 
 class RotationalObject : public GLObject {
 public:
-    RotationalObject(int PCount, int TCount, float P[], int offset[] = nullptr);
+    RotationalObject(int PCount, int TCount, float P[], float offset[] = nullptr);
     virtual ~RotationalObject();
 private:
 
