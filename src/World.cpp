@@ -5,16 +5,18 @@
 
 #include "World.hpp"
 
-World::World(): 
+World::World():
     window(new Window(1280, 720, "Procedural world")),
-//    shader(new Shader("src/shaders/world.vs",
-//                      "src/shaders/world.fs")),
     camera(new Camera())
 {
     glewExperimental = GL_TRUE;
     glewInit();
+
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, this->window->width(), this->window->height());
+
+    this->shader = new Shader("src/shaders/world.vs",
+                              "src/shaders/world.fs");
 }
 
 World::~World()
@@ -38,7 +40,7 @@ void World::draw()
 
         //this->view = this->camera.view();
 
-        //this->shader->use();
+        this->shader->use();
 
         // TODO MVP matrices
 
