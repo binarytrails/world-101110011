@@ -7,6 +7,8 @@
 
 #include <stdio.h>
 
+#include <vector>
+
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>
@@ -26,11 +28,27 @@ class World
         void draw();
 
     private:
+        void updateMVP();
+
+        void initTerrain();
+        void initTerrainBuffers();
+        void uploadTerrain();
+        void drawTerrain();
 
         Window *window;
         Shader *shader;
         Camera *camera;
+
         GLuint vboId,
                vaoId,
                eboId;
+
+        GLenum renderMode;
+
+        glm::mat4 model;
+        glm::mat4 view;
+        glm::mat4 projection;
+
+        std::vector<glm::vec3> terrainVertices;
+        std::vector<uint16_t> terrainVerticesI;
 };
