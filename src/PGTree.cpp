@@ -1,8 +1,10 @@
 #include "PGTree.h"
 
+// TODO: Poorly coded
 PGTree::PGTree(float offset[]) {
     int height = (int)randNum(3.0f,6.0f);
     
+    //Generate trunk
     float T[6+(height*3)] = {
         0.4f + randNum(), 0.0f, 0.0f,
         0.3f + randNum(), 0.2f, 0.0f
@@ -16,6 +18,7 @@ PGTree::PGTree(float offset[]) {
         
     this->objects.push_back(new RotationalObject(height+2, 6, T, offset));
     
+    //Generate leaves
     float L[9*3] = {
         0.0f, (height+2)*0.2f, 0.0f,
         0.4f, (height+2)*0.2f, 0.0f,
