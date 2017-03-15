@@ -17,10 +17,10 @@
 class Shader
 {
     public:
-        GLuint ProgramId;
-        
         Shader(const GLchar* vertexPath,
                const GLchar* fragmentPath);
         
-        void Use();
+        void use();
+
+        GLuint programId;
 };

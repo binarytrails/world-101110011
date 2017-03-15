@@ -4,7 +4,7 @@
  * @brief Adapted from http://learnopengl.com
 */
 
-#include <Shader.hpp>
+#include "Shader.hpp"
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 {
@@ -67,25 +67,24 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
                 infoLog);
     }
     // Shader Program
-    this->ProgramId = glCreateProgram();
-    glAttachShader(this->ProgramId, vertex);
-    glAttachShader(this->ProgramId, fragment);
-    glLinkProgram(this->ProgramId);
+    this->programId = glCreateProgram();
+    glAttachShader(this->programId, vertex);
+    glAttachShader(this->programId, fragment);
+    glLinkProgram(this->programId);
     // Print linking errors if any
-    glGetProgramiv(this->ProgramId, GL_LINK_STATUS, &success);
+    glGetProgramiv(this->programId, GL_LINK_STATUS, &success);
     if (!success)
     {
-        glGetProgramInfoLog(this->ProgramId, 512, NULL, infoLog);
+        glGetProgramInfoLog(this->programId, 512, NULL, infoLog);
         fprintf(stderr, "ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s", infoLog);
     }
     // Delete the shaders as they're linked into our program now and no longer necessery
     glDeleteShader(vertex);
     glDeleteShader(fragment);
-
 }
 
 // Uses the current shader
-void Shader::Use() 
-{ 
-    glUseProgram(this->ProgramId); 
+void Shader::use()
+{
+    glUseProgram(this->programId);
 }
