@@ -29,6 +29,7 @@ class World
 
     private:
 
+        void setWindowContext();
         void setWindowCallbacks();
 
         void updateMVP();
@@ -56,6 +57,21 @@ class World
         std::vector<uint16_t> terrainVerticesI;
 };
 
+// Window context
+
+struct callback_context
+{
+    Window *window;
+    Camera *camera;
+};
+
+static callback_context* get_context(GLFWwindow* w)
+{
+    return static_cast<callback_context*>(glfwGetWindowUserPointer(w));
+}
+
+static callback_context cbc;
+
 // Window callbacks
 
 static void key_callback(GLFWwindow *w, int key,
@@ -67,7 +83,3 @@ static void mouse_scroll_callback(GLFWwindow *w,
                                   double xoffset, double yoffset);
 
 static void framebuffer_size_callback(GLFWwindow* w, int width, int height);
-
-static Window *window;
-
-static Camera *camera;

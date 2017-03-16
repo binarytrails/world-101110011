@@ -7,12 +7,12 @@ Group project with OpenGL in C++.
 - Seva
     - Project architecture
         - ~~Makefile~~
-        - ~~Window~~
-        - ~~Shader~~
-        - ~~Camera~~
-        - ~~World~~
-        - ~~Abstract Mesh~~
-    - Camera controls
+        - ~~Window class~~
+        - ~~Shader class~~
+        - ~~Camera class~~
+        - ~~World class~~
+        - ~~Abstract Mesh class~~
+    - ~~Floating Camera controls~~
     - Procedurally generated terrain
     - Skybox
     
@@ -21,6 +21,17 @@ Group project with OpenGL in C++.
 - Eric
 
 - Sami
+
+## Controls
+
+Floating Camera:
+
+    scroll      z-zoom
+    
+    w           move forward
+    s           move backward
+    a           move left
+    d           move right
 
 ## Setup
 

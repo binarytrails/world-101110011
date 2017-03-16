@@ -10,6 +10,7 @@ World::World():
     camera(new Camera()),
     renderMode(GL_TRIANGLES)
 {
+    this->setWindowContext();
     this->setWindowCallbacks();
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -36,8 +37,16 @@ World::~World()
     delete this->window;
 }
 
+void World::setWindowContext()
+{
+    cbc.window = this->window;
+    cbc.camera = this->camera;
+    glfwSetWindowUserPointer(this->window->get(), &cbc);
+}
+
 void World::setWindowCallbacks()
 {
+    // set callbacks
     glfwSetKeyCallback(this->window->get(), key_callback);
 
     glfwSetMouseButtonCallback(this->window->get(), mouse_key_callback);
@@ -46,10 +55,6 @@ void World::setWindowCallbacks()
                                    framebuffer_size_callback);
 
     glfwSetScrollCallback(this->window->get(), mouse_scroll_callback);
-
-    // FIXME bind static to in-class ones for callback access or define context
-    window = this->window;
-    camera = this->camera;
 }
 
 void World::updateMVP()
@@ -209,14 +214,18 @@ void World::drawTerrain()
 
 void framebuffer_size_callback(GLFWwindow* w, int width, int height)
 {
-    window->width(width);
-    window->height(height);
+    callback_context* cbc_ptr = get_context(w);
+
+    cbc_ptr->window->width(width);
+    cbc_ptr->window->height(height);
+
     glViewport(0, 0, width, height);
 }
 
 void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode)
 {
     //printf("keyboard: %i\n", key);
+    callback_context* cbc_ptr = get_context(w);
 
 /*
     if (key == GLFW_KEY_LEFT)   mesh->rotate(glm::vec3(0, 1, 0));
@@ -225,10 +234,10 @@ void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode)
     if (key == GLFW_KEY_DOWN)   mesh->rotate(glm::vec3(-1, 0, 0));
 */
 
-    if (key == GLFW_KEY_W) camera->moveDown();
-    if (key == GLFW_KEY_S) camera->moveUp();
-    if (key == GLFW_KEY_A) camera->moveLeft();
-    if (key == GLFW_KEY_D) camera->moveRight();
+    if (key == GLFW_KEY_W) cbc_ptr->camera->moveDown();
+    if (key == GLFW_KEY_S) cbc_ptr->camera->moveUp();
+    if (key == GLFW_KEY_A) cbc_ptr->camera->moveLeft();
+    if (key == GLFW_KEY_D) cbc_ptr->camera->moveRight();
 }
 
 void mouse_key_callback(GLFWwindow* w, int key, int action, int mode)
@@ -238,6 +247,8 @@ void mouse_key_callback(GLFWwindow* w, int key, int action, int mode)
 
 void mouse_scroll_callback(GLFWwindow *w, double xoffset, double yoffset)
 {
-    if (yoffset > 0)        camera->moveForward();
-    else if (yoffset < 0)   camera->moveBackward();
+    callback_context* cbc_ptr = get_context(w);
+
+    if (yoffset > 0)        cbc_ptr->camera->moveForward();
+    else if (yoffset < 0)   cbc_ptr->camera->moveBackward();
 }
