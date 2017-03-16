@@ -12,8 +12,9 @@ Group project with OpenGL in C++.
         - ~~Camera~~
         - ~~World~~
         - ~~Abstract Mesh~~
-    - Skybox
+    - Camera controls
     - Procedurally generated terrain
+    - Skybox
     
 - Tarik
 

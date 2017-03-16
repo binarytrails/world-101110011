@@ -7,10 +7,11 @@
 
 World::World():
     window(new Window(1280, 720, "Procedural world")),
-    camera(new Camera())    //gl_Position = vec4(position, 1.0f);
-,
+    camera(new Camera()),
     renderMode(GL_TRIANGLES)
 {
+    this->setWindowCallbacks();
+
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     glewExperimental = GL_TRUE;
@@ -33,6 +34,22 @@ World::~World()
     delete this->camera;
     delete this->shader;
     delete this->window;
+}
+
+void World::setWindowCallbacks()
+{
+    glfwSetKeyCallback(this->window->get(), key_callback);
+
+    glfwSetMouseButtonCallback(this->window->get(), mouse_key_callback);
+
+    glfwSetFramebufferSizeCallback(this->window->get(),
+                                   framebuffer_size_callback);
+
+    glfwSetScrollCallback(this->window->get(), mouse_scroll_callback);
+
+    // FIXME bind static to in-class ones for callback access or define context
+    window = this->window;
+    camera = this->camera;
 }
 
 void World::updateMVP()
@@ -85,6 +102,7 @@ void World::draw()
 
 void World::initTerrain()
 {
+/*
     // square
     this->terrainVertices.push_back(glm::vec3(-1.0f, -1.0f, 0.0f)); // b-l
     this->terrainVertices.push_back(glm::vec3(1.0f, -1.0f, 0.0f));  // b-r
@@ -95,6 +113,43 @@ void World::initTerrain()
         0, 1, 2,
         1, 2, 3
     };
+*/
+    // floor
+    uint8_t xcells = 5;
+    uint8_t zcells = 5;
+
+    // floor test MOQ
+    for (GLfloat x = -1.0f; x < 1.0f; x += (1.0f / xcells))
+    {
+        for (GLfloat z = -1.0f; z < 1.0f; z += (1.0f / zcells))
+        {
+            printf("(%f,%f,%f)\n", x, 0.5f, z);
+
+            this->terrainVertices.push_back(glm::vec3(x, 0.5f, z));
+        }
+    }
+
+    printf("-----------vsize: %i\n", this->terrainVertices.size());
+
+    for (uint8_t x = 0; x < xcells * 2; x++)
+    {
+        for (uint8_t z = 0; z < zcells * 2; z++)
+        {
+            uint16_t p1 = z + xcells * x;
+            uint16_t p2 = z + xcells * (x + 1);
+
+            // Triangle 1
+            this->terrainVerticesI.push_back(p1);
+            this->terrainVerticesI.push_back(p1 + 1);
+            this->terrainVerticesI.push_back(p2);
+
+            // Triangle 2
+            this->terrainVerticesI.push_back(p1 + 1);
+            this->terrainVerticesI.push_back(p2);
+            this->terrainVerticesI.push_back(p2 + 1);
+        }
+    }
+    printf("-----------visize: %i\n", this->terrainVerticesI.size());
 }
 
 void World::initTerrainBuffers()
@@ -148,4 +203,41 @@ void World::drawTerrain()
                        this->terrainVerticesI.size(),
                        GL_UNSIGNED_SHORT, 0);
     glBindVertexArray(0);
+}
+
+// Window callbacks
+
+void framebuffer_size_callback(GLFWwindow* w, int width, int height)
+{
+    window->width(width);
+    window->height(height);
+    glViewport(0, 0, width, height);
+}
+
+void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode)
+{
+    //printf("keyboard: %i\n", key);
+
+/*
+    if (key == GLFW_KEY_LEFT)   mesh->rotate(glm::vec3(0, 1, 0));
+    if (key == GLFW_KEY_RIGHT)  mesh->rotate(glm::vec3(0, -1, 0));
+    if (key == GLFW_KEY_UP)     mesh->rotate(glm::vec3(1, 0, 0));
+    if (key == GLFW_KEY_DOWN)   mesh->rotate(glm::vec3(-1, 0, 0));
+*/
+
+    if (key == GLFW_KEY_W) camera->moveDown();
+    if (key == GLFW_KEY_S) camera->moveUp();
+    if (key == GLFW_KEY_A) camera->moveLeft();
+    if (key == GLFW_KEY_D) camera->moveRight();
+}
+
+void mouse_key_callback(GLFWwindow* w, int key, int action, int mode)
+{
+    // TODO
+}
+
+void mouse_scroll_callback(GLFWwindow *w, double xoffset, double yoffset)
+{
+    if (yoffset > 0)        camera->moveForward();
+    else if (yoffset < 0)   camera->moveBackward();
 }
