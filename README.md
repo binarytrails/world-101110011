@@ -12,6 +12,7 @@ Group project with OpenGL in C++.
         - ~~Camera class~~
         - ~~World class~~
         - ~~Abstract Mesh class~~
+        - ~~Render modes~~
     - ~~Floating Camera controls~~
     - Procedurally generated terrain
     - Skybox
@@ -40,6 +41,10 @@ Floating Camera:
     s           move backward
     a           move left
     d           move right
+
+    t           display triangles
+    l           display lines
+    p           display points
 
 ## Setup
 
