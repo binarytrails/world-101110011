@@ -42,6 +42,9 @@ class Terrain : public Mesh
 
         void build();
         void buildPlaneGrid();
+        void buildPlaneGridRecursive(glm::vec3 v, const bool onetime);
+        void buildPlaneGridIndices();
+        //TODO void buildPlaneGridIndicesRecursive();
 
         void upload();
         void updateMVP(const glm::mat4 view, const glm::mat4 projection);

@@ -68,13 +68,12 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 
 void Terrain::build()
 {
-    this->buildPlaneGrid();
+    this->buildPlaneGridRecursive(glm::vec3(-1.0f, 0.5, -1.0f), false);
+    this->buildPlaneGridIndices();
 }
 
 void Terrain::buildPlaneGrid()
 {
-    // TODO float padding = 0.01f;
-
     for (GLfloat x = -1.0f; x <= 1.0f; x += (1.0f / (this->X_CELLS / 2)))
     {
         for (GLfloat z = -1.0f; z <= 1.0f; z += (1.0f / (this->Z_CELLS / 2)))
@@ -82,7 +81,31 @@ void Terrain::buildPlaneGrid()
             this->vertices.push_back(glm::vec3(x, 0.5f, z));
         }
     }
+}
 
+void Terrain::buildPlaneGridRecursive(glm::vec3 v, const bool onetime)
+{
+    if (v.x > 1.0f || v.z > 1.0f)
+        return;
+    else
+    {
+        //printf("push (%f, %f, %f)\n", v.x, v.y, v.z);
+        this->vertices.push_back(v);
+
+        v.z += (1.0f / (this->Z_CELLS / 2.0f));
+        buildPlaneGridRecursive(v, onetime);
+
+        // v.z coming back in reverse from -1.0f -> 1.0f
+        v.x = v.z * -1.0f;
+        v.z = -1.0f;
+
+        if (!onetime)
+            buildPlaneGridRecursive(v, true);
+    }
+}
+
+void Terrain::buildPlaneGridIndices()
+{
     if (this->getRenderMode() == GL_TRIANGLES)
     {
         for (uint8_t x = 0; x < this->X_CELLS - 1; x++)
