@@ -62,54 +62,74 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 // TODO WIP recursive
 void Terrain::build()
 {
-/*
-    // square
-    this->vertices.push_back(glm::vec3(-1.0f, -1.0f, 0.0f)); // b-l
-    this->vertices.push_back(glm::vec3(1.0f, -1.0f, 0.0f));  // b-r
-    this->vertices.push_back(glm::vec3(-1.0f, 1.0f, -1.0f)); // t-l
-    this->vertices.push_back(glm::vec3(1.0f, 1.0f, -1.0f));  // t-r
+    this->buildPlaneGrid(20, 20);
+}
 
-    this->verticesI = {
-        0, 1, 2,
-        1, 2, 3
-    };
-*/
-    // floor
-    uint8_t xcells = 5;
-    uint8_t zcells = 5;
+void Terrain::buildPlaneGrid(const uint16_t xcells, const uint16_t zcells)
+{
+    // TODO float padding = 0.01f;
 
-    // floor test MOQ
-    for (GLfloat x = -1.0f; x < 1.0f; x += (1.0f / xcells))
+    for (GLfloat x = -1.0f; x <= 1.0f; x += (1.0f / (xcells / 2)))
     {
-        for (GLfloat z = -1.0f; z < 1.0f; z += (1.0f / zcells))
+        for (GLfloat z = -1.0f; z <= 1.0f; z += (1.0f / (zcells / 2)))
         {
-            //printf("(%f,%f,%f)\n", x, 0.5f, z);
-
             this->vertices.push_back(glm::vec3(x, 0.5f, z));
         }
     }
 
-    //printf("-----------vsize: %i\n", this->vertices.size());
-
-    for (uint8_t x = 0; x < xcells * 2; x++)
+    if (this->getRenderMode() == GL_TRIANGLES)
     {
-        for (uint8_t z = 0; z < zcells * 2; z++)
+        for (uint8_t x = 0; x < xcells - 1; x++)
         {
-            uint16_t p1 = z + xcells * x;
-            uint16_t p2 = z + xcells * (x + 1);
+            for (uint8_t z = 0; z < zcells - 1; z++)
+            {
+                uint16_t p1 = z + xcells * x;
+                uint16_t p2 = z + xcells * (x + 1);
 
-            // Triangle 1
-            this->verticesI.push_back(p1);
-            this->verticesI.push_back(p1 + 1);
-            this->verticesI.push_back(p2);
-
-            // Triangle 2
-            this->verticesI.push_back(p1 + 1);
-            this->verticesI.push_back(p2);
-            this->verticesI.push_back(p2 + 1);
+                // Triangle 1
+                this->verticesI.push_back(p1);
+                this->verticesI.push_back(p1 + 1);
+                this->verticesI.push_back(p2);
+                // Triangle 2
+                this->verticesI.push_back(p2);
+                this->verticesI.push_back(p1 + 1);
+                this->verticesI.push_back(p2 + 1);
+            }
         }
     }
-    //printf("-----------visize: %i\n", this->verticesI.size());
+    else if (this->getRenderMode() == GL_LINES)
+    {
+        for (uint8_t x = 0; x < xcells - 1; x++)
+        {
+            for (uint8_t z = 0; z < zcells - 1; z++)
+            {
+                uint16_t p1 = z + xcells * x;
+                uint16_t p2 = z + xcells * (x + 1);
+
+                // Edge 1
+                this->verticesI.push_back(p1);
+                this->verticesI.push_back(p1 + 1);
+
+                if (x < xcells - 1)
+                {
+                    // Edge 2
+                    this->verticesI.push_back(p1);
+                    this->verticesI.push_back(p2);
+                }
+            }
+        }
+    }
+    else if (this->getRenderMode() == GL_POINTS)
+    {
+        for (uint8_t x = 0; x < xcells; x++)
+        {
+            for (uint8_t z = 0; z < zcells; z++)
+            {
+                uint16_t p1 = z + xcells * x;
+                this->verticesI.push_back(p1);
+            }
+        }
+    }
 }
 
 void Terrain::initBuffers()

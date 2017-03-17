@@ -37,7 +37,10 @@ class Terrain : public Mesh
 
     private:
         void initBuffers();
+
         void build();
+        void buildPlaneGrid(const uint16_t xcells, const uint16_t zcells);
+
         void upload();
         void updateMVP(const glm::mat4 view, const glm::mat4 projection);
         void draw();
