@@ -39,22 +39,22 @@ World::~World()
 
 void World::setWindowContext()
 {
-    cbc.window = this->window;
-    cbc.camera = this->camera;
-    glfwSetWindowUserPointer(this->window->get(), &cbc);
+    callbackContext.window = this->window;
+    callbackContext.camera = this->camera;
+    glfwSetWindowUserPointer(this->window->get(), &callbackContext);
 }
 
 void World::setWindowCallbacks()
 {
     // set callbacks
-    glfwSetKeyCallback(this->window->get(), key_callback);
+    glfwSetKeyCallback(this->window->get(), keyCallback);
 
-    glfwSetMouseButtonCallback(this->window->get(), mouse_key_callback);
+    glfwSetMouseButtonCallback(this->window->get(), mouseKeyCallback);
 
     glfwSetFramebufferSizeCallback(this->window->get(),
-                                   framebuffer_size_callback);
+                                   framebufferSizeCallback);
 
-    glfwSetScrollCallback(this->window->get(), mouse_scroll_callback);
+    glfwSetScrollCallback(this->window->get(), mouseScrollCallback);
 }
 
 void World::updateMVP()
@@ -83,9 +83,7 @@ void World::updateMVP()
 
 void World::draw()
 {
-    this->initTerrain();
-    this->initTerrainBuffers();
-    this->uploadTerrain();
+    this->terrain = new Terrain();
 
     while (!glfwWindowShouldClose(this->window->get()))
     {
@@ -96,159 +94,12 @@ void World::draw()
 
         this->shader->use();
 
-        this->updateMVP();
+        this->terrain->render(this->window, this->camera,
+                              this->view, this->projection);
 
-        this->drawTerrain();
+        this->updateMVP();
 
         // swap the screen buffers
         glfwSwapBuffers(this->window->get());
     }
-}
-
-void World::initTerrain()
-{
-/*
-    // square
-    this->terrainVertices.push_back(glm::vec3(-1.0f, -1.0f, 0.0f)); // b-l
-    this->terrainVertices.push_back(glm::vec3(1.0f, -1.0f, 0.0f));  // b-r
-    this->terrainVertices.push_back(glm::vec3(-1.0f, 1.0f, -1.0f)); // t-l
-    this->terrainVertices.push_back(glm::vec3(1.0f, 1.0f, -1.0f));  // t-r
-
-    this->terrainVerticesI = {
-        0, 1, 2,
-        1, 2, 3
-    };
-*/
-    // floor
-    uint8_t xcells = 5;
-    uint8_t zcells = 5;
-
-    // floor test MOQ
-    for (GLfloat x = -1.0f; x < 1.0f; x += (1.0f / xcells))
-    {
-        for (GLfloat z = -1.0f; z < 1.0f; z += (1.0f / zcells))
-        {
-            printf("(%f,%f,%f)\n", x, 0.5f, z);
-
-            this->terrainVertices.push_back(glm::vec3(x, 0.5f, z));
-        }
-    }
-
-    printf("-----------vsize: %i\n", this->terrainVertices.size());
-
-    for (uint8_t x = 0; x < xcells * 2; x++)
-    {
-        for (uint8_t z = 0; z < zcells * 2; z++)
-        {
-            uint16_t p1 = z + xcells * x;
-            uint16_t p2 = z + xcells * (x + 1);
-
-            // Triangle 1
-            this->terrainVerticesI.push_back(p1);
-            this->terrainVerticesI.push_back(p1 + 1);
-            this->terrainVerticesI.push_back(p2);
-
-            // Triangle 2
-            this->terrainVerticesI.push_back(p1 + 1);
-            this->terrainVerticesI.push_back(p2);
-            this->terrainVerticesI.push_back(p2 + 1);
-        }
-    }
-    printf("-----------visize: %i\n", this->terrainVerticesI.size());
-}
-
-void World::initTerrainBuffers()
-{
-    glGenBuffers(1, &this->vboId);
-    glGenVertexArrays(1, &this->vaoId);
-    glGenBuffers(1, &this->eboId);
-
-    glBindBuffer(GL_ARRAY_BUFFER, this->vboId);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(glm::vec3) * this->terrainVertices.size(),
-                 &this->terrainVertices[0],
-                 GL_STATIC_DRAW);
-
-    // has to be before ebo bind
-    glBindVertexArray(this->vaoId);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->eboId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 sizeof(this->terrainVerticesI) * this->terrainVerticesI.size(),
-                 &this->terrainVerticesI[0],
-                 GL_STATIC_DRAW);
-
-    // enable vao -> vbo pointing
-    glEnableVertexAttribArray(0);
-    // setup formats of my vao attributes
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), NULL);
-
-    // unbind vbo
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    // unbind vao
-    glBindVertexArray(0);
-}
-
-void World::uploadTerrain()
-{
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->eboId);
-
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                     sizeof(GLushort) * this->terrainVerticesI.size(),
-                    &this->terrainVerticesI[0],
-                    GL_STATIC_DRAW);
-
-    // don't disconnect to draw
-}
-
-void World::drawTerrain()
-{
-    glBindVertexArray(this->vaoId);
-        glDrawElements(this->renderMode,
-                       this->terrainVerticesI.size(),
-                       GL_UNSIGNED_SHORT, 0);
-    glBindVertexArray(0);
-}
-
-// Window callbacks
-
-void framebuffer_size_callback(GLFWwindow* w, int width, int height)
-{
-    callback_context* cbc_ptr = get_context(w);
-
-    cbc_ptr->window->width(width);
-    cbc_ptr->window->height(height);
-
-    glViewport(0, 0, width, height);
-}
-
-void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode)
-{
-    //printf("keyboard: %i\n", key);
-    callback_context* cbc_ptr = get_context(w);
-
-/*
-    if (key == GLFW_KEY_LEFT)   mesh->rotate(glm::vec3(0, 1, 0));
-    if (key == GLFW_KEY_RIGHT)  mesh->rotate(glm::vec3(0, -1, 0));
-    if (key == GLFW_KEY_UP)     mesh->rotate(glm::vec3(1, 0, 0));
-    if (key == GLFW_KEY_DOWN)   mesh->rotate(glm::vec3(-1, 0, 0));
-*/
-
-    if (key == GLFW_KEY_W) cbc_ptr->camera->moveDown();
-    if (key == GLFW_KEY_S) cbc_ptr->camera->moveUp();
-    if (key == GLFW_KEY_A) cbc_ptr->camera->moveLeft();
-    if (key == GLFW_KEY_D) cbc_ptr->camera->moveRight();
-}
-
-void mouse_key_callback(GLFWwindow* w, int key, int action, int mode)
-{
-    // TODO
-}
-
-void mouse_scroll_callback(GLFWwindow *w, double xoffset, double yoffset)
-{
-    callback_context* cbc_ptr = get_context(w);
-
-    if (yoffset > 0)        cbc_ptr->camera->moveForward();
-    else if (yoffset < 0)   cbc_ptr->camera->moveBackward();
 }

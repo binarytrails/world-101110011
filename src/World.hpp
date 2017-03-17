@@ -16,8 +16,12 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Window.hpp"
+#include "WindowCallback.hpp"
+
 #include "Shader.hpp"
 #include "Camera.hpp"
+
+#include "Terrain.hpp"
 
 class World
 {
@@ -28,16 +32,10 @@ class World
         void draw();
 
     private:
-
         void setWindowContext();
         void setWindowCallbacks();
 
         void updateMVP();
-
-        void initTerrain();
-        void initTerrainBuffers();
-        void uploadTerrain();
-        void drawTerrain();
 
         Window *window;
         Shader *shader;
@@ -53,33 +51,5 @@ class World
         glm::mat4 view;
         glm::mat4 projection;
 
-        std::vector<glm::vec3> terrainVertices;
-        std::vector<uint16_t> terrainVerticesI;
+        Terrain *terrain;
 };
-
-// Window context
-
-struct callback_context
-{
-    Window *window;
-    Camera *camera;
-};
-
-static callback_context* get_context(GLFWwindow* w)
-{
-    return static_cast<callback_context*>(glfwGetWindowUserPointer(w));
-}
-
-static callback_context cbc;
-
-// Window callbacks
-
-static void key_callback(GLFWwindow *w, int key,
-                         int scancode, int action, int mode);
-
-static void mouse_key_callback(GLFWwindow *w, int key, int action, int mode);
-
-static void mouse_scroll_callback(GLFWwindow *w,
-                                  double xoffset, double yoffset);
-
-static void framebuffer_size_callback(GLFWwindow* w, int width, int height);

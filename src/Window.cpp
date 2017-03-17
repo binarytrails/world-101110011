@@ -10,7 +10,7 @@ Window::Window(const int w, const int h,
                WIDTH(w), HEIGHT(h)
 {
     glfwInit();
-    
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE,
