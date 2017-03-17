@@ -23,11 +23,12 @@
 class World
 {
     public:
-        World();
+        World(const uint16_t width, const uint8_t height);
         ~World();
 
         void setRenderMode(const GLenum mode);
 
+        void build();
         void draw();
 
         void rotate(const glm::vec3 axes);
@@ -53,6 +54,8 @@ class World
         glm::mat4 projection;
 
         Terrain *terrain;
+        const uint16_t TERRAIN_WIDTH;
+        const uint16_t TERRAIN_HEIGHT;
 };
 
 // Window context

@@ -5,7 +5,8 @@
 
 #include "World.hpp"
 
-World::World():
+World::World(const uint16_t width, const uint8_t height):
+    TERRAIN_WIDTH(width), TERRAIN_HEIGHT(height),
     window(new Window(1280, 720, "Procedural world")),
     camera(new Camera()),
     renderMode(GL_TRIANGLES)
@@ -88,9 +89,14 @@ void World::updateMVP()
 
 }
 
+void World::build()
+{
+    this->terrain = new Terrain(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
+}
+
 void World::draw()
 {
-    this->terrain = new Terrain();
+    this->build();
 
     while (!glfwWindowShouldClose(this->window->get()))
     {

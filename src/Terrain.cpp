@@ -5,8 +5,8 @@
 
 #include "Terrain.hpp"
 
-Terrain::Terrain():
-    renderMode(GL_TRIANGLES)
+Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
+    X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES)
 {
     this->shader = new Shader("src/shaders/terrain.vs",
                               "src/shaders/terrain.fs");
@@ -66,19 +66,18 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
-// TODO WIP recursive
 void Terrain::build()
 {
-    this->buildPlaneGrid(200, 200);
+    this->buildPlaneGrid();
 }
 
-void Terrain::buildPlaneGrid(const uint16_t xcells, const uint16_t zcells)
+void Terrain::buildPlaneGrid()
 {
     // TODO float padding = 0.01f;
 
-    for (GLfloat x = -1.0f; x <= 1.0f; x += (1.0f / (xcells / 2)))
+    for (GLfloat x = -1.0f; x <= 1.0f; x += (1.0f / (this->X_CELLS / 2)))
     {
-        for (GLfloat z = -1.0f; z <= 1.0f; z += (1.0f / (zcells / 2)))
+        for (GLfloat z = -1.0f; z <= 1.0f; z += (1.0f / (this->Z_CELLS / 2)))
         {
             this->vertices.push_back(glm::vec3(x, 0.5f, z));
         }
@@ -86,12 +85,12 @@ void Terrain::buildPlaneGrid(const uint16_t xcells, const uint16_t zcells)
 
     if (this->getRenderMode() == GL_TRIANGLES)
     {
-        for (uint8_t x = 0; x < xcells - 1; x++)
+        for (uint8_t x = 0; x < this->X_CELLS - 1; x++)
         {
-            for (uint8_t z = 0; z < zcells - 1; z++)
+            for (uint8_t z = 0; z < this->Z_CELLS - 1; z++)
             {
-                uint16_t p1 = z + xcells * x;
-                uint16_t p2 = z + xcells * (x + 1);
+                uint16_t p1 = z + this->X_CELLS * x;
+                uint16_t p2 = z + this->X_CELLS * (x + 1);
 
                 // Triangle 1
                 this->verticesI.push_back(p1);
@@ -106,18 +105,18 @@ void Terrain::buildPlaneGrid(const uint16_t xcells, const uint16_t zcells)
     }
     else if (this->getRenderMode() == GL_LINES)
     {
-        for (uint8_t x = 0; x < xcells - 1; x++)
+        for (uint8_t x = 0; x < this->X_CELLS - 1; x++)
         {
-            for (uint8_t z = 0; z < zcells - 1; z++)
+            for (uint8_t z = 0; z < this->Z_CELLS - 1; z++)
             {
-                uint16_t p1 = z + xcells * x;
-                uint16_t p2 = z + xcells * (x + 1);
+                uint16_t p1 = z + this->X_CELLS * x;
+                uint16_t p2 = z + this->X_CELLS * (x + 1);
 
                 // Edge 1
                 this->verticesI.push_back(p1);
                 this->verticesI.push_back(p1 + 1);
 
-                if (x < xcells - 1)
+                if (x < this->X_CELLS - 1)
                 {
                     // Edge 2
                     this->verticesI.push_back(p1);
@@ -128,11 +127,11 @@ void Terrain::buildPlaneGrid(const uint16_t xcells, const uint16_t zcells)
     }
     else if (this->getRenderMode() == GL_POINTS)
     {
-        for (uint8_t x = 0; x < xcells; x++)
+        for (uint8_t x = 0; x < this->X_CELLS; x++)
         {
-            for (uint8_t z = 0; z < zcells; z++)
+            for (uint8_t z = 0; z < this->Z_CELLS; z++)
             {
-                uint16_t p1 = z + xcells * x;
+                uint16_t p1 = z + this->X_CELLS * x;
                 this->verticesI.push_back(p1);
             }
         }

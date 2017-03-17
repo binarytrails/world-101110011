@@ -23,7 +23,7 @@
 class Terrain : public Mesh
 {
     public:
-        Terrain();
+        Terrain(const uint16_t xcells, const uint16_t zcells);
         ~Terrain();
 
         GLenum getRenderMode() const;
@@ -41,7 +41,7 @@ class Terrain : public Mesh
         void initBuffers();
 
         void build();
-        void buildPlaneGrid(const uint16_t xcells, const uint16_t zcells);
+        void buildPlaneGrid();
 
         void upload();
         void updateMVP(const glm::mat4 view, const glm::mat4 projection);
@@ -59,4 +59,7 @@ class Terrain : public Mesh
 
         std::vector<glm::vec3> vertices;
         std::vector<uint16_t> verticesI;
+
+        const uint16_t X_CELLS;
+        const uint16_t Z_CELLS;
 };
