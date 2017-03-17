@@ -17,10 +17,18 @@ Group project with OpenGL in C++.
     - Skybox
     
 - Tarik
+    - Perlin Noise for terrain.
+    - AABB testing.
+    - (Lighting, maybe?)
+    - (Generating a planet terrain?)
 
 - Eric
+    - Weather (and possibly water?) effects.
 
 - Sami
+    - Generating objects
+
+
 
 ## Controls
 
