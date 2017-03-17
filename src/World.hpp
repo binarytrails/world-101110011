@@ -30,6 +30,8 @@ class World
 
         void draw();
 
+        void rotate(const glm::vec3 axes);
+
     private:
         void setWindowContext();
         void setWindowCallbacks();
@@ -86,12 +88,10 @@ static void keyCallback(GLFWwindow* w, int key, int scancode, int action, int mo
     //printf("keyboard: %i\n", key);
     CallbackContext* cbcPtr = getWindowContext(w);
 
-/*
-    if (key == GLFW_KEY_LEFT)   mesh->rotate(glm::vec3(0, 1, 0));
-    if (key == GLFW_KEY_RIGHT)  mesh->rotate(glm::vec3(0, -1, 0));
-    if (key == GLFW_KEY_UP)     mesh->rotate(glm::vec3(1, 0, 0));
-    if (key == GLFW_KEY_DOWN)   mesh->rotate(glm::vec3(-1, 0, 0));
-*/
+    if (key == GLFW_KEY_LEFT)   cbcPtr->world->rotate(glm::vec3(0, 1, 0));
+    if (key == GLFW_KEY_RIGHT)  cbcPtr->world->rotate(glm::vec3(0, -1, 0));
+    if (key == GLFW_KEY_UP)     cbcPtr->world->rotate(glm::vec3(1, 0, 0));
+    if (key == GLFW_KEY_DOWN)   cbcPtr->world->rotate(glm::vec3(-1, 0, 0));
 
     if (key == GLFW_KEY_W) cbcPtr->camera->moveDown();
     if (key == GLFW_KEY_S) cbcPtr->camera->moveUp();

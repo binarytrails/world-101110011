@@ -110,3 +110,9 @@ void World::draw()
         glfwSwapBuffers(this->window->get());
     }
 }
+
+void World::rotate(const glm::vec3 axes)
+{
+    glm::vec3 terrainSpin = axes / 20.0f;
+    this->terrain->rotate(terrainSpin);
+}

@@ -16,4 +16,6 @@ class Mesh
                             const Camera* camera,
                             const glm::mat4 view,
                             const glm::mat4 projection) = 0;
+
+        virtual void rotate(const glm::vec3 spin) = 0;
 };

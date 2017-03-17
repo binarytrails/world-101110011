@@ -46,6 +46,13 @@ void Terrain::render(const Window* window,
     this->draw();
 }
 
+void Terrain::rotate(const glm::vec3 spin)
+{
+    this->model = glm::rotate(this->model, spin.x, glm::vec3(1, 0, 0));
+    this->model = glm::rotate(this->model, spin.y, glm::vec3(0, 1, 0));
+    this->model = glm::rotate(this->model, spin.z, glm::vec3(0, 0, 1));
+}
+
 void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 {
     // locate in shaders
@@ -62,7 +69,7 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 // TODO WIP recursive
 void Terrain::build()
 {
-    this->buildPlaneGrid(20, 20);
+    this->buildPlaneGrid(200, 200);
 }
 
 void Terrain::buildPlaneGrid(const uint16_t xcells, const uint16_t zcells)

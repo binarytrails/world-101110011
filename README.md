@@ -36,6 +36,7 @@ Group project with OpenGL in C++.
 Floating Camera:
 
     scroll      z-zoom
+    arrows      rotate
     
     w           move forward
     s           move backward

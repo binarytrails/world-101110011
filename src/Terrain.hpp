@@ -35,6 +35,8 @@ class Terrain : public Mesh
                     const glm::mat4 view,
                     const glm::mat4 projection);
 
+        void rotate(const glm::vec3 spin);
+
     private:
         void initBuffers();
 
