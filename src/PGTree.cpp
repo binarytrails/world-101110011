@@ -1,8 +1,8 @@
 #include "PGTree.h"
 
 // TODO: Poorly coded
-PGTree::PGTree(float offset[]) {
-    int height = (int)randNum(2.0f,5.0f);
+PGTree::PGTree(float offset[], float radius) {
+    /*int height = (int)randNum(2.0f,5.0f);
     
     //Generate trunk
     float T[6+(height*3)] = {
@@ -16,20 +16,23 @@ PGTree::PGTree(float offset[]) {
         T[c*3+8] = 0.0f;
     }
         
-    this->objects.push_back(new RotationalObject(height+2, 6, T, offset));
+    this->objects.push_back(new RotationalObject(height+2, 6, T, offset));*/
     
-    //Generate leaves
-    float L[9*3] = {
-        0.0f, (height+1)*0.2f, 0.0f,
-        0.4f, (height+1)*0.2f, 0.0f,
-        0.5f + randNum(), (height+1)*0.2f+1*0.15f, 0.0f,
-        0.6f + randNum(), (height+1)*0.2f+2*0.15f, 0.0f,
-        0.8f + randNum(), (height+1)*0.2f+3*0.15f, 0.0f,
-        0.8f + randNum(), (height+1)*0.2f+4*0.15f, 0.0f,
-        0.6f + randNum(), (height+1)*0.2f+5*0.15f, 0.0f,
-        0.4f + randNum(), (height+1)*0.2f+6*0.15f, 0.0f,
-        0.0f, (height+1)*0.2f+7*0.15f, 0.0f
-    };
-    this->objects.push_back(new RotationalObject(9, 6, L, offset));
+    loop(offset, 0.5);
 }
 
+void PGTree::loop(float offset[], float limit) {
+    if(limit > 0) {
+        float T[9] = {
+            limit, 0.0f, 0.0f,
+            limit, 0.1f, 0.0f,
+            limit-0.05f, 0.1f, 0.0f
+        };
+        
+        this->objects.push_back(new RotationalObject(3, 6, T, offset));
+        this->objects.push_back(new RotationalObject(2, 6, T, offset));
+        offset[1] += 0.05f;
+        
+        loop(offset, limit-0.05f);
+    }
+}
