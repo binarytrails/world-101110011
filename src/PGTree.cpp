@@ -30,7 +30,6 @@ void PGTree::loop(float offset[], float limit) {
         };
         
         this->objects.push_back(new RotationalObject(3, 6, T, offset));
-        this->objects.push_back(new RotationalObject(2, 6, T, offset));
         offset[1] += 0.05f;
         
         loop(offset, limit-0.05f);
