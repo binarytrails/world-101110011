@@ -2,7 +2,7 @@
 
 // TODO: Poorly coded
 PGTree::PGTree(float offset[]) {
-    int height = (int)randNum(3.0f,6.0f);
+    int height = (int)randNum(2.0f,5.0f);
     
     //Generate trunk
     float T[6+(height*3)] = {
@@ -20,15 +20,15 @@ PGTree::PGTree(float offset[]) {
     
     //Generate leaves
     float L[9*3] = {
-        0.0f, (height+2)*0.2f, 0.0f,
-        0.4f, (height+2)*0.2f, 0.0f,
-        0.5f + randNum(), (height+2)*0.2f+1*0.15f, 0.0f,
-        0.6f + randNum(), (height+2)*0.2f+2*0.15f, 0.0f,
-        0.8f + randNum(), (height+2)*0.2f+3*0.15f, 0.0f,
-        0.8f + randNum(), (height+2)*0.2f+4*0.15f, 0.0f,
-        0.6f + randNum(), (height+2)*0.2f+5*0.15f, 0.0f,
-        0.4f + randNum(), (height+2)*0.2f+6*0.15f, 0.0f,
-        0.0f, (height+2)*0.2f+7*0.15f, 0.0f
+        0.0f, (height+1)*0.2f, 0.0f,
+        0.4f, (height+1)*0.2f, 0.0f,
+        0.5f + randNum(), (height+1)*0.2f+1*0.15f, 0.0f,
+        0.6f + randNum(), (height+1)*0.2f+2*0.15f, 0.0f,
+        0.8f + randNum(), (height+1)*0.2f+3*0.15f, 0.0f,
+        0.8f + randNum(), (height+1)*0.2f+4*0.15f, 0.0f,
+        0.6f + randNum(), (height+1)*0.2f+5*0.15f, 0.0f,
+        0.4f + randNum(), (height+1)*0.2f+6*0.15f, 0.0f,
+        0.0f, (height+1)*0.2f+7*0.15f, 0.0f
     };
     this->objects.push_back(new RotationalObject(9, 6, L, offset));
 }

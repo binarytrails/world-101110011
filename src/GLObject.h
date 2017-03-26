@@ -2,6 +2,7 @@
 #define GLOBJECT_H
 
 #include <GLFW/glfw3.h>
+#include <vector>
 
 class GLObject {
 public:
@@ -10,11 +11,21 @@ public:
     
     int vSize;
     int iSize;
+    int iMax = 0;
+    GLObject() : vSize(0), iSize(0) {};
+    GLObject(int vSize, int iSize) : vSize(vSize), iSize(iSize) {};
+    
+    //Build a GLObject by combining vertices and indices of every objects in a vector
+    GLObject(const std::vector<GLObject*>& others);
+    
+    GLObject(const GLObject& orig);
     
     //Two points used to form a hitbox
     bool sizeFirst = true;
     float sizeMin[3] = {0, 0, 0};
     float sizeMax[3] = {0, 0, 0};
+    
+    GLObject add(GLObject* other);
     
     virtual ~GLObject();
 protected:
