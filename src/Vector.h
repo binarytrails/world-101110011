@@ -11,7 +11,7 @@ public:
     Vector(float x, float y, float z) : x(x), y(y), z(z) {};
     Vector(const Vector& orig);
     
-    double magnitude ();
+    float magnitude ();
     Vector normalize();
     Vector negative();
     float dotProduct(Vector v);

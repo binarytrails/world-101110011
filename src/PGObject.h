@@ -7,14 +7,15 @@
 #include <random>
 #include "GLObject.h"
 #include "Vector.h"
+#include "lNode.h"
 
 class PGObject {
 public:
+    const float accuracy = 0.001; //used to exclude inaccuracy in low value computation errors
     std::vector<GLObject*> objects;
-    std::vector<Vector*> vocabulary;
 protected:
     float randNum(float min = -0.05f, float max = 0.05f);
-    virtual void loop(float offset[], float limit) = 0;
+    virtual void loop(lNode* rootNode, Point offset, float limit, float step) = 0;
 };
 
 #endif /* PGOBJECT_H */

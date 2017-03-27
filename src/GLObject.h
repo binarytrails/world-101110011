@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 
+#include "Point.h"
+
 class GLObject {
 public:
     GLfloat* vertices;
@@ -12,6 +14,8 @@ public:
     int vSize;
     int iSize;
     int iMax = 0;
+    Point offset = Point(0,0,0);
+    
     GLObject() : vSize(0), iSize(0) {};
     GLObject(int vSize, int iSize) : vSize(vSize), iSize(iSize) {};
     

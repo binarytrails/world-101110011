@@ -8,9 +8,9 @@
 
 class PGTree : public PGObject {
 public:
-    PGTree(float offset[], float radius = 0.5);
+    PGTree(Point offset, float radius = 0.5);
 protected:
-    virtual void loop(float offset[], float limit);
+    virtual void loop(lNode* rootNode, Point offset, float limit, float step);
 };
 
 #endif /* PGTREE_H */

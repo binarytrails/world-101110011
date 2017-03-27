@@ -6,7 +6,7 @@ Vector::Vector(const Vector& orig) {
     z = orig.z;
 }
 
-double Vector::magnitude () {
+float Vector::magnitude () {
     return sqrt((x*x) + (y*y) + (z*z));
 }
 
