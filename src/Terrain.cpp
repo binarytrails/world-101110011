@@ -68,7 +68,8 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 
 void Terrain::build()
 {
-    this->buildPlaneGridRecursive(glm::vec3(-1.0f, 0.5, -1.0f), false);
+    //this->buildPlaneGridRecursive(glm::vec3(-1.0f, 0.5, -1.0f), false);
+    this->buildPlaneGrid();
     this->buildPlaneGridIndices();
 }
 
@@ -78,7 +79,8 @@ void Terrain::buildPlaneGrid()
     {
         for (GLfloat z = -1.0f; z <= 1.0f; z += (1.0f / (this->Z_CELLS / 2)))
         {
-            this->vertices.push_back(glm::vec3(x, 0.5f, z));
+            // TODO elevate
+            this->vertices.push_back(glm::vec3(x, std::rand() % 4, z));
         }
     }
 }
