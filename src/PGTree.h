@@ -7,8 +7,6 @@
 #include "Vector.h"
 
 class PGTree : public PGObject {
-public:
-    PGTree(Point offset, float radius = 0.5);
 protected:
     virtual void loop(lNode* rootNode, Point offset, float limit, float step);
 };
