@@ -66,19 +66,43 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
+float Terrain::getElevation(const float x, const float z)
+{
+    float y = this->perlinNoise.GetValue(x, 0.0f, z);
+
+    /*
+    // octaves
+    y = 1    * this->perlinNoise.GetValue(1 * x, 0, 1 * z) +
+        0.5  * this->perlinNoise.GetValue(2 * x, 0, 2 * z) +
+        0.25 * this->perlinNoise.GetValue(4 * x, 0, 4 * z);
+    */
+
+    return y;
+}
+
 void Terrain::build()
 {
-    this->buildPlaneGridRecursive(glm::vec3(-1.0f, 0.5, -1.0f), false);
+    this->buildPlaneGrid();
+
+    // TODO apply getElevation
+    //this->buildPlaneGridRecursive(glm::vec3(-1.0f, 0.5, -1.0f), false);
+
     this->buildPlaneGridIndices();
 }
 
 void Terrain::buildPlaneGrid()
 {
-    for (GLfloat x = -1.0f; x <= 1.0f; x += (1.0f / (this->X_CELLS / 2)))
+    for (GLfloat x = 0; x < this->X_CELLS; x++)
     {
-        for (GLfloat z = -1.0f; z <= 1.0f; z += (1.0f / (this->Z_CELLS / 2)))
+        for (GLfloat z = 0; z < this->Z_CELLS; z++)
         {
-            this->vertices.push_back(glm::vec3(x, 0.5f, z));
+            GLfloat nx = x / this->X_CELLS - 0.5;
+            GLfloat nz = z / this->Z_CELLS - 0.5;
+
+            GLfloat ny = (GLfloat) this->getElevation(nx, nz);
+
+            printf("push (%f, %f, %f)\n", nx, ny, nz);
+            this->vertices.push_back(glm::vec3(nx, ny, nz));
         }
     }
 }

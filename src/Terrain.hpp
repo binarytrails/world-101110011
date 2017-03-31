@@ -20,6 +20,8 @@
 #include "Shader.hpp"
 #include "Mesh.hpp"
 
+#include <noise/noise.h>
+
 class Terrain : public Mesh
 {
     public:
@@ -39,6 +41,8 @@ class Terrain : public Mesh
 
     private:
         void initBuffers();
+
+        float getElevation(const float x, const float z);
 
         void build();
         void buildPlaneGrid();
@@ -65,4 +69,6 @@ class Terrain : public Mesh
 
         const uint16_t X_CELLS;
         const uint16_t Z_CELLS;
+
+        noise::module::Perlin perlinNoise;
 };

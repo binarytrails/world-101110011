@@ -12,6 +12,8 @@ OPENGL_MAC=-lGLEW -lglfw3 -framework Cocoa -framework OpenGL \
 GLFW_ARCH=-lglfw
 GLFW_UNIX=-lglfw3
 
+EXTRA_LIBS=-lnoise
+
 INCLUDES=-I./src
 CXX_FILES=src/Main.cpp src/Window.cpp src/Shader.cpp src/Camera.cpp \
 		  src/World.cpp src/Terrain.cpp
@@ -22,7 +24,7 @@ all:
 	mkdir -p build
 
 arch: all
-	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} \
+	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} ${EXTRA_LIBS} \
 		${INCLUDES} ${CXX_FILES} ${BIN}
 
 linux: all
