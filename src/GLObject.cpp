@@ -28,6 +28,19 @@ void GLObject::addindice(int p1, int p2, int p3) {
     iCursor += 3;
 }
 
+GLObject::GLObject(int vSize, int iSize, GLfloat* v, GLuint* i) : vSize(vSize), iSize(iSize) {
+    vertices = new GLfloat[vSize];
+    indices = new GLuint[iSize];
+    
+    for(int c = 0; c < vSize; c+=3) {
+        addPoint(v[c], v[c+1], v[c+2]);
+    }
+    
+    for(int c = 0; c < iSize; c+=3) {
+        addindice(i[c], i[c+1], i[c+2]);
+    }
+}
+
 GLObject::~GLObject() {
     delete[] vertices;
     delete[] indices;

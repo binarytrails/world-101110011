@@ -18,6 +18,7 @@ public:
     
     GLObject() : vSize(0), iSize(0) {};
     GLObject(int vSize, int iSize) : vSize(vSize), iSize(iSize) {};
+    GLObject(int vSize, int iSize, GLfloat* v, GLuint* i);
     
     //Build a GLObject by combining vertices and indices of every objects in a vector
     GLObject(const std::vector<GLObject*>& others);
