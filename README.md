@@ -56,11 +56,9 @@ Floating Camera:
 
 ## Setup
 
-### GNU / Linux
+### OSX
 
-Install the missing libs and compile with:
-
-    make linux
+    make mac
 
 ### Arch Linux
 
@@ -72,17 +70,11 @@ Compile with :
 
     make linux
 
-Get setup info :
+### GNU / Linux
 
-    glxinfo
+Install the missing libs and compile with:
 
-Test your setup :
-
-    glxgears
-
-### Mac OSX
-
-    -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+    make linux
 
 ## Coding Style
 
