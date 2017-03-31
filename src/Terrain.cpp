@@ -32,12 +32,24 @@ void Terrain::setRenderMode(const GLenum renderMode)
     this->renderMode = renderMode;
 }
 
+void Terrain::onCameraChange(const Camera* camera)
+{
+    if (camera->view() != this->view)
+    {
+        printf("camera moved\n");
+        camera->printView();
+    }
+    view = camera->view();
+}
+
 void Terrain::render(const Window* window,
             const Camera* camera,
             const glm::mat4 view,
             const glm::mat4 projection)
 {
     this->shader->use();
+
+    this->onCameraChange(camera);
 
     this->upload();
 
@@ -68,7 +80,7 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 
 float Terrain::getElevation(const float x, const float z)
 {
-    float y = this->perlinNoise.GetValue(x, 0.0f, z);
+    float y = this->perlinNoise.GetValue(x / 3, 0.0f, z / 3);
 
     /*
     // octaves

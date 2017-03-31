@@ -42,6 +42,8 @@ class Terrain : public Mesh
     private:
         void initBuffers();
 
+        void onCameraChange(const Camera* camera);
+
         float getElevation(const float x, const float z);
 
         void build();
@@ -61,8 +63,8 @@ class Terrain : public Mesh
                eboId;
 
         GLenum renderMode;
-
         glm::mat4 model;
+        glm::mat4 view;
 
         std::vector<glm::vec3> vertices;
         std::vector<uint16_t> verticesI;

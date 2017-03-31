@@ -86,7 +86,6 @@ void World::updateMVP()
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(this->model));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(this->view));
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(this->projection));
-
 }
 
 void World::build()
