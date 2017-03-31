@@ -3,35 +3,35 @@
 #!
 
 CXX=g++
-CXXFLAGS=-std=c++11 -g -Wall -Wextra -Wfatal-errors -pedantic \
-		-lGLEW -lGL -lX11 -lpthread -lXrandr -lXi\
-		-I./src
+CXXFLAGS=-std=c++11 -g -Wall -Wextra -Wfatal-errors -pedantic
+
+OPENGL_LINUX=-lGLEW -lGL -lX11 -lpthread -lXrandr -lXi
+OPENGL_MAC=-lGLEW -lglfw3 -framework Cocoa -framework OpenGL \
+		   -framework IOKit -framework CoreVideo
 
 GLFW_ARCH=-lglfw
-GLFW_LINUX = -lglfw3
+GLFW_UNIX=-lglfw3
 
-# Linker flags for Mac
-CXXFLAGS_MAC =  -std=c++11 -g -Wall -Wextra -Wfatal-errors -pedantic \
--lGLEW -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit \
--framework CoreVideo
+INCLUDES=-I./src
+CXX_FILES=src/Main.cpp src/Window.cpp src/Shader.cpp src/Camera.cpp \
+		  src/World.cpp src/Terrain.cpp
 
-CXX_FILES=src/World.cpp src/Window.cpp src/Shader.cpp src/Terrain.cpp src/Main.cpp\
-	src/Camera.cpp
+BIN=-o build/world.out
 
 all:
 	mkdir -p build
 
 arch: all
-	${CXX} ${CXXFLAGS} ${GLFW_ARCH} ${CXX_FILES}\
-		-o build/world.out
+	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} \
+		${INCLUDES} ${CXX_FILES} ${BIN}
 
 linux: all
-	${CXX} ${CXXFLAGS} ${GLFW_LINUX} ${CXX_FILES}\
-		-o build/world.out
+	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_UNIX} \
+		${INCLUDES} ${CXX_FILES} ${BIN}
 
 mac: all
-	${CXX} -std=c++11 ${CXXFLAGS_MAC} ${CXX_FILES}\
-		-o build/world.out
+	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} \
+		${INCLUDES} ${CXX_FILES} ${BIN}
 
 clean:
 	rm -rf build/
