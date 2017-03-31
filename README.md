@@ -35,7 +35,7 @@ Group project with OpenGL in C++.
         - L-System
 
 - Justin
-    - TODO
+    - Shadows
 
 
 ## Controls
