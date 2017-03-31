@@ -15,20 +15,27 @@ Group project with OpenGL in C++.
         - ~~Render modes~~
     - ~~Floating Camera controls~~
     - Procedurally generated terrain
-    - Skybox
+        - ~~Grid~~
+        - Perlin Noise
+    - Merging parts
     
 - Tarik
-    - Perlin Noise for terrain.
+    - Skybox
     - AABB testing.
     - (Lighting, maybe?)
     - (Generating a planet terrain?)
 
 - Eric
-    - Weather (and possibly water?) effects.
+    - Particles
+        - Falling
+        - Cloud
 
 - Sami
     - Generating objects
+        - L-System
 
+- Justin
+    - TODO
 
 
 ## Controls
@@ -111,9 +118,10 @@ The channel #opengl on the irc.freenode.net server is quite active!
 
 ## Authors
 
-| Name                   |  Email                     |
-|:----------------------:|:-------------------------: |
-| Tarik Abou-Saddik      | tarik.abousaddik@gmail.com |
-| Vsevolod (Seva) Ivanov | seva@tumahn.net            |
-| Eric                   | ericchiassonmorgan@gmail.com|
-| Sami					 | Sami@boubaker.me			  |
+| Name                   |  Email                       |
+|:----------------------:|:----------------------------:|
+| Tarik Abou-Saddik      | tarik.abousaddik@gmail.com   |
+| Vsevolod (Seva) Ivanov | seva@tumahn.net              |
+| Eric                   | ericchiassonmorgan@gmail.com |
+| Sami					 | Sami@boubaker.me			    |
+| Justin                 | zigman32@gmail.com           |
