@@ -2,15 +2,7 @@
 #include "/glm/glm.hpp"
 
 bool Shadow::Intersect(glm::vec3 light, glm::vec3 point, Point slope, glm::vec3 &intersect){
-	//Translate so light is at origin
-
-	point.x -= light.x;
-	point.y -= light.y;
-	point.z -= light.z;
-	slope.x -= light.x;
-	slope.y -= light.y;
-	slope.z -= light.z;
-
+	
 
 	
 	float D = -1 * (slope.x*slope.direction.x + slope.y*slope.direction.y + slope.z*slope.direction.z);
