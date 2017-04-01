@@ -20,7 +20,7 @@
 #include "Shader.hpp"
 #include "Mesh.hpp"
 
-#include <noise/noise.h>
+#include "TerrainHeight.hpp"
 
 class Terrain : public Mesh
 {
@@ -76,5 +76,5 @@ class Terrain : public Mesh
         const uint16_t X_CELLS;
         const uint16_t Z_CELLS;
 
-        noise::module::Perlin perlinNoise;
+        TerrainHeight *elevation;
 };

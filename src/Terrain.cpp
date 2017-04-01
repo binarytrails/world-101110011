@@ -20,6 +20,7 @@ Terrain::~Terrain()
     glDeleteBuffers(1, &this->vboId);
 
     delete this->shader;
+    delete this->elevation;
 }
 
 GLenum Terrain::getRenderMode() const
@@ -78,27 +79,15 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
-float Terrain::getElevation(const float x, const float z)
-{
-    float y = this->perlinNoise.GetValue(x / 3, 0.0f, z / 3);
-
-    /*
-    // octaves
-    y = 1    * this->perlinNoise.GetValue(1 * x, 0, 1 * z) +
-        0.5  * this->perlinNoise.GetValue(2 * x, 0, 2 * z) +
-        0.25 * this->perlinNoise.GetValue(4 * x, 0, 4 * z);
-    */
-
-    return y;
-}
-
 void Terrain::build()
 {
+    this->elevation = new TerrainHeight();
+
     //this->genPlaneVertices();
     //this->genPlaneVerticesRecursive(0, 0);
 
-    this->genTerrainVertices();
-    //this->genTerrainVerticesRecursive(0, 0); // FIXME
+    //this->genTerrainVertices();
+    this->genTerrainVerticesRecursive(0, 0);
 
     this->genVerticesI();
 }
@@ -111,14 +100,13 @@ void Terrain::genTerrainVertices()
         {
             GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
             GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
-            GLfloat ny = (GLfloat) this->getElevation(nx, nz);
-            //printf("for (%i, %i) push (%f, %f, %f)\n", x, z, nx, ny, nz);
+            GLfloat ny = (GLfloat) this->elevation->get(nx, nz);
+
             this->vertices.push_back(glm::vec3(nx, ny, nz));
         }
     }
 }
 
-// FIXME it seems that libnoise doesn't behave well with recursion
 void Terrain::genTerrainVerticesRecursive(uint16_t x, uint16_t z)
 {
     if (x == this->X_CELLS && z == this->Z_CELLS)
@@ -129,18 +117,19 @@ void Terrain::genTerrainVerticesRecursive(uint16_t x, uint16_t z)
     {
         if (z < this->Z_CELLS)
         {
-            // add
             GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
             GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
-            GLfloat ny = (GLfloat) this->getElevation(nx, nz);
+            GLfloat ny = (GLfloat) this->elevation->get(nx, nz);
+
             this->vertices.push_back(glm::vec3(nx, ny, nz));
+            printf("for (%i, %i) push (%f, %f, %f)\n", x, z, nx, ny, nz);
 
             // recur
-            genPlaneVerticesRecursive(x, z + 1);
+            genTerrainVerticesRecursive(x, z + 1);
         }
         else
         {
-            genPlaneVerticesRecursive(x + 1, 0);
+            genTerrainVerticesRecursive(x + 1, 0);
         }
     }
 }
@@ -153,6 +142,7 @@ void Terrain::genPlaneVertices()
         {
             GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
             GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
+
             this->vertices.push_back(glm::vec3(nx, 0.0f, nz));
         }
     }
@@ -169,11 +159,10 @@ void Terrain::genPlaneVerticesRecursive(uint16_t x, uint16_t z)
     {
         if (z < this->Z_CELLS)
         {
-            // add
-            glm::vec3 nv((float) x / this->X_CELLS * 2 - 1,
-                         0,
-                         (float) z / this->Z_CELLS * 2 - 1);
-            this->vertices.push_back(nv);
+            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
+            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
+            this->vertices.push_back(glm::vec3(nx, 0.0f, nz));
+
             // recur
             //printf("column recur %i, %i\n", x, z);
             genPlaneVerticesRecursive(x, z + 1);
