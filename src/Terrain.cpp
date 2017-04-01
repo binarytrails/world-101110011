@@ -43,9 +43,9 @@ void Terrain::onCameraChange(const Camera* camera)
 }
 
 void Terrain::render(const Window* window,
-            const Camera* camera,
-            const glm::mat4 view,
-            const glm::mat4 projection)
+                     const Camera* camera,
+                     const glm::mat4 view,
+                     const glm::mat4 projection)
 {
     this->shader->use();
 
@@ -104,16 +104,16 @@ void Terrain::build()
 
 void Terrain::buildPlaneGrid()
 {
-    for (GLfloat x = 0; x < this->X_CELLS; x++)
+    for (uint16_t x = 0; x < this->X_CELLS; x++)
     {
-        for (GLfloat z = 0; z < this->Z_CELLS; z++)
+        for (uint16_t z = 0; z < this->Z_CELLS; z++)
         {
-            GLfloat nx = x / this->X_CELLS - 0.5;
-            GLfloat nz = z / this->Z_CELLS - 0.5;
+            GLfloat nx = ((float) x / this->X_CELLS) - 0.5f;
+            GLfloat nz = ((float) z / this->Z_CELLS) - 0.5f;
 
             GLfloat ny = (GLfloat) this->getElevation(nx, nz);
 
-            printf("push (%f, %f, %f)\n", nx, ny, nz);
+            printf("for (%i, %i) push (%f, %f, %f)\n", x, z, nx, ny, nz);
             this->vertices.push_back(glm::vec3(nx, ny, nz));
         }
     }
@@ -144,10 +144,15 @@ void Terrain::buildPlaneGridIndices()
 {
     if (this->getRenderMode() == GL_TRIANGLES)
     {
-        for (uint8_t x = 0; x < this->X_CELLS - 1; x++)
+        for (uint16_t x = 0; x < this->X_CELLS - 1; x++)
         {
-            for (uint8_t z = 0; z < this->Z_CELLS - 1; z++)
+            for (uint16_t z = 0; z < this->Z_CELLS - 1; z++)
             {
+                /*
+                printf("%li : %li", this->verticesI.size(),
+                        this->verticesI.max_size());
+                */
+
                 uint16_t p1 = z + this->X_CELLS * x;
                 uint16_t p2 = z + this->X_CELLS * (x + 1);
 
@@ -164,9 +169,9 @@ void Terrain::buildPlaneGridIndices()
     }
     else if (this->getRenderMode() == GL_LINES)
     {
-        for (uint8_t x = 0; x < this->X_CELLS - 1; x++)
+        for (uint16_t x = 0; x < this->X_CELLS - 1; x++)
         {
-            for (uint8_t z = 0; z < this->Z_CELLS - 1; z++)
+            for (uint16_t z = 0; z < this->Z_CELLS - 1; z++)
             {
                 uint16_t p1 = z + this->X_CELLS * x;
                 uint16_t p2 = z + this->X_CELLS * (x + 1);
@@ -186,9 +191,9 @@ void Terrain::buildPlaneGridIndices()
     }
     else if (this->getRenderMode() == GL_POINTS)
     {
-        for (uint8_t x = 0; x < this->X_CELLS; x++)
+        for (uint16_t x = 0; x < this->X_CELLS; x++)
         {
-            for (uint8_t z = 0; z < this->Z_CELLS; z++)
+            for (uint16_t z = 0; z < this->Z_CELLS; z++)
             {
                 uint16_t p1 = z + this->X_CELLS * x;
                 this->verticesI.push_back(p1);

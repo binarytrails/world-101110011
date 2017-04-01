@@ -23,7 +23,7 @@
 class World
 {
     public:
-        World(const uint16_t width, const uint8_t height);
+        World(const uint16_t width, const uint16_t height);
         ~World();
 
         void setRenderMode(const GLenum mode);

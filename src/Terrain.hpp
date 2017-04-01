@@ -67,7 +67,7 @@ class Terrain : public Mesh
         glm::mat4 view;
 
         std::vector<glm::vec3> vertices;
-        std::vector<uint16_t> verticesI;
+        std::vector<GLushort> verticesI;
 
         const uint16_t X_CELLS;
         const uint16_t Z_CELLS;
