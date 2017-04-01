@@ -47,10 +47,14 @@ class Terrain : public Mesh
         float getElevation(const float x, const float z);
 
         void build();
-        void buildPlaneGrid();
-        void buildPlaneGridRecursive(glm::vec3 v, const bool onetime);
-        void buildPlaneGridIndices();
-        //TODO void buildPlaneGridIndicesRecursive();
+
+        void genPlaneVertices();
+        void genPlaneVerticesRecursive(uint16_t x, uint16_t z);
+
+        void genTerrainVertices();
+        void genTerrainVerticesRecursive(uint16_t x, uint16_t z);
+
+        void genVerticesI();
 
         void upload();
         void updateMVP(const glm::mat4 view, const glm::mat4 projection);

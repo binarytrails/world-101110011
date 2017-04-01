@@ -36,8 +36,8 @@ void Terrain::onCameraChange(const Camera* camera)
 {
     if (camera->view() != this->view)
     {
-        printf("camera moved\n");
-        camera->printView();
+        //printf("camera moved\n");
+        //camera->printView();
     }
     view = camera->view();
 }
@@ -94,53 +94,99 @@ float Terrain::getElevation(const float x, const float z)
 
 void Terrain::build()
 {
-    this->buildPlaneGrid();
+    //this->genPlaneVertices();
+    //this->genPlaneVerticesRecursive(0, 0);
 
-    // TODO apply getElevation
-    //this->buildPlaneGridRecursive(glm::vec3(-1.0f, 0.5, -1.0f), false);
+    this->genTerrainVertices();
+    //this->genTerrainVerticesRecursive(0, 0); // FIXME
 
-    this->buildPlaneGridIndices();
+    this->genVerticesI();
 }
 
-void Terrain::buildPlaneGrid()
+void Terrain::genTerrainVertices()
 {
     for (uint16_t x = 0; x < this->X_CELLS; x++)
     {
         for (uint16_t z = 0; z < this->Z_CELLS; z++)
         {
-            GLfloat nx = ((float) x / this->X_CELLS) - 0.5f;
-            GLfloat nz = ((float) z / this->Z_CELLS) - 0.5f;
-
+            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
+            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
             GLfloat ny = (GLfloat) this->getElevation(nx, nz);
-
-            printf("for (%i, %i) push (%f, %f, %f)\n", x, z, nx, ny, nz);
+            //printf("for (%i, %i) push (%f, %f, %f)\n", x, z, nx, ny, nz);
             this->vertices.push_back(glm::vec3(nx, ny, nz));
         }
     }
 }
 
-void Terrain::buildPlaneGridRecursive(glm::vec3 v, const bool onetime)
+// FIXME it seems that libnoise doesn't behave well with recursion
+void Terrain::genTerrainVerticesRecursive(uint16_t x, uint16_t z)
 {
-    if (v.x > 1.0f || v.z > 1.0f)
+    if (x == this->X_CELLS && z == this->Z_CELLS)
+    {
         return;
+    }
     else
     {
-        //printf("push (%f, %f, %f)\n", v.x, v.y, v.z);
-        this->vertices.push_back(v);
+        if (z < this->Z_CELLS)
+        {
+            // add
+            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
+            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
+            GLfloat ny = (GLfloat) this->getElevation(nx, nz);
+            this->vertices.push_back(glm::vec3(nx, ny, nz));
 
-        v.z += (1.0f / (this->Z_CELLS / 2.0f));
-        buildPlaneGridRecursive(v, onetime);
-
-        // v.z coming back in reverse from -1.0f -> 1.0f
-        v.x = v.z * -1.0f;
-        v.z = -1.0f;
-
-        if (!onetime)
-            buildPlaneGridRecursive(v, true);
+            // recur
+            genPlaneVerticesRecursive(x, z + 1);
+        }
+        else
+        {
+            genPlaneVerticesRecursive(x + 1, 0);
+        }
     }
 }
 
-void Terrain::buildPlaneGridIndices()
+void Terrain::genPlaneVertices()
+{
+    for (uint16_t x = 0; x < this->X_CELLS; x++)
+    {
+        for (uint16_t z = 0; z < this->Z_CELLS; z++)
+        {
+            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
+            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
+            this->vertices.push_back(glm::vec3(nx, 0.0f, nz));
+        }
+    }
+}
+
+void Terrain::genPlaneVerticesRecursive(uint16_t x, uint16_t z)
+{
+    if (x == this->X_CELLS && z == this->Z_CELLS)
+    {
+        //printf("return %i, %i\n", x, z);
+        return;
+    }
+    else
+    {
+        if (z < this->Z_CELLS)
+        {
+            // add
+            glm::vec3 nv((float) x / this->X_CELLS * 2 - 1,
+                         0,
+                         (float) z / this->Z_CELLS * 2 - 1);
+            this->vertices.push_back(nv);
+            // recur
+            //printf("column recur %i, %i\n", x, z);
+            genPlaneVerticesRecursive(x, z + 1);
+        }
+        else
+        {
+            //printf("row recur %i, %i\n", x + 1, 0);
+            genPlaneVerticesRecursive(x + 1, 0);
+        }
+    }
+}
+
+void Terrain::genVerticesI()
 {
     if (this->getRenderMode() == GL_TRIANGLES)
     {
@@ -148,11 +194,6 @@ void Terrain::buildPlaneGridIndices()
         {
             for (uint16_t z = 0; z < this->Z_CELLS - 1; z++)
             {
-                /*
-                printf("%li : %li", this->verticesI.size(),
-                        this->verticesI.max_size());
-                */
-
                 uint16_t p1 = z + this->X_CELLS * x;
                 uint16_t p2 = z + this->X_CELLS * (x + 1);
 
