@@ -1,9 +1,20 @@
 #ifndef GLOBJECT_H
 #define GLOBJECT_H
 
-#include <GLFW/glfw3.h>
-#include <vector>
+// GLEW
+#define GLEW_STATIC
+#include <GL/glew.h>
 
+// GLFW
+#include <GLFW/glfw3.h>
+
+// GLM Mathematics
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <complex.h>
+
+#include <vector>
 #include "Point.h"
 
 class GLObject {
@@ -15,6 +26,8 @@ public:
     int iSize;
     int iMax = 0;
     Point offset = Point(0,0,0);
+    GLuint VBO, instanceVBO, VAO, EBO;
+    int instanceCount = -1;
     
     GLObject() : vSize(0), iSize(0) {};
     GLObject(int vSize, int iSize) : vSize(vSize), iSize(iSize) {};
@@ -31,6 +44,7 @@ public:
     float sizeMax[3] = {0, 0, 0};
     
     GLObject add(GLObject* other);
+    void draw(glm::vec3* translations, int count);
     
     virtual ~GLObject();
 protected:
