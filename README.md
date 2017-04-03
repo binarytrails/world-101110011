@@ -22,10 +22,11 @@ Group project with OpenGL in C++.
     - Merging parts
     
 - Tarik
-    - Skybox
-    - AABB testing.
-    - (Lighting, maybe?)
-    - (Generating a planet terrain?)
+    - Add Skybox with a day/night cycle.
+    - Add Eric's particle effects alongside Skybox
+    - Add Terrain collision detection
+    - Add object collision detection
+    - (Optional) Add mini HUD
 
 - Eric
     - Particles
