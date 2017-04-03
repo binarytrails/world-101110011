@@ -1,7 +1,9 @@
 #include "Shadow.hpp"
 #include "/glm/glm.hpp"
 
-bool Shadow::Intersect(glm::vec3 light, glm::vec3 point, Point slope, glm::vec3 &intersect){
+
+
+bool Shadow::intersect(glm::vec3 light, glm::vec3 point, Point slope, glm::vec3 &intersect){
 	
 
 	
