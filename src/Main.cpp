@@ -10,8 +10,8 @@
 
 int main(int argc, char *argv[])
 {
-    uint16_t w = 256;
-    uint16_t h = 256;
+    uint16_t w = 50;
+    uint16_t h = 50;
 
     printf("Generating a world %ix%i..\n", w, h);
     World *world = new World(w, h);
