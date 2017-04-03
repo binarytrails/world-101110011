@@ -20,6 +20,7 @@ Terrain::~Terrain()
     glDeleteBuffers(1, &this->vboId);
 
     delete this->shader;
+    delete this->elevation;
 }
 
 GLenum Terrain::getRenderMode() const
@@ -32,12 +33,24 @@ void Terrain::setRenderMode(const GLenum renderMode)
     this->renderMode = renderMode;
 }
 
+void Terrain::onCameraChange(const Camera* camera)
+{
+    if (camera->view() != this->view)
+    {
+        //printf("camera moved\n");
+        //camera->printView();
+    }
+    view = camera->view();
+}
+
 void Terrain::render(const Window* window,
-            const Camera* camera,
-            const glm::mat4 view,
-            const glm::mat4 projection)
+                     const Camera* camera,
+                     const glm::mat4 view,
+                     const glm::mat4 projection)
 {
     this->shader->use();
+
+    this->onCameraChange(camera);
 
     this->upload();
 
@@ -68,49 +81,107 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 
 void Terrain::build()
 {
-    this->buildPlaneGridRecursive(glm::vec3(-1.0f, 0.5, -1.0f), false);
-    this->buildPlaneGridIndices();
+    this->elevation = new TerrainHeight();
+
+    //this->genPlaneVertices();
+    //this->genPlaneVerticesRecursive(0, 0);
+
+    //this->genTerrainVertices();
+    this->genTerrainVerticesRecursive(0, 0);
+
+    this->genVerticesI();
 }
 
-void Terrain::buildPlaneGrid()
+void Terrain::genTerrainVertices()
 {
-    for (GLfloat x = -1.0f; x <= 1.0f; x += (1.0f / (this->X_CELLS / 2)))
+    for (uint16_t x = 0; x < this->X_CELLS; x++)
     {
-        for (GLfloat z = -1.0f; z <= 1.0f; z += (1.0f / (this->Z_CELLS / 2)))
+        for (uint16_t z = 0; z < this->Z_CELLS; z++)
         {
-            this->vertices.push_back(glm::vec3(x, 0.5f, z));
+            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
+            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
+            GLfloat ny = (GLfloat) this->elevation->get(nx, nz);
+
+            this->vertices.push_back(glm::vec3(nx, ny, nz));
         }
     }
 }
 
-void Terrain::buildPlaneGridRecursive(glm::vec3 v, const bool onetime)
+void Terrain::genTerrainVerticesRecursive(uint16_t x, uint16_t z)
 {
-    if (v.x > 1.0f || v.z > 1.0f)
+    if (x == this->X_CELLS && z == this->Z_CELLS)
+    {
         return;
+    }
     else
     {
-        //printf("push (%f, %f, %f)\n", v.x, v.y, v.z);
-        this->vertices.push_back(v);
+        if (z < this->Z_CELLS)
+        {
+            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
+            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
+            GLfloat ny = (GLfloat) this->elevation->get(nx, nz);
 
-        v.z += (1.0f / (this->Z_CELLS / 2.0f));
-        buildPlaneGridRecursive(v, onetime);
+            this->vertices.push_back(glm::vec3(nx, ny, nz));
+            printf("for (%i, %i) push (%f, %f, %f)\n", x, z, nx, ny, nz);
 
-        // v.z coming back in reverse from -1.0f -> 1.0f
-        v.x = v.z * -1.0f;
-        v.z = -1.0f;
-
-        if (!onetime)
-            buildPlaneGridRecursive(v, true);
+            // recur
+            genTerrainVerticesRecursive(x, z + 1);
+        }
+        else
+        {
+            genTerrainVerticesRecursive(x + 1, 0);
+        }
     }
 }
 
-void Terrain::buildPlaneGridIndices()
+void Terrain::genPlaneVertices()
+{
+    for (uint16_t x = 0; x < this->X_CELLS; x++)
+    {
+        for (uint16_t z = 0; z < this->Z_CELLS; z++)
+        {
+            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
+            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
+
+            this->vertices.push_back(glm::vec3(nx, 0.0f, nz));
+        }
+    }
+}
+
+void Terrain::genPlaneVerticesRecursive(uint16_t x, uint16_t z)
+{
+    if (x == this->X_CELLS && z == this->Z_CELLS)
+    {
+        //printf("return %i, %i\n", x, z);
+        return;
+    }
+    else
+    {
+        if (z < this->Z_CELLS)
+        {
+            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
+            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
+            this->vertices.push_back(glm::vec3(nx, 0.0f, nz));
+
+            // recur
+            //printf("column recur %i, %i\n", x, z);
+            genPlaneVerticesRecursive(x, z + 1);
+        }
+        else
+        {
+            //printf("row recur %i, %i\n", x + 1, 0);
+            genPlaneVerticesRecursive(x + 1, 0);
+        }
+    }
+}
+
+void Terrain::genVerticesI()
 {
     if (this->getRenderMode() == GL_TRIANGLES)
     {
-        for (uint8_t x = 0; x < this->X_CELLS - 1; x++)
+        for (uint16_t x = 0; x < this->X_CELLS - 1; x++)
         {
-            for (uint8_t z = 0; z < this->Z_CELLS - 1; z++)
+            for (uint16_t z = 0; z < this->Z_CELLS - 1; z++)
             {
                 uint16_t p1 = z + this->X_CELLS * x;
                 uint16_t p2 = z + this->X_CELLS * (x + 1);
@@ -128,9 +199,9 @@ void Terrain::buildPlaneGridIndices()
     }
     else if (this->getRenderMode() == GL_LINES)
     {
-        for (uint8_t x = 0; x < this->X_CELLS - 1; x++)
+        for (uint16_t x = 0; x < this->X_CELLS - 1; x++)
         {
-            for (uint8_t z = 0; z < this->Z_CELLS - 1; z++)
+            for (uint16_t z = 0; z < this->Z_CELLS - 1; z++)
             {
                 uint16_t p1 = z + this->X_CELLS * x;
                 uint16_t p2 = z + this->X_CELLS * (x + 1);
@@ -150,9 +221,9 @@ void Terrain::buildPlaneGridIndices()
     }
     else if (this->getRenderMode() == GL_POINTS)
     {
-        for (uint8_t x = 0; x < this->X_CELLS; x++)
+        for (uint16_t x = 0; x < this->X_CELLS; x++)
         {
-            for (uint8_t z = 0; z < this->Z_CELLS; z++)
+            for (uint16_t z = 0; z < this->Z_CELLS; z++)
             {
                 uint16_t p1 = z + this->X_CELLS * x;
                 this->verticesI.push_back(p1);

@@ -4,14 +4,16 @@
 */
 
 #include <stdio.h>
+#include <sstream>
 
 #include "World.hpp"
 
-int main()
+int main(int argc, char *argv[])
 {
-    const uint8_t w = 200;
-    const uint8_t h = 200;
+    uint16_t w = 256;
+    uint16_t h = 256;
 
+    printf("Generating a world %ix%i..\n", w, h);
     World *world = new World(w, h);
 
     world->draw();

@@ -16,7 +16,9 @@ Group project with OpenGL in C++.
     - ~~Floating Camera controls~~
     - Procedurally generated terrain
         - ~~Grid~~
-        - Perlin Noise
+        - ~~Terrain height generation~~
+        - Infinite in every direction
+        - User motions
     - Merging parts
     
 - Tarik
