@@ -17,7 +17,18 @@ class TerrainHeight
         float get(const float x, const float z);
 
     private:
-        float randFloat(const unsigned int upperBound);
+        // smooth noise
+        float snoise(float x, float z);
+        // sharp noise
+        float noise(const float x, const float z);
 
-        int seed;
+        // interpolation to get float values
+        float inoise(float x, float z);
+        float icurve(float a, float c, float b);
+
+        // random float
+        float randf(const unsigned int upperBound);
+
+        int   SEED;
+        float AMPLITUDE;
 };
