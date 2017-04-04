@@ -5,7 +5,7 @@
 
 #include "World.hpp"
 
-World::World(const uint16_t width, const uint8_t height):
+World::World(const uint16_t width, const uint16_t height):
     TERRAIN_WIDTH(width), TERRAIN_HEIGHT(height),
     window(new Window(1280, 720, "Procedural world")),
     camera(new Camera()),
@@ -86,7 +86,6 @@ void World::updateMVP()
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(this->model));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(this->view));
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(this->projection));
-
 }
 
 void World::build()

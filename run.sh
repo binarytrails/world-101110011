@@ -1,1 +1,1 @@
-build/./world.out
+build/./world.out $@

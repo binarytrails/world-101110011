@@ -49,3 +49,16 @@ void Camera::moveLeft()
 {
     this->eye += glm::normalize(glm::cross(this->at, this->up)) * this->speed;
 }
+
+void Camera::printView() const
+{
+    const float *pSource = (const float*) glm::value_ptr(this->view());
+    printf("+-----------------------------------------+\n");
+    for (int i = 0; i < 16; i++)
+    {
+        printf("%f ", pSource[i]);
+        if (i % 4 == 0)
+            printf("\n");
+    }
+    printf("\n+-----------------------------------------+\n");
+}

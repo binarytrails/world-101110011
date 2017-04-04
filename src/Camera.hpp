@@ -5,10 +5,13 @@
 
 #pragma once
 
+#include <stdio.h>
+
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class Camera
 {
@@ -25,6 +28,8 @@ class Camera
 
         void moveForward();
         void moveBackward();
+
+        void printView() const;
 
     private:
         glm::vec3 eye;

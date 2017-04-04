@@ -20,6 +20,8 @@
 #include "Shader.hpp"
 #include "Mesh.hpp"
 
+#include "TerrainHeight.hpp"
+
 class Terrain : public Mesh
 {
     public:
@@ -40,11 +42,19 @@ class Terrain : public Mesh
     private:
         void initBuffers();
 
+        void onCameraChange(const Camera* camera);
+
+        float getElevation(const float x, const float z);
+
         void build();
-        void buildPlaneGrid();
-        void buildPlaneGridRecursive(glm::vec3 v, const bool onetime);
-        void buildPlaneGridIndices();
-        //TODO void buildPlaneGridIndicesRecursive();
+
+        void genPlaneVertices();
+        void genPlaneVerticesRecursive(uint16_t x, uint16_t z);
+
+        void genTerrainVertices();
+        void genTerrainVerticesRecursive(uint16_t x, uint16_t z);
+
+        void genVerticesI();
 
         void upload();
         void updateMVP(const glm::mat4 view, const glm::mat4 projection);
@@ -57,12 +67,14 @@ class Terrain : public Mesh
                eboId;
 
         GLenum renderMode;
-
         glm::mat4 model;
+        glm::mat4 view;
 
         std::vector<glm::vec3> vertices;
-        std::vector<uint16_t> verticesI;
+        std::vector<GLushort> verticesI;
 
         const uint16_t X_CELLS;
         const uint16_t Z_CELLS;
+
+        TerrainHeight *elevation;
 };

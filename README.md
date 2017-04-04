@@ -16,14 +16,17 @@ Group project with OpenGL in C++.
     - ~~Floating Camera controls~~
     - Procedurally generated terrain
         - ~~Grid~~
-        - Perlin Noise
+        - ~~Terrain height generation~~
+        - Infinite in every direction
+        - User motions
     - Merging parts
     
 - Tarik
-    - Skybox
-    - AABB testing.
-    - (Lighting, maybe?)
-    - (Generating a planet terrain?)
+    - Add Skybox with a day/night cycle.
+    - Add Eric's particle effects alongside Skybox
+    - Add Terrain collision detection
+    - Add object collision detection
+    - (Optional) Add mini HUD
 
 - Eric
     - Particles
