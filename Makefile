@@ -32,7 +32,7 @@ linux: all
 		${INCLUDES} ${CXX_FILES} ${BIN}
 
 mac: all
-	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} \
+	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} ${EXTRA_LIBS} \
 		${INCLUDES} ${CXX_FILES} ${BIN}
 
 clean:

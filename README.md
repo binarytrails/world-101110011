@@ -27,6 +27,7 @@ Group project with OpenGL in C++.
     - Add Terrain collision detection
     - Add object collision detection
     - (Optional) Add mini HUD
+    - (Optional) Add fog 
 
 - Eric
     - Particles
