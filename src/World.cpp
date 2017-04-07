@@ -67,7 +67,10 @@ void World::setWindowCallbacks()
 void World::updateMVP()
 {
     // update states
-    this->view = this->camera->view();
+    this->view = glm::translate(this->camera->view(),
+                                glm::vec3(0, 0, -2));
+    // continuous rotation
+    this->rotate(glm::vec3(0, 0, 0));
 
     this->projection = glm::perspective(
         45.0f,
@@ -95,9 +98,12 @@ void World::draw()
 {
     this->build();
 
-    this->setRenderMode(GL_POINTS);
+    this->setRenderMode(GL_LINES);
 
+    // setup camera TODO clean way
+    this->rotate(glm::vec3(10, 0, 0));
     this->camera->moveUp();
+
     this->updateMVP();
 
     while (!glfwWindowShouldClose(this->window->get()))

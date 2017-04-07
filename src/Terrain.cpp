@@ -98,9 +98,15 @@ void Terrain::genTerrainVertices()
     {
         for (GLfloat z = 0; z < this->Z_CELLS; z+=1)
         {
+            // don't normalize before
             GLfloat y = this->elevation->get(x, z);
-            printf("terrain : push : (%f, %f, %f)\n", x, y, z);
-            this->vertices.push_back(glm::vec3(x, y, z));
+
+            glm::vec3 nv = glm::vec3(x / this->X_CELLS * 2 - 1,
+                                     y / this->Y_CELLS * 2 - 1,
+                                     z / this->Z_CELLS * 2 - 1);
+
+            printf("terrain : push : (%f, %f, %f)\n", nv.x, nv.y, nv.z);
+            this->vertices.push_back(nv);
         }
     }
 }
