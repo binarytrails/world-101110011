@@ -116,6 +116,8 @@ void World::draw()
 
         // swap the screen buffers
         glfwSwapBuffers(this->window->get());
+
+        this->camera->printView();
     }
 }
 
