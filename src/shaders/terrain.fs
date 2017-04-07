@@ -10,6 +10,6 @@ out vec4 color;
 
 void main()
 {
-    vec3 c1 = vec3(abs(pos.x), abs(pos.y), abs(pos.z));
-    color = vec4(c1, 1.0f);
+    vec3 white = vec3(255, 255, 255);
+    color = vec4(white, 1.0f);
 }

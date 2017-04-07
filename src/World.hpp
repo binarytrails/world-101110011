@@ -96,8 +96,8 @@ static void keyCallback(GLFWwindow* w, int key, int scancode, int action, int mo
     if (key == GLFW_KEY_UP)     cbcPtr->world->rotate(glm::vec3(1, 0, 0));
     if (key == GLFW_KEY_DOWN)   cbcPtr->world->rotate(glm::vec3(-1, 0, 0));
 
-    if (key == GLFW_KEY_W) cbcPtr->camera->moveDown();
-    if (key == GLFW_KEY_S) cbcPtr->camera->moveUp();
+    if (key == GLFW_KEY_W) cbcPtr->camera->moveUp();
+    if (key == GLFW_KEY_S) cbcPtr->camera->moveDown();
     if (key == GLFW_KEY_A) cbcPtr->camera->moveLeft();
     if (key == GLFW_KEY_D) cbcPtr->camera->moveRight();
 
