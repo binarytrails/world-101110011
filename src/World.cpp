@@ -44,9 +44,10 @@ void World::setRenderMode(const GLenum mode)
 
 void World::setWindowContext()
 {
-    callbackContext.window = this->window;
-    callbackContext.camera = this->camera;
-    callbackContext.world = this;
+    callbackContext.window  = this->window;
+    callbackContext.camera  = this->camera;
+    callbackContext.world   = this;
+    callbackContext.terrain = this->terrain;
 
     glfwSetWindowUserPointer(this->window->get(), &callbackContext);
 }

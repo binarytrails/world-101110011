@@ -39,10 +39,10 @@ class Terrain : public Mesh
 
         void rotate(const glm::vec3 spin);
 
+        void advance(const glm::ivec3 ds);
+
     private:
         void initBuffers();
-
-        void onCameraChange(const Camera* camera);
 
         float getElevation(const float x, const float z);
 
