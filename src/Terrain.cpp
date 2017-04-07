@@ -84,10 +84,10 @@ void Terrain::build()
     this->elevation = new TerrainHeight();
 
     //this->genPlaneVertices();
-    //this->genPlaneVerticesRecursive(0, 0);
+    this->genPlaneVerticesRecursive(0, 0);
 
     //this->genTerrainVertices();
-    this->genTerrainVerticesRecursive(0, 0);
+    //this->genTerrainVerticesRecursive(0, 0);
 
     this->genVerticesI();
 }
