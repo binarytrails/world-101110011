@@ -86,10 +86,8 @@ void Terrain::advance(const glm::ivec3 ds)
     /* TODO implement
      *
      */
-    printf("Terrain->vertices size=%i\n", this->vertices.size());
     std::vector<glm::vec3> vx = this->vertices;
 
-/*
     this->vertices.clear();
     this->verticesI.clear();
 
@@ -100,10 +98,12 @@ void Terrain::advance(const glm::ivec3 ds)
     );
     this->genVerticesI();
 
-*/
+    this->upload();
+
     printf("Terrain : advance(%i, %i, %i)\n", ds.x, ds.y, ds.z);
 }
 
+// Note: takes only positive range
 void Terrain::genTerrainVertices(
     uint16_t x, uint16_t z, uint16_t max_x, uint16_t max_z)
 {
@@ -135,6 +135,8 @@ void Terrain::genTerrainVerticesRecursive(
     {
         if (z < max_z)
         {
+            printf("terrain : elevation->get(%i, %i)\n", x, z);
+            // don't normalize before
             GLfloat y = this->elevation->get(x, z);
 
             glm::vec3 nv = glm::vec3((GLfloat) x / max_x         * 2 - 1,

@@ -66,7 +66,8 @@ class World
 
 struct CallbackContext
 {
-    World   *world;
+    World *world;
+    uint16_t steps;
 };
 
 static CallbackContext* getWindowContext(GLFWwindow* w)
@@ -118,23 +119,35 @@ static void mouseKeyCallback(GLFWwindow* w, int key, int action, int mode)
 
 static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
 {
-    // TODO count them consider starting at 0?
-    uint16_t step = 100;
+    uint16_t step = 0;
+    const uint16_t step_size = 1;
     
     CallbackContext* cbcPtr = getWindowContext(w);
     Terrain* terrain = cbcPtr->world->getTerrain();
 
-    // TODO detect and generate in this direction
+    /* TODO
+     *      1. detect direction
+     *      2. if going on positive x or z axis then
+     *              advance terrain in this direction
+     *
+     * Note: To see terrain progressive rebuild;
+     *       its noise intput should be:
+     *          TODO
+     */
 
     if (yoffset > 0)
     {
-        terrain->advance(glm::ivec3(step, 0, 0));
+        cbcPtr->steps++;
+        step = cbcPtr->steps * step_size;
+        terrain->advance(glm::ivec3(step, 0, step));
 
         //cbcPtr->camera->moveForward();
     }
     else if (yoffset < 0)
     {
-        terrain->advance(glm::ivec3(step * -1, 0, 0));
+        cbcPtr->steps--;
+        step = cbcPtr->steps * step_size * -1;
+        terrain->advance(glm::ivec3(step, 0, step));
 
         //cbcPtr->camera->moveBackward();
     }
