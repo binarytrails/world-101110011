@@ -65,6 +65,7 @@ struct CallbackContext
     Window  *window;
     Camera  *camera;
     World   *world;
+    Terrain *terrain;
 };
 
 static CallbackContext* getWindowContext(GLFWwindow* w)
@@ -101,6 +102,9 @@ static void keyCallback(GLFWwindow* w, int key, int scancode, int action, int mo
     if (key == GLFW_KEY_A) cbcPtr->camera->moveLeft();
     if (key == GLFW_KEY_D) cbcPtr->camera->moveRight();
 
+    if (key == GLFW_KEY_I) cbcPtr->camera->moveForward();
+    if (key == GLFW_KEY_O) cbcPtr->camera->moveBackward();
+
     if (key == GLFW_KEY_T) cbcPtr->world->setRenderMode(GL_TRIANGLES);
     if (key == GLFW_KEY_L) cbcPtr->world->setRenderMode(GL_LINES);
     if (key == GLFW_KEY_P) cbcPtr->world->setRenderMode(GL_POINTS);
@@ -115,7 +119,19 @@ static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
 {
     CallbackContext* cbcPtr = getWindowContext(w);
 
-    if (yoffset > 0)        cbcPtr->camera->moveForward();
-    else if (yoffset < 0)   cbcPtr->camera->moveBackward();
+    // TODO detect and generate in this direction
+
+    if (yoffset > 0)
+    {
+        cbcPtr->terrain->advance(glm::ivec3(1, 0, 0));
+
+        //cbcPtr->camera->moveForward();
+    }
+    else if (yoffset < 0)
+    {
+        cbcPtr->terrain->advance(glm::ivec3(-1, 0, 0));
+
+        //cbcPtr->camera->moveBackward();
+    }
 }
 

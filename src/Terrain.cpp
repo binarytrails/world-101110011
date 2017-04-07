@@ -33,24 +33,12 @@ void Terrain::setRenderMode(const GLenum renderMode)
     this->renderMode = renderMode;
 }
 
-void Terrain::onCameraChange(const Camera* camera)
-{
-    if (camera->view() != this->view)
-    {
-        //printf("camera moved\n");
-        //camera->printView();
-    }
-    view = camera->view();
-}
-
 void Terrain::render(const Window* window,
                      const Camera* camera,
                      const glm::mat4 view,
                      const glm::mat4 projection)
 {
     this->shader->use();
-
-    this->onCameraChange(camera);
 
     this->upload();
 
@@ -84,52 +72,71 @@ void Terrain::build()
     this->elevation = new TerrainHeight();
 
     //this->genPlaneVertices();
-    this->genPlaneVerticesRecursive(0, 0);
+    //this->genPlaneVerticesRecursive(0, 0);
 
-    //this->genTerrainVertices();
-    //this->genTerrainVerticesRecursive(0, 0);
+    //this->genTerrainVertices(0, 0, this->X_CELLS, this->Z_CELLS);
+    this->genTerrainVerticesRecursive(0, 0, this->X_CELLS, this->Z_CELLS);
 
     this->genVerticesI();
 }
 
-void Terrain::genTerrainVertices()
+// by directions steps
+void Terrain::advance(const glm::ivec3 ds)
 {
-    for (uint16_t x = 0; x < this->X_CELLS; x++)
-    {
-        for (uint16_t z = 0; z < this->Z_CELLS; z++)
-        {
-            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
-            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
-            GLfloat ny = (GLfloat) this->elevation->get(nx, nz);
+    /* TODO implement
+     *
+     */
+    printf("Terrain : advance(%i, %i, %i)\n", ds.x, ds.y, ds.z);
+}
 
-            this->vertices.push_back(glm::vec3(nx, ny, nz));
+void Terrain::genTerrainVertices(
+    uint16_t x, uint16_t z, uint16_t max_x, uint16_t max_z)
+{
+    for (GLfloat x = 0; x < max_x; x+=1)
+    {
+        for (GLfloat z = 0; z < max_z; z+=1)
+        {
+            // don't normalize before
+            GLfloat y = this->elevation->get(x, z);
+
+            glm::vec3 nv = glm::vec3(x / max_x         * 2 - 1,
+                                     y / this->Y_CELLS * 2 - 1,
+                                     z / max_z         * 2 - 1);
+
+            printf("terrain : push : vertex(%f, %f, %f)\n", nv.x, nv.y, nv.z);
+            this->vertices.push_back(nv);
         }
     }
 }
 
-void Terrain::genTerrainVerticesRecursive(uint16_t x, uint16_t z)
+void Terrain::genTerrainVerticesRecursive(
+    uint16_t x, uint16_t z, uint16_t max_x, uint16_t max_z)
 {
-    if (x == this->X_CELLS && z == this->Z_CELLS)
+    if (x == max_x && z == max_z)
     {
         return;
     }
     else
     {
-        if (z < this->Z_CELLS)
+        if (z < max_z)
         {
-            GLfloat nx = (GLfloat) x / this->X_CELLS * 2 - 1;
-            GLfloat nz = (GLfloat) z / this->Z_CELLS * 2 - 1;
-            GLfloat ny = (GLfloat) this->elevation->get(nx, nz);
+            GLfloat y = this->elevation->get(x, z);
 
-            this->vertices.push_back(glm::vec3(nx, ny, nz));
-            printf("for (%i, %i) push (%f, %f, %f)\n", x, z, nx, ny, nz);
+            glm::vec3 nv = glm::vec3((GLfloat) x / max_x         * 2 - 1,
+                                     (GLfloat) y / this->Y_CELLS * 2 - 1,
+                                     (GLfloat) z / max_z         * 2 - 1);
+
+            //printf("terrain : in   : f(%i, %i, %i, %i)\n", x, z, max_x, max_z);
+            printf("terrain : push : vertex(%f, %f, %f)\n", nv.x, nv.y, nv.z);
+
+            this->vertices.push_back(nv);
 
             // recur
-            genTerrainVerticesRecursive(x, z + 1);
+            genTerrainVerticesRecursive(x, z + 1, max_x, max_z);
         }
         else
         {
-            genTerrainVerticesRecursive(x + 1, 0);
+            genTerrainVerticesRecursive(x + 1, 0, max_x, max_z);
         }
     }
 }

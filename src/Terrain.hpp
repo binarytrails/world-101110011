@@ -39,10 +39,10 @@ class Terrain : public Mesh
 
         void rotate(const glm::vec3 spin);
 
+        void advance(const glm::ivec3 ds);
+
     private:
         void initBuffers();
-
-        void onCameraChange(const Camera* camera);
 
         float getElevation(const float x, const float z);
 
@@ -51,8 +51,10 @@ class Terrain : public Mesh
         void genPlaneVertices();
         void genPlaneVerticesRecursive(uint16_t x, uint16_t z);
 
-        void genTerrainVertices();
-        void genTerrainVerticesRecursive(uint16_t x, uint16_t z);
+        void genTerrainVertices(uint16_t x,        uint16_t z,
+                                uint16_t max_x,    uint16_t max_z);
+        void genTerrainVerticesRecursive(uint16_t x,        uint16_t z,
+                                         uint16_t max_x,    uint16_t max_z);
 
         void genVerticesI();
 
@@ -74,6 +76,7 @@ class Terrain : public Mesh
         std::vector<GLushort> verticesI;
 
         const uint16_t X_CELLS;
+        const uint16_t Y_CELLS = 100;
         const uint16_t Z_CELLS;
 
         TerrainHeight *elevation;

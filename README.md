@@ -53,7 +53,10 @@ Floating Camera:
     s           move backward
     a           move left
     d           move right
-
+    
+    i           zoom in
+    o           zoom out
+    
     t           display triangles
     l           display lines
     p           display points
