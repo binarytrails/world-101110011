@@ -9,7 +9,7 @@ World::World(const uint16_t width, const uint16_t height):
     TERRAIN_WIDTH(width), TERRAIN_HEIGHT(height),
     window(new Window(1280, 720, "Procedural world")),
     camera(new Camera()),
-    renderMode(GL_TRIANGLES)
+    renderMode(GL_POINTS)
 {
     this->setWindowContext();
     this->setWindowCallbacks();
@@ -68,8 +68,7 @@ void World::setWindowCallbacks()
 void World::updateMVP()
 {
     // update states
-    this->view = glm::translate(this->camera->view(),
-                                glm::vec3(0.0f, 0.0f, -3.0f));
+    this->view = this->camera->view();
 
     this->projection = glm::perspective(
         45.0f,
@@ -96,6 +95,9 @@ void World::build()
 void World::draw()
 {
     this->build();
+
+    this->camera->moveUp();
+    this->updateMVP();
 
     while (!glfwWindowShouldClose(this->window->get()))
     {
