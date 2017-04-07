@@ -8,8 +8,7 @@
 World::World(const uint16_t width, const uint16_t height):
     TERRAIN_WIDTH(width), TERRAIN_HEIGHT(height),
     window(new Window(1280, 720, "Procedural world")),
-    camera(new Camera()),
-    renderMode(GL_POINTS)
+    camera(new Camera())
 {
     this->setWindowContext();
     this->setWindowCallbacks();
@@ -95,6 +94,8 @@ void World::build()
 void World::draw()
 {
     this->build();
+
+    this->setRenderMode(GL_POINTS);
 
     this->camera->moveUp();
     this->updateMVP();
