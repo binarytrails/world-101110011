@@ -86,9 +86,8 @@ void Terrain::build()
     //this->genPlaneVertices();
     //this->genPlaneVerticesRecursive(0, 0);
 
-    this->genTerrainVertices(0, 0, this->X_CELLS, this->Z_CELLS);
-    // FIXME
-    //this->genTerrainVerticesRecursive(0, 0, this->X_CELLS, this->Z_CELLS);
+    //this->genTerrainVertices(0, 0, this->X_CELLS, this->Z_CELLS);
+    this->genTerrainVerticesRecursive(0, 0, this->X_CELLS, this->Z_CELLS);
 
     this->genVerticesI();
 }
@@ -107,13 +106,12 @@ void Terrain::genTerrainVertices(
                                      y / this->Y_CELLS * 2 - 1,
                                      z / max_z         * 2 - 1);
 
-            printf("terrain : push : (%f, %f, %f)\n", nv.x, nv.y, nv.z);
+            printf("terrain : push : vertex(%f, %f, %f)\n", nv.x, nv.y, nv.z);
             this->vertices.push_back(nv);
         }
     }
 }
 
-// FIXME
 void Terrain::genTerrainVerticesRecursive(
     uint16_t x, uint16_t z, uint16_t max_x, uint16_t max_z)
 {
@@ -127,12 +125,12 @@ void Terrain::genTerrainVerticesRecursive(
         {
             GLfloat y = this->elevation->get(x, z);
 
-            glm::vec3 nv = glm::vec3(x / max_x         * 2 - 1,
-                                     y / this->Y_CELLS * 2 - 1,
-                                     z / max_z         * 2 - 1);
+            glm::vec3 nv = glm::vec3((GLfloat) x / max_x         * 2 - 1,
+                                     (GLfloat) y / this->Y_CELLS * 2 - 1,
+                                     (GLfloat) z / max_z         * 2 - 1);
 
-            printf("terrain : in   : f(%i, %i, %i, %i)\n", x, z, max_x, max_z);
-            printf("terrain : push :  (%f, %f, %f)\n", nv.x, nv.y, nv.z);
+            //printf("terrain : in   : f(%i, %i, %i, %i)\n", x, z, max_x, max_z);
+            printf("terrain : push : vertex(%f, %f, %f)\n", nv.x, nv.y, nv.z);
 
             this->vertices.push_back(nv);
 
