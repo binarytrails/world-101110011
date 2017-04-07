@@ -10,9 +10,6 @@ World::World(const uint16_t width, const uint16_t height):
     window(new Window(1280, 720, "Procedural world")),
     camera(new Camera())
 {
-    this->setWindowContext();
-    this->setWindowCallbacks();
-
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     glewExperimental = GL_TRUE;
@@ -25,6 +22,16 @@ World::World(const uint16_t width, const uint16_t height):
 
     this->shader = new Shader("src/shaders/world.vs",
                               "src/shaders/world.fs");
+
+    this->build();
+    this->setRenderMode(GL_LINES);
+
+    // setup camera TODO clean way
+    this->rotate(glm::vec3(10, 0, 0));
+    this->camera->moveUp();
+
+    this->updateMVP();
+
 }
 
 World::~World()
@@ -42,13 +49,24 @@ void World::setRenderMode(const GLenum mode)
     this->terrain->setRenderMode(mode);
 }
 
+Window* World::getWindow()
+{
+    return this->window;
+}
+
+Camera* World::getCamera()
+{
+    return this->camera;
+}
+
+Terrain* World::getTerrain()
+{
+    return this->terrain;
+}
+
 void World::setWindowContext()
 {
-    callbackContext.window  = this->window;
-    callbackContext.camera  = this->camera;
-    callbackContext.world   = this;
-    callbackContext.terrain = this->terrain;
-
+    callbackContext.world = this;
     glfwSetWindowUserPointer(this->window->get(), &callbackContext);
 }
 
@@ -93,20 +111,13 @@ void World::updateMVP()
 void World::build()
 {
     this->terrain = new Terrain(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
+
+    this->setWindowContext();
+    this->setWindowCallbacks();
 }
 
 void World::draw()
 {
-    this->build();
-
-    this->setRenderMode(GL_LINES);
-
-    // setup camera TODO clean way
-    this->rotate(glm::vec3(10, 0, 0));
-    this->camera->moveUp();
-
-    this->updateMVP();
-
     while (!glfwWindowShouldClose(this->window->get()))
     {
         glfwPollEvents();

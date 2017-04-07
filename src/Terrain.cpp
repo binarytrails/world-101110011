@@ -86,6 +86,21 @@ void Terrain::advance(const glm::ivec3 ds)
     /* TODO implement
      *
      */
+    printf("Terrain->vertices size=%i\n", this->vertices.size());
+    std::vector<glm::vec3> vx = this->vertices;
+
+/*
+    this->vertices.clear();
+    this->verticesI.clear();
+
+    // TODO do not regenerate entirely but only in step size
+    this->genTerrainVerticesRecursive(
+            ds.x,                 ds.z,
+            this->X_CELLS + ds.x, this->Z_CELLS + ds.z
+    );
+    this->genVerticesI();
+
+*/
     printf("Terrain : advance(%i, %i, %i)\n", ds.x, ds.y, ds.z);
 }
 
