@@ -94,9 +94,9 @@ void Terrain::build()
 
 void Terrain::genTerrainVertices()
 {
-    for (uint16_t x = 0; x < this->X_CELLS; x++)
+    for (GLfloat x = 0; x < this->X_CELLS; x+=1)
     {
-        for (uint16_t z = 0; z < this->Z_CELLS; z++)
+        for (GLfloat z = 0; z < this->Z_CELLS; z+=1)
         {
             GLfloat y = this->elevation->get(x, z);
             printf("terrain : push : (%f, %f, %f)\n", x, y, z);
