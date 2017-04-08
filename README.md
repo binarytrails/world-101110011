@@ -1,6 +1,10 @@
-# COMP371
+# World-101110011
 
 Group project with OpenGL in C++.
+
+    COMP 371
+    Concordia University
+    Winter 2017
 
 ## Roadmap
 
@@ -17,6 +21,7 @@ Group project with OpenGL in C++.
     - Procedurally generated terrain
         - ~~Grid~~
         - ~~Terrain height generation~~
+        - ~~Recursion on grid & terrain generation~~
         - Texture
         - Infinite (reload on advancement)
     
@@ -46,7 +51,8 @@ Group project with OpenGL in C++.
     - Proper user motions
         - Test and fix the camera see: World constructor FIXME tag
         - Draw axes pointing arrows which you can toggle on / off with a key
-            - Note: this would enhance visual debugging
+            
+            Note: this would enhance visual debugging
     - Water under certain elevation level
         - Reflection
     - Grass (multiple instantiations)
@@ -73,57 +79,25 @@ Floating Camera:
 
 ## Setup
 
-### OSX
+**OSX**
 
     make mac
 
-### Arch Linux
+**Arch Linux**
 
-Install these :
+Dependencies: ```glew glm glfw-x11 mesa-demos```
 
-    sudo pacman -S glew glm glfw-x11 mesa-demos
+    make arch
 
-Compile with :
-
-    make linux
-
-### GNU / Linux
-
-Install the missing libs and compile with:
+**GNU / Linux**
 
     make linux
 
 ## Coding Style
 
-### Identation
+- Identation:
 
-It's a standard to use spaces over tabs. For readability, I recommend 4 spaces which is a widely used standard.
-
-http://www.learncpp.com/cpp-tutorial/16-whitespace-and-basic-formatting/
-
-## Help
-
-### IRC
-
-> Internet Relay Chat (IRC) is an application layer protocol that facilitates communication in the form of text.
-
-The channel #opengl on the irc.freenode.net server is quite active!
-
-### Links
-
-[Modern OpenGL Tutorial Website](https://learnopengl.com)
-
-[OpenGL Tutorial Videos](https://www.youtube.com/watch?v=6c1QYZAEP2M&list=PLRwVmtr-pp06qT6ckboaOhnm9FxmzHpbY)
-
-[C++ Tutorial Website](http://www.learncpp.com)
-
-[Getting Started with GLFW] (http://www.glfw.org/docs/latest/quick.html)
-
-[GLEW](http://glew.sourceforge.net)
-
-[OpenGL Math Library (GLM)](http://glm.g-truc.net/0.9.8/index.html)
-
-[OGRE](http://www.ogre3d.org)
+    It's a standard to use spaces over tabs. For readability, we recommend 4 spaces which is a widely used standard.
 
 ## Authors
 
