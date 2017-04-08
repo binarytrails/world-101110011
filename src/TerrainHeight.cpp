@@ -6,7 +6,7 @@
 #include "TerrainHeight.hpp"
 
 TerrainHeight::TerrainHeight():
-    AMPLITUDE(10),
+    AMPLITUDE(3),
     SEED(rand() % (unsigned int) std::pow(10, 10))
 {
 }

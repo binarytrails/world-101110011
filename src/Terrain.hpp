@@ -76,7 +76,6 @@ class Terrain : public Mesh
         std::vector<GLushort> verticesI;
 
         const uint16_t X_CELLS;
-        const uint16_t Y_CELLS = 100;
         const uint16_t Z_CELLS;
 
         TerrainHeight *elevation;

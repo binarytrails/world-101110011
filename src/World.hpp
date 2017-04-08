@@ -121,7 +121,7 @@ static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
 {
     uint16_t step = 0;
     const uint16_t step_size = 1;
-    
+
     CallbackContext* cbcPtr = getWindowContext(w);
     Terrain* terrain = cbcPtr->world->getTerrain();
 
@@ -129,27 +129,23 @@ static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
      *      1. detect direction
      *      2. if going on positive x or z axis then
      *              advance terrain in this direction
-     *
-     * Note: To see terrain progressive rebuild;
-     *       its noise intput should be:
-     *          TODO
      */
 
     if (yoffset > 0)
     {
         cbcPtr->steps++;
         step = cbcPtr->steps * step_size;
-        terrain->advance(glm::ivec3(step, 0, step));
 
-        //cbcPtr->camera->moveForward();
+        //terrain->advance(glm::ivec3(step, 0, step));
+        cbcPtr->world->getCamera()->moveForward();
     }
     else if (yoffset < 0)
     {
         cbcPtr->steps--;
         step = cbcPtr->steps * step_size * -1;
-        terrain->advance(glm::ivec3(step, 0, step));
 
-        //cbcPtr->camera->moveBackward();
+        //terrain->advance(glm::ivec3(step, 0, step));
+        cbcPtr->world->getCamera()->moveBackward();
     }
 }
 

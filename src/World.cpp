@@ -26,12 +26,7 @@ World::World(const uint16_t width, const uint16_t height):
     this->build();
     this->setRenderMode(GL_LINES);
 
-    // setup camera TODO clean way
-    this->rotate(glm::vec3(10, 0, 0));
-    this->camera->moveUp();
-
     this->updateMVP();
-
 }
 
 World::~World()
@@ -86,10 +81,7 @@ void World::setWindowCallbacks()
 void World::updateMVP()
 {
     // update states
-    this->view = glm::translate(this->camera->view(),
-                                glm::vec3(0, 0, -2));
-    // continuous rotation
-    this->rotate(glm::vec3(0, 0, 0));
+    this->view = this->camera->view();
 
     this->projection = glm::perspective(
         45.0f,
@@ -129,6 +121,9 @@ void World::draw()
 
         this->terrain->render(this->window, this->camera,
                               this->view, this->projection);
+
+        // continuous rotation
+        //this->rotate(glm::vec3(0, 0, 0));
 
         this->updateMVP();
 
