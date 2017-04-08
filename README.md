@@ -2,13 +2,7 @@
 
 Group project with OpenGL in C++.
 
-## State of Things
-
-- Not assigned
-    - Illumination
-    - Mountains shadows
-    - Proper user motions
-        - Test and fix the camera see: World constructor FIXME tag
+## Roadmap
 
 - Seva
     - Project architecture
@@ -46,6 +40,17 @@ Group project with OpenGL in C++.
 - Justin
     - Shadows
 
+- Not assigned
+    - Illumination
+    - Mountains shadows
+    - Proper user motions
+        - Test and fix the camera see: World constructor FIXME tag
+        - Draw axes pointing arrows which you can toggle on / off with a key
+            - Note: this would enhance visual debugging
+    - Water under certain elevation level
+        - Reflection
+    - Grass (multiple instantiations)
+        - Wind influence
 
 ## Controls
 
