@@ -24,7 +24,10 @@ World::World(const uint16_t width, const uint16_t height):
                               "src/shaders/world.fs");
 
     this->build();
-    this->setRenderMode(GL_LINES);
+    this->setRenderMode(GL_TRIANGLES);
+
+    // FIXME hack display
+    this->rotate(glm::vec3(5, 0, 0));
 
     this->updateMVP();
 }

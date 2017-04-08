@@ -1,5 +1,0 @@
-Everyone is welcome to implement those
-
-Terrain:
-    - Setup properly camera and its controls (ensure logic)
-    - Implement detect directions to advance on both x, z axes

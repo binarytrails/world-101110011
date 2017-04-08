@@ -11,8 +11,10 @@ out vec4 color;
 void main()
 {
     vec3 white = vec3(255, 255, 255);
-    vec3 rgb   = vec3(clamp(pos.x+50, 50, 255),
-                      clamp(pos.y+50, 50, 255),
-                      clamp(pos.z+50, 50, 255));
-    color      = vec4(rgb, 1.0f);
+
+    // TODO set as highest from width and height
+    float d = 50;
+    vec3 rgb = vec3(pos.x / d, pos.y / d, pos.z / d);
+
+    color = vec4(rgb, 1.0f);
 }

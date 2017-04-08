@@ -4,6 +4,12 @@ Group project with OpenGL in C++.
 
 ## State of Things
 
+- Not assigned
+    - Illumination
+    - Mountains shadows
+    - Proper user motions
+        - Test and fix the camera see: World constructor FIXME tag
+
 - Seva
     - Project architecture
         - ~~Makefile~~
@@ -17,9 +23,8 @@ Group project with OpenGL in C++.
     - Procedurally generated terrain
         - ~~Grid~~
         - ~~Terrain height generation~~
-        - Infinite in every direction
-        - User motions
-    - Merging parts
+        - Texture
+        - Infinite (reload on advancement)
     
 - Tarik
     - Add Skybox with a day/night cycle.
