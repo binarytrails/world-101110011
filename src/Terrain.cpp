@@ -6,10 +6,12 @@
 #include "Terrain.hpp"
 
 Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
-    X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES)
+    X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES),
+    textureFilepath("assets/images/ground_cracked_n.jpg")
 {
     this->shader = new Shader("src/shaders/terrain.vs",
                               "src/shaders/terrain.fs");
+    this->loadTexture();
     this->build();
     this->initBuffers();
 }
@@ -65,6 +67,31 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(this->model));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+}
+
+void Terrain::loadTexture()
+{
+    glGenTextures(1, &this->texture);
+    glBindTexture(GL_TEXTURE_2D, this->texture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    int w, h;
+    unsigned char* image = SOIL_load_image(
+        this->textureFilepath.c_str(), &w, &h, 0, SOIL_LOAD_RGB);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0,
+                     GL_RGB, GL_UNSIGNED_BYTE, image);
+
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+    SOIL_free_image_data(image);
+
+    glBindTexture(GL_TEXTURE_2D, 0); // unbind
 }
 
 void Terrain::build()
@@ -130,7 +157,7 @@ void Terrain::genTerrainVerticesRecursive(
         if (z < max_z)
         {
             glm::vec3 v(x, this->elevation->get(x, z), z);
-            printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+            //printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
             this->vertices.push_back(v);
 
             // recur
@@ -251,6 +278,7 @@ void Terrain::initBuffers()
     // has to be before ebo bind
     glBindVertexArray(this->vaoId);
 
+    // position indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->eboId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  sizeof(this->verticesI) * this->verticesI.size(),
@@ -259,8 +287,14 @@ void Terrain::initBuffers()
 
     // enable vao -> vbo pointing
     glEnableVertexAttribArray(0);
+
     // setup formats of my vao attributes
+    // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), NULL);
+    // texture coordinates attribute
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat),
+                          (GLvoid*)(6 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
 
     // unbind vbo
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -285,9 +319,13 @@ void Terrain::upload()
 
 void Terrain::draw()
 {
+    glBindTexture(GL_TEXTURE_2D, this->texture);
+
     glBindVertexArray(this->vaoId);
+
         glDrawElements(this->renderMode,
                        this->verticesI.size(),
                        GL_UNSIGNED_SHORT, 0);
+
     glBindVertexArray(0);
 }

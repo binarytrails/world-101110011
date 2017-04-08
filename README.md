@@ -87,6 +87,10 @@ Install the missing libs and compile with:
 
     make linux
 
+## Libraries
+
+- SOIL : loads texture image
+
 ## Assets
 
 Terrain textures : https://opengameart.org/node/24221
