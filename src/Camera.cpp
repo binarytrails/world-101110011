@@ -6,10 +6,10 @@
 #include "Camera.hpp"
 
 Camera::Camera() :
-    eye(0.0f, 0.0f, 0.0f),
-    at(0.0f, 0.0f, -1.0f),
+    eye(0.0f, 3.0f, 0.0f),
+    at(1.0f, 0.0f, 1.0f),
     up(0.0f, 1.0f, 0.0f),
-    speed(0.05f)
+    speed(0.8f)
 {
 }
 

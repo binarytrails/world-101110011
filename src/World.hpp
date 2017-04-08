@@ -28,6 +28,10 @@ class World
 
         void setRenderMode(const GLenum mode);
 
+        Window*  getWindow();
+        Camera*  getCamera();
+        Terrain* getTerrain();
+
         void build();
         void draw();
 
@@ -62,10 +66,8 @@ class World
 
 struct CallbackContext
 {
-    Window  *window;
-    Camera  *camera;
-    World   *world;
-    Terrain *terrain;
+    World *world;
+    uint16_t steps;
 };
 
 static CallbackContext* getWindowContext(GLFWwindow* w)
@@ -81,8 +83,8 @@ static void framebufferSizeCallback(GLFWwindow* w, int width, int height)
 {
     CallbackContext* cbcPtr = getWindowContext(w);
 
-    cbcPtr->window->width(width);
-    cbcPtr->window->height(height);
+    cbcPtr->world->getWindow()->width(width);
+    cbcPtr->world->getWindow()->height(height);
 
     glViewport(0, 0, width, height);
 }
@@ -97,13 +99,13 @@ static void keyCallback(GLFWwindow* w, int key, int scancode, int action, int mo
     if (key == GLFW_KEY_UP)     cbcPtr->world->rotate(glm::vec3(1, 0, 0));
     if (key == GLFW_KEY_DOWN)   cbcPtr->world->rotate(glm::vec3(-1, 0, 0));
 
-    if (key == GLFW_KEY_W) cbcPtr->camera->moveUp();
-    if (key == GLFW_KEY_S) cbcPtr->camera->moveDown();
-    if (key == GLFW_KEY_A) cbcPtr->camera->moveLeft();
-    if (key == GLFW_KEY_D) cbcPtr->camera->moveRight();
+    if (key == GLFW_KEY_W) cbcPtr->world->getCamera()->moveUp();
+    if (key == GLFW_KEY_S) cbcPtr->world->getCamera()->moveDown();
+    if (key == GLFW_KEY_A) cbcPtr->world->getCamera()->moveLeft();
+    if (key == GLFW_KEY_D) cbcPtr->world->getCamera()->moveRight();
 
-    if (key == GLFW_KEY_I) cbcPtr->camera->moveForward();
-    if (key == GLFW_KEY_O) cbcPtr->camera->moveBackward();
+    if (key == GLFW_KEY_I) cbcPtr->world->getCamera()->moveForward();
+    if (key == GLFW_KEY_O) cbcPtr->world->getCamera()->moveBackward();
 
     if (key == GLFW_KEY_T) cbcPtr->world->setRenderMode(GL_TRIANGLES);
     if (key == GLFW_KEY_L) cbcPtr->world->setRenderMode(GL_LINES);
@@ -117,21 +119,33 @@ static void mouseKeyCallback(GLFWwindow* w, int key, int action, int mode)
 
 static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
 {
-    CallbackContext* cbcPtr = getWindowContext(w);
+    uint16_t step = 0;
+    const uint16_t step_size = 1;
 
-    // TODO detect and generate in this direction
+    CallbackContext* cbcPtr = getWindowContext(w);
+    Terrain* terrain = cbcPtr->world->getTerrain();
+
+    /* TODO
+     *      1. detect direction
+     *      2. if going on positive x or z axis then
+     *              advance terrain in this direction
+     */
 
     if (yoffset > 0)
     {
-        cbcPtr->terrain->advance(glm::ivec3(1, 0, 0));
+        cbcPtr->steps++;
+        step = cbcPtr->steps * step_size;
 
-        //cbcPtr->camera->moveForward();
+        //terrain->advance(glm::ivec3(step, 0, step));
+        cbcPtr->world->getCamera()->moveForward();
     }
     else if (yoffset < 0)
     {
-        cbcPtr->terrain->advance(glm::ivec3(-1, 0, 0));
+        cbcPtr->steps--;
+        step = cbcPtr->steps * step_size * -1;
 
-        //cbcPtr->camera->moveBackward();
+        //terrain->advance(glm::ivec3(step, 0, step));
+        cbcPtr->world->getCamera()->moveBackward();
     }
 }
 
