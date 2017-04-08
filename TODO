@@ -1,8 +1,0 @@
-Everyone is welcome to implement those
-
-World:
-    - Test and fix the camera see: World constructor FIXME tag
-
-Terrain:
-    - Setup properly camera and its controls (ensure logic)
-    - Implement detect directions to advance on both x, z axes
