@@ -7,7 +7,11 @@
 
 Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
     X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES),
-    textureFilepath("assets/images/ground_cracked_n.jpg")
+    textureFilepath("assets/images/ground_cracked_n.jpg"),
+    textureCoords({glm::vec2(0, 0),  // left  bottom
+                   glm::vec2(1, 0),  // right bottom
+                   glm::vec2(0, 1),  // upper left
+                   glm::vec2(1, 1)}) // upper right
 {
     this->shader = new Shader("src/shaders/terrain.vs",
                               "src/shaders/terrain.fs");
@@ -157,8 +161,23 @@ void Terrain::genTerrainVerticesRecursive(
         if (z < max_z)
         {
             glm::vec3 v(x, this->elevation->get(x, z), z);
-            //printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+
+
+            printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
             this->vertices.push_back(v);
+
+
+
+            // TODO wip : append texture
+            uint16_t texPos = (textureCounter % 4);
+            glm::vec2 texCoord = (
+                textureCoords[texPos],
+                textureCoords[texPos+1]
+            );
+            printf("terrain : push : texCord(%f, %f)\n",texCoord.x,texCoord.y);
+            //this->vertices.push_back(glm::vec3(texCoord, 0));
+            this->textureCounter++;
+
 
             // recur
             genTerrainVerticesRecursive(x, z + 1, max_x, max_z);

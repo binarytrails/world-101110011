@@ -71,7 +71,9 @@ class Terrain : public Mesh
                eboId,
                texture;
 
-        std::string textureFilepath;
+        uint16_t textureCounter;
+        const std::vector<glm::vec2> textureCoords;
+        const std::string textureFilepath;
 
         GLenum renderMode;
         glm::mat4 model;
