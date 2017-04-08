@@ -87,6 +87,10 @@ Install the missing libs and compile with:
 
     make linux
 
+## Assets
+
+Terrain textures : https://opengameart.org/node/24221
+
 ## Coding Style
 
 ### Identation
@@ -111,7 +115,7 @@ The channel #opengl on the irc.freenode.net server is quite active!
 
 [C++ Tutorial Website](http://www.learncpp.com)
 
-[Getting Started with GLFW] (http://www.glfw.org/docs/latest/quick.html)
+[Getting Started with GLFW](http://www.glfw.org/docs/latest/quick.html)
 
 [GLEW](http://glew.sourceforge.net)
 
