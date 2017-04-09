@@ -3,13 +3,14 @@
 Cloud::Cloud() {}
 
 
-Cloud::Cloud(GLfloat x, GLfloat y, GLfloat z, GLuint wid, GLuint len, GLuint dropCount) {
+Cloud::Cloud(GLfloat x, GLfloat y, GLfloat z, GLuint wid, GLuint len, GLuint dropCount, Wind *weather) {
 	_x = x;
 	_y = y;
 	_z = z;
 	_width = wid;
 	_length = len;
 	_dropCount = dropCount;
+	wind = weather;
 
 	for (int i = 0; i < _dropCount; i++) {
 
@@ -31,6 +32,7 @@ void Cloud::increment() {
 void Cloud::newDrop(int i) {
 	if (!isSeeded) seed();
 	drops[i] = new Particle((float)(rand() % _width) + _x, (float)(rand() % 10) + _y, (float)(rand() % _length) + _z);
+	drops[i]->setVelocity(drops[i]->getVelocity() + wind->getWind());
 }
 
 

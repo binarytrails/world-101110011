@@ -22,6 +22,12 @@ public:
 	GLfloat getPosY();
 	GLfloat getPosZ();
 
+	//return a particles current velocity
+	glm::vec3 getVelocity();
+
+	//set a particle's velocity
+	void setVelocity(glm::vec3 wind);
+
 	//applies effects of wind and gravity to a particle
 	void increment();
 
@@ -34,7 +40,7 @@ private:
 	GLfloat _x, _y, _z;
 
 	//velocity
-	GLfloat _speedX, _speedY, _speedZ;
+	glm::vec3 velocity;
 
 	//change in velocity each frame
 	GLfloat _acceleration;

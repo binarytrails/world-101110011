@@ -1,4 +1,5 @@
 #include "Particle.h"
+#include <iostream>
 
 
 Particle::Particle() {}
@@ -7,9 +8,8 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z) {
 	_x = x;
 	_y = y;
 	_z = z;
-	_speedX = 0.0f;
-	_speedY = 0.0f;
-	_speedZ = 0.0f;
+	velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+
 	_acceleration = -0.00001f;
 }
 
@@ -25,9 +25,20 @@ GLfloat Particle::getPosZ() {
 	return _z;
 }
 
+glm::vec3 Particle::getVelocity() {
+	return velocity;
+}
+
+void Particle::setVelocity(glm::vec3 v) {
+	velocity = v;
+}
+
 void Particle::increment() {
-	_speedY += _acceleration;
-	_y += _speedY;
+	velocity.y += _acceleration;
+
+	_x += velocity.x;
+	_y += velocity.y;
+	_z += velocity.z;
 }
 
 bool Particle::checkLife() {

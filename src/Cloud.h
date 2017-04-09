@@ -8,6 +8,7 @@
 #include "..\glm\gtc\type_ptr.hpp"
 
 #include "Particle.h"
+#include "Wind.h"
 #include <vector>
 #include <time.h>
 
@@ -19,7 +20,7 @@ public:
 	Cloud();
 
 	//create a cloud at a certain location with certain dimensions, and the number of Particles it creates
-	Cloud(GLfloat x, GLfloat y, GLfloat z, GLuint wid, GLuint len, GLuint dropCount);
+	Cloud(GLfloat x, GLfloat y, GLfloat z, GLuint wid, GLuint len, GLuint dropCount, Wind *weather);
 
 	//applies effects of wind to a cloud's position/particles
 	void increment();
@@ -53,6 +54,8 @@ private:
 	GLuint _dropCount;
 	Particle *drops[1000];
 	GLfloat allVertices[6000];
+
+	Wind *wind;
 
 	bool isSeeded = false;
 };
