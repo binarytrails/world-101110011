@@ -1,5 +1,6 @@
 build/
 nbproject/
+docs/doxygen/
 *.swo
 *.swp
 *.out
