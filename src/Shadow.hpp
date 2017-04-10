@@ -7,19 +7,20 @@ Created by: Justin Velicogna.
 #define SHADOW_H
 
 #include "GLObject.h"
-#include "\glm\glm.hpp"
+#include "..\glm\glm.hpp"
+#include "Point.h"
 #include <vector>
 
 
 class Shadow : public GLObject{
 	public:
 		Shadow(GLObject orig, Point plane, glm::vec3 light): GLObject(orig.vSize,orig.iSize){
-			for (int i = 0; i < orig.vSize; i++)
+			for (int i = 0; i < orig.vSize; i+=3)
 			{
 				glm::vec3 point;
-				if (intersect(light, orig.vertices[i], plane, point))
+				if (intersect(light, glm::vec3(orig.vertices[i],orig.vertices[i+1],orig.vertices[i+2]), plane, point))
 				{
-					vertices[i] = point;
+					addPoint(point.x,point.y,point.z);
 				}
 				else
 				{

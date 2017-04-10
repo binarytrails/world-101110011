@@ -52,6 +52,10 @@ protected:
     int iCursor = 0;
     void addPoint(float x, float y, float z);
     void addindice(int p1, int p2, int p3);
+	void addTriangle(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);//assume color data is provided in vectors
+	
+private:
+	glm::vec3 getNormal(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);
 };
 
 #endif /* GLOBJECT_H */

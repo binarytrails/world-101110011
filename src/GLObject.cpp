@@ -2,6 +2,9 @@
 
 void GLObject::draw(glm::vec3* translations, int count) {
     if(this->instanceCount == -1) {
+		
+		//TODO: update to use color and alpha and normal data
+		
         instanceCount = count;
         
         // Store instance data in an array buffer
@@ -67,6 +70,16 @@ void GLObject::addindice(int p1, int p2, int p3) {
     iCursor += 3;
 }
 
+void GLObject::addTriangle(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3){
+	//TODO: Make this work with colors and alpha data. Also add normal data.
+	addPoint(p1.x, p1.y, p1.z);
+	addPoint(p2.x, p2.y, p2.z);
+	addPoint(p3.x, p3.y, p3.z);
+	
+	
+	
+}
+
 GLObject::GLObject(int vSize, int iSize, GLfloat* v, GLuint* i) : vSize(vSize), iSize(iSize) {
     vertices = new GLfloat[vSize];
     indices = new GLuint[iSize];
@@ -113,4 +126,9 @@ GLObject::GLObject(const std::vector<GLObject*>& others){
             addindice(others.at(o)->indices[c]+max, others.at(o)->indices[c+1]+max, others.at(o)->indices[c+2]+max);
         max += others.at(o)->iMax + 1;
     }
+}
+
+glm::vec3 GLObject::getNormal(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3){
+	return glm::normalize(glm::cross(p2-p1,p3-p1));
+	
 }
