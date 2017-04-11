@@ -21,15 +21,15 @@ class GLObject {
 public:
     GLfloat* vertices;
     GLfloat* colors;
+    GLfloat* normals;
     GLuint* indices;
-    
 
     std::vector<float> data; //easier to add too, no need to have a starting size
     int vSize;
     int iSize;
     int iMax = 0;
     Point offset = Point(0,0,0);
-    GLuint VBO, instanceVBO, colorVBO, VAO, EBO;
+    GLuint VBO, instanceVBO, colorVBO, normalVBO, VAO, EBO;
     int instanceCount = -1;
     
     GLObject() : vSize(0), iSize(0) {};
@@ -53,7 +53,7 @@ public:
 protected:
     int vCursor = 0;
     int iCursor = 0;
-    void addPoint(float x, float y, float z, float r = 0.0f, float g = 0.0f, float b = 0.0f);
+    void addPoint(float x, float y, float z, float nx = 0, float ny = 0, float nz = 0, float r = 0.0f, float g = 0.0f, float b = 0.0f);
     void addindice(int p1, int p2, int p3);
     void addTriangle(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);//assume color data is provided in vectors
 	

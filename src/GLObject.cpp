@@ -2,11 +2,6 @@
 
 void GLObject::draw(glm::vec3* translations, int count) {
     if(this->instanceCount == -1) {
-		
-		//TODO: update to use color and alpha and normal data
-		
-		
-
         instanceCount = count;
         
         // Store instance data in an array buffer
@@ -32,18 +27,26 @@ void GLObject::draw(glm::vec3* translations, int count) {
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         
+        //Normal
         glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
+        glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
         glBufferData(GL_ARRAY_BUFFER, vSize*sizeof(colors[0]), colors, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        
+        //Color
+        glEnableVertexAttribArray(2);
+        glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
+        glBufferData(GL_ARRAY_BUFFER, vSize*sizeof(colors[0]), colors, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 
         // Also set instance data
-        glEnableVertexAttribArray(2);
+        glEnableVertexAttribArray(3);
         glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);	
-        glVertexAttribDivisor(2, 1); // Tell OpenGL this is an instanced vertex attribute.
+        glVertexAttribDivisor(3, 1); // Tell OpenGL this is an instanced vertex attribute.
     } else {
         glBindVertexArray(VAO);
     }
@@ -51,7 +54,7 @@ void GLObject::draw(glm::vec3* translations, int count) {
     glDrawElementsInstanced(GL_TRIANGLES, iSize, GL_UNSIGNED_INT, 0, instanceCount);
 }
 
-void GLObject::addPoint(float x, float y, float z, float r, float g, float b) {
+void GLObject::addPoint(float x, float y, float z, float nx, float ny, float nz, float r, float g, float b) {
     this->vertices[vCursor] = x;
     this->vertices[vCursor+1] = y;
     this->vertices[vCursor+2] = z;
@@ -59,6 +62,10 @@ void GLObject::addPoint(float x, float y, float z, float r, float g, float b) {
     this->colors[vCursor] = r;
     this->colors[vCursor+1] = g;
     this->colors[vCursor+2] = b;
+    
+    this->normals[vCursor] = nx;
+    this->normals[vCursor+1] = ny;
+    this->normals[vCursor+2] = nz;
     
     for(int c = 0; c < 3; c++) {
         if(this->vertices[vCursor+c] > sizeMax[c] || sizeFirst)
@@ -171,6 +178,7 @@ GLObject::GLObject(const std::vector<GLObject*>& others){
     
     vertices = new GLfloat[vSize];
     colors = new GLfloat[vSize];
+    normals = new GLfloat[vSize];
     indices = new GLuint[iSize];
     
     int max = 0;
