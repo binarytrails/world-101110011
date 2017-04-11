@@ -8,10 +8,13 @@
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 color;
-layout (location = 3) in vec3 alpha;
+layout (location = 3) in float alpha;
 
 
 out vec3 pos;
+out vec3 norm;
+out vec3 col;
+out float alp;
 
 uniform mat4 model;
 uniform mat4 view;
