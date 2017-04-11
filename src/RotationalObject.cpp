@@ -10,6 +10,7 @@ RotationalObject::RotationalObject(int PCount, int TCount, float P[], Point off,
     this->vSize = PCount * TCount * 3;
     this->iSize = (PCount-1) * TCount * 6;
     vertices = new GLfloat[this->vSize];
+    colors = new GLfloat[this->vSize];
     indices = new GLuint[this->iSize];
     
     Vector axisN = axis.normalize();

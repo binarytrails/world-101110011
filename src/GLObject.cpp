@@ -17,6 +17,7 @@ void GLObject::draw(glm::vec3* translations, int count) {
         
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
+        glGenBuffers(1, &colorVBO);
         glGenBuffers(1, &EBO);
 
         // Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
@@ -30,6 +31,12 @@ void GLObject::draw(glm::vec3* translations, int count) {
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
+        glBufferData(GL_ARRAY_BUFFER, vSize*sizeof(colors[0]), colors, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 
         // Also set instance data
         glEnableVertexAttribArray(2);
@@ -44,10 +51,14 @@ void GLObject::draw(glm::vec3* translations, int count) {
     glDrawElementsInstanced(GL_TRIANGLES, iSize, GL_UNSIGNED_INT, 0, instanceCount);
 }
 
-void GLObject::addPoint(float x, float y, float z) {
+void GLObject::addPoint(float x, float y, float z, float r, float g, float b) {
     this->vertices[vCursor] = x;
     this->vertices[vCursor+1] = y;
     this->vertices[vCursor+2] = z;
+    
+    this->colors[vCursor] = r;
+    this->colors[vCursor+1] = g;
+    this->colors[vCursor+2] = b;
     
     for(int c = 0; c < 3; c++) {
         if(this->vertices[vCursor+c] > sizeMax[c] || sizeFirst)
@@ -159,6 +170,7 @@ GLObject::GLObject(const std::vector<GLObject*>& others){
     }
     
     vertices = new GLfloat[vSize];
+    colors = new GLfloat[vSize];
     indices = new GLuint[iSize];
     
     int max = 0;

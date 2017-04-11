@@ -253,7 +253,7 @@ void Terrain::initBuffers()
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->eboId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 sizeof(this->verticesI) * this->verticesI.size(),
+                 sizeof(this->verticesI[0]) * this->verticesI.size(),
                  &this->verticesI[0],
                  GL_STATIC_DRAW);
 
