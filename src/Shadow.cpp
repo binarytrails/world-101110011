@@ -10,7 +10,7 @@ bool Shadow::intersect(glm::vec3 light, glm::vec3 point, Point slope, glm::vec3 
 	float D = -1 * (slope.x*slope.direction.x + slope.y*slope.direction.y + slope.z*slope.direction.z);
 
 	float numerator = slope.direction.x*light.x + slope.direction.y*light.y + slope.direction.z*light.z + D;
-
+	
 	float divisor = slope.direction.x*point.x + slope.direction.y*point.y + slope.direction.z*point.z; //noot noot
 
 	if (divisor == 0)

@@ -22,6 +22,8 @@ public:
     GLfloat* vertices;
     GLuint* indices;
     
+
+	std::vector<float> data; //easier to add too, no need to have a starting size
     int vSize;
     int iSize;
     int iMax = 0;

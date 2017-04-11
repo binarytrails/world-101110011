@@ -24,6 +24,7 @@ class Shadow : public GLObject{
 				}
 				else
 				{
+					
 					iSize = 0;
 					vSize = 0;
 					return;

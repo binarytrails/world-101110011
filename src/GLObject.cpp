@@ -5,6 +5,8 @@ void GLObject::draw(glm::vec3* translations, int count) {
 		
 		//TODO: update to use color and alpha and normal data
 		
+		
+
         instanceCount = count;
         
         // Store instance data in an array buffer
@@ -72,9 +74,50 @@ void GLObject::addindice(int p1, int p2, int p3) {
 
 void GLObject::addTriangle(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3){
 	//TODO: Make this work with colors and alpha data. Also add normal data.
-	addPoint(p1.x, p1.y, p1.z);
-	addPoint(p2.x, p2.y, p2.z);
-	addPoint(p3.x, p3.y, p3.z);
+	
+	glm::vec3 normal = getNormal(p1, p2, p3);
+
+	data.push_back(p1.x);
+	data.push_back(p1.y);
+	data.push_back(p1.z);
+	data.push_back(normal.x);
+	data.push_back(normal.y);
+	data.push_back(normal.z);
+	data.push_back(p1.r);
+	data.push_back(p1.g);
+	data.push_back(p1.b);
+	data.push_back(p1.t); //I am pretty sure t is for transperancy
+
+	data.push_back(p2.x);
+	data.push_back(p2.y);
+	data.push_back(p2.z);
+	data.push_back(normal.x);
+	data.push_back(normal.y);
+	data.push_back(normal.z);
+	data.push_back(p2.r);
+	data.push_back(p2.g);
+	data.push_back(p2.b);
+	data.push_back(p2.t); //I am pretty sure t is for transperancy
+
+
+	data.push_back(p3.x);
+	data.push_back(p3.y);
+	data.push_back(p3.z);
+	data.push_back(normal.x);
+	data.push_back(normal.y);
+	data.push_back(normal.z);
+	data.push_back(p3.r);
+	data.push_back(p3.g);
+	data.push_back(p3.b);
+	data.push_back(p3.t); //I am pretty sure t is for transperancy
+
+
+
+	//addPoint(p1.x, p1.y, p1.z);
+	//addPoint(p2.x, p2.y, p2.z);
+	//addPoint(p3.x, p3.y, p3.z);
+
+
 	
 	
 	
