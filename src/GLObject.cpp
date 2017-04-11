@@ -30,7 +30,7 @@ void GLObject::draw(glm::vec3* translations, int count) {
         //Normal
         glEnableVertexAttribArray(1);
         glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
-        glBufferData(GL_ARRAY_BUFFER, vSize*sizeof(colors[0]), colors, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, vSize*sizeof(normals[0]), normals, GL_STATIC_DRAW);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         
         //Color
