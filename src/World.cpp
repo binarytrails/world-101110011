@@ -5,9 +5,9 @@
 
 #include "World.hpp"
 
-World::World(const uint16_t width, const uint16_t height):
+World::World(const uint16_t width, const uint16_t height, const char* name):
     TERRAIN_WIDTH(width), TERRAIN_HEIGHT(height),
-    window(new Window(1280, 720, "Procedural world")),
+    window(new Window(1280, 720, name)),
     camera(new Camera())
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
