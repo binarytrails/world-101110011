@@ -23,8 +23,9 @@ void main()
     rgb = rgb / d;
     color = texture(soilTexture, texCoord); //* vec4(rgb, 1.0f);
 */
-
-    // TODO texture influenced by elevation
+// TODO texture influenced by elevation
+// TODO illumination
+/*
 	vec4 textureColor = texture(soilTexture, texCoord);
 	
 	float ambientStrength = 0.1f;
@@ -48,7 +49,8 @@ void main()
 	result.y = (ambient + diffuse + specular) * textureColor.y;
 	result.z = (ambient + diffuse + specular) * textureColor.z;
 	result.w = textureColor.w;
-	
-	
+		
     color = result;
+*/
+    color = texture(soilTexture, texCoord);
 }

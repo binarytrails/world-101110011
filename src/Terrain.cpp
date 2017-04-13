@@ -158,7 +158,7 @@ void Terrain::genTerrainVerticesRecursive(
     if (x == max_x && z == max_z)
     {
         glm::vec3 v(x, this->elevation->get(x, z), z);
-        printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+        //printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
         this->vertices.push_back(v);
         return;
     }
@@ -167,7 +167,7 @@ void Terrain::genTerrainVerticesRecursive(
         if (z < max_z)
         {
             glm::vec3 v(x, this->elevation->get(x, z), z);
-            printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+            //printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
             this->vertices.push_back(v);
 
             // recur
