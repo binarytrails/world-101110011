@@ -26,4 +26,7 @@ void main()
     gl_Position = projection * view * model * vec4(position + offset, 1.0f);
     gl_PointSize = 5.0;
     pos = position;
+	norm = normal;
+	col = color;
+	alp = alpha;
 }
