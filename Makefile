@@ -28,12 +28,22 @@ arch: all
 		${INCLUDES} ${CXX_FILES} ${BIN}
 
 linux: all
-	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_UNIX} \
+	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_UNIX} ${EXTRA_LIBS} \
 		${INCLUDES} ${CXX_FILES} ${BIN}
 
 mac: all
 	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} ${EXTRA_LIBS} \
 		${INCLUDES} ${CXX_FILES} ${BIN}
+
+skybox-arch: all
+	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} ${EXTRA_LIBS} \
+		${INCLUDES} -o build/skybox.out \
+		src/Skybox.cpp src/Camera.cpp src/Window.cpp src/Shader.cpp
+
+skybox-mac: all
+	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} ${EXTRA_LIBS} \
+		${INCLUDES} -o build/skybox.out \
+		src/Skybox.cpp src/Camera.cpp src/Window.cpp src/Shader.cpp
 
 clean:
 	rm -rf build/
