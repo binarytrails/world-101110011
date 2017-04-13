@@ -85,7 +85,7 @@ Floating Camera:
 
 **Arch Linux**
 
-Dependencies: ```glew glm glfw-x11 mesa-demos```
+Dependencies: ```glew glm glfw-x11 mesa-demos soil```
 
     make arch
 
