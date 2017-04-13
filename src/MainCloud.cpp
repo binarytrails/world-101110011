@@ -88,7 +88,7 @@ int main() {
 	
 
 	// Build and compile our shader program
-	Shader ourShader("shaders/shaderRain.vs", "shaders/shaderRain.frag");
+	Shader ourShader("src/shaders/shaderRain.vs", "src/shaders/shaderRain.frag");
 
 	//enable depth testing
 	glEnable(GL_DEPTH_TEST);
