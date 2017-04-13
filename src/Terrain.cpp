@@ -14,7 +14,7 @@ Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
     this->loadTexture();
     this->build();
 
-    glPointSize(3);
+    glPointSize(50);
 
     this->initBuffers();
 }

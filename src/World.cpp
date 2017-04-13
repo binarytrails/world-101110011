@@ -24,10 +24,12 @@ World::World(const uint16_t width, const uint16_t height):
                               "src/shaders/world.fs");
 
     this->build();
-    this->setRenderMode(GL_TRIANGLES);
+    this->setRenderMode(GL_POINTS);
 
     // FIXME hack display
     this->rotate(glm::vec3(5, 0, 0));
+    for (int i=0; i < 200; i++)
+        this->getCamera()->moveBackward();
 
     this->updateMVP();
 }
@@ -90,7 +92,7 @@ void World::updateMVP()
         45.0f,
         (GLfloat) this->window->width() / (GLfloat) this->window->height(),
         0.1f,
-        100.0f);
+        500.0f);
 
     // locate in shaders
     GLint modelLoc = glGetUniformLocation(this->shader->programId, "model");
