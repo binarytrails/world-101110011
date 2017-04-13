@@ -7,11 +7,11 @@
 
 Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
     X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES),
-    textureFilepath("assets/images/ground_cracked_n.jpg"),
-    textureCoords({glm::vec2(0, 0),  // left  bottom
-                   glm::vec2(1, 0),  // right bottom
-                   glm::vec2(0, 1),  // upper left
-                   glm::vec2(1, 1)}) // upper right
+    texFilepath("assets/images/ground_cracked_n.jpg"),
+    texCoords({glm::vec2(0, 0),  // left  bottom
+               glm::vec2(1, 0),  // right bottom
+               glm::vec2(0, 1),  // upper left
+               glm::vec2(1, 1)}) // upper right
 {
     this->shader = new Shader("src/shaders/terrain.vs",
                               "src/shaders/terrain.fs");
@@ -75,6 +75,8 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 
 void Terrain::loadTexture()
 {
+    glEnable(GL_TEXTURE_2D);
+
     glGenTextures(1, &this->texture);
     glBindTexture(GL_TEXTURE_2D, this->texture);
 
@@ -86,7 +88,7 @@ void Terrain::loadTexture()
 
     int w, h;
     unsigned char* image = SOIL_load_image(
-        this->textureFilepath.c_str(), &w, &h, 0, SOIL_LOAD_RGB);
+        this->texFilepath.c_str(), &w, &h, 0, SOIL_LOAD_RGB);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0,
                      GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -102,6 +104,8 @@ void Terrain::build()
 {
     this->elevation = new TerrainHeight();
 
+    // Note: size*2 because each vertex has a texture
+
     //this->genPlaneVertices();
     //this->genPlaneVerticesRecursive(0, 0);
 
@@ -109,6 +113,15 @@ void Terrain::build()
     this->genTerrainVerticesRecursive(0, 0, this->X_CELLS, this->Z_CELLS);
 
     this->genVerticesI();
+}
+
+glm::vec3 Terrain::nextTextureCoords()
+{
+    uint16_t texPos = (this->texCounter % 4);
+    glm::vec2 texCoord = (texCoords[texPos], texCoords[texPos+1]);
+    printf("terrain : push : texCord(%f, %f)\n",texCoord.x,texCoord.y);
+    this->texCounter++;
+    return glm::vec3(texCoord, 0);
 }
 
 // by directions steps
@@ -161,23 +174,8 @@ void Terrain::genTerrainVerticesRecursive(
         if (z < max_z)
         {
             glm::vec3 v(x, this->elevation->get(x, z), z);
-
-
             printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
             this->vertices.push_back(v);
-
-
-
-            // TODO wip : append texture
-            uint16_t texPos = (textureCounter % 4);
-            glm::vec2 texCoord = (
-                textureCoords[texPos],
-                textureCoords[texPos+1]
-            );
-            printf("terrain : push : texCord(%f, %f)\n",texCoord.x,texCoord.y);
-            //this->vertices.push_back(glm::vec3(texCoord, 0));
-            this->textureCounter++;
-
 
             // recur
             genTerrainVerticesRecursive(x, z + 1, max_x, max_z);
@@ -235,6 +233,11 @@ void Terrain::genVerticesI()
             {
                 uint16_t p1 = z + this->X_CELLS * x;
                 uint16_t p2 = z + this->X_CELLS * (x + 1);
+
+                glm::vec3 v = this->vertices[p1];
+                printf("terrain : genVI : p1(%f, %f, %f)\n", v.x, v.y, v.z);
+                v = this->vertices[p2];
+                printf("terrain : genVI : p2(%f, %f, %f)\n", v.x, v.y, v.z);
 
                 // Triangle 1
                 this->verticesI.push_back(p1);
@@ -311,8 +314,8 @@ void Terrain::initBuffers()
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), NULL);
     // texture coordinates attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat),
-                          (GLvoid*)(6 * sizeof(GLfloat)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), NULL);
+
     glEnableVertexAttribArray(1);
 
     // unbind vbo

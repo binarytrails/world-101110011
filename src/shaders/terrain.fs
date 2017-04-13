@@ -6,7 +6,7 @@
 #version 330 core
 
 in vec3 pos;
-in vec2 texCoord;
+in vec3 texCoord;
 
 out vec4 color;
 
@@ -21,5 +21,5 @@ void main()
     vec3 rgb = vec3(pos.x / d, pos.y / d, pos.z / d);
 
     // TODO different soildTextureCoords (2nd arg)
-    color = texture(soilTexture, texCoord);// * vec4(rgb, 1.0f);
+    color = texture(soilTexture, vec2(texCoord.x, texCoord.y));// * vec4(rgb, 1.0f);
 }
