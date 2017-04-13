@@ -7,7 +7,7 @@
 
 TerrainHeight::TerrainHeight():
     AMPLITUDE(6),
-    SEED(rand() % (unsigned int) std::pow(10, 10))
+    SEED(rand() % (unsigned int)pow(10, 10))
 {
 }
 
