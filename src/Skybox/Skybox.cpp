@@ -12,8 +12,8 @@ Skybox::Skybox(std::vector<const GLchar*>& faces)
   glDepthFunc(GL_LESS);
 
   // Set up and compile our shaders.
-  shader = new Shader("../shaders/advanced.vs", "shaders/advanced.frag");
-  skyboxShader = new Shader("../shaders/skybox.vs", "shaders/skybox.frag");
+  shader = new Shader("../shaders/advanced.vs", "../shaders/advanced.frag");
+  skyboxShader = new Shader("../shaders/skybox.vs", "../shaders/skybox.frag");
 
   // Call our texture loading method.
   this->loadCubeMap(faces);
