@@ -3,22 +3,30 @@
 Cloud::Cloud() {}
 
 
-Cloud::Cloud(GLfloat x, GLfloat y, GLfloat z, GLuint wid, GLuint len, GLuint dropCount, Wind *weather) {
+Cloud::Cloud(GLfloat x, GLfloat y, GLfloat z, GLfloat wid, GLfloat len, GLuint dropCount, Wind *weather, GLuint type) {
 	_x = x;
 	_y = y;
 	_z = z;
 	_width = wid;
 	_length = len;
 	_dropCount = dropCount;
+	_type = type;
 	wind = weather;
 
 	for (int i = 0; i < _dropCount; i++) {
 
 		if (!isSeeded) seed();
 
-		drops[i] = new Particle((float)(rand() % wid) + x, (float)(rand() % 10) + y, (float)(rand() % len) + z);
+		if (_type == 1) drops[i] = new Particle(randomBetween(x, x + wid), y, randomBetween(z, z + len));
 	}
 
+}
+
+float Cloud::randomBetween(float a, float b) {
+	float random = ((float)rand()) / (float)RAND_MAX;
+	float diff = b - a;
+	float r = random * diff;
+	return a + r;
 }
 
 
@@ -31,7 +39,7 @@ void Cloud::increment() {
 
 void Cloud::newDrop(int i) {
 	if (!isSeeded) seed();
-	drops[i] = new Particle((float)(rand() % _width) + _x, (float)(rand() % 10) + _y, (float)(rand() % _length) + _z);
+	if (_type == 1) drops[i] = new Particle(randomBetween(_x, _x + _width), _y, randomBetween(_z, _z + _length));
 	drops[i]->setVelocity(drops[i]->getVelocity() + wind->getWind());
 }
 

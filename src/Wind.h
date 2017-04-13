@@ -1,11 +1,11 @@
 #pragma once
-#include "..\glew\glew.h"	// include GL Extension Wrangler
-#include "..\glfw\glfw3.h"	// include GLFW helper library
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 //use GLM for transformation math
-#include "..\glm\glm.hpp"   
-#include "..\glm\gtc\matrix_transform.hpp"
-#include "..\glm\gtc\type_ptr.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "Particle.h"
 
