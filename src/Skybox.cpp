@@ -31,10 +31,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // User-defined includes
-#include "../Camera.hpp" 
-#include "../Window.hpp"
+#include "Camera.hpp" 
+#include "Window.hpp"
 // #include "../World.hpp" // Already includes GLM
-#include "../Shader.hpp"
+#include "Shader.hpp"
 
 // Constants
 const uint WIDTH = 800, HEIGHT = 600;
@@ -75,8 +75,8 @@ int main()
 	glDepthFunc(GL_LESS);
 
 	// 6. Set up and compile our shaders.
-	Shader shader("shaders/advanced.vs", "shaders/advanced.frag");
-	Shader skyboxShader("shaders/skybox.vs", "shaders/skybox.frag");
+	Shader shader("src/shaders/advanced.vs", "src/shaders/advanced.frag");
+	Shader skyboxShader("src/shaders/skybox.vs", "src/shaders/skybox.frag");
 
 	// 7. Setting up vertices for our cube.
 	GLfloat cubeVertices[] = {
@@ -199,16 +199,16 @@ int main()
     glBindVertexArray(0);
 
     //11. Load textures
-    GLuint cubeTexture  = loadTexture("textures/container.jpg");
+    GLuint cubeTexture  = loadTexture("assets/images/cubemap/textures/container.jpg");
 
     // 12. Cubemap (Skybox)
     std::vector<const GLchar*> faces;
-    faces.push_back("skybox-2/right.jpg");
-    faces.push_back("skybox-2/left.jpg");
-    faces.push_back("skybox-2/top.jpg");
-    faces.push_back("skybox-2/bottom.jpg");
-    faces.push_back("skybox-2/front.jpg");
-    faces.push_back("skybox-2/back.jpg");
+    faces.push_back("/assets/images/cubemap/skybox-2/right.jpg");
+    faces.push_back("/assets/images/cubemap/skybox-2/left.jpg");
+    faces.push_back("/assets/images/cubemap/skybox-2/top.jpg");
+    faces.push_back("/assets/images/cubemap/skybox-2/bottom.jpg");
+    faces.push_back("/assets/images/cubemap/skybox-2/front.jpg");
+    faces.push_back("/assets/images/cubemap/skybox-2/back.jpg");
     GLuint cubemapTexture = loadCubemap(faces);
 
     // 13. Game loop

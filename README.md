@@ -18,12 +18,12 @@ Group project with OpenGL in C++.
         - ~~Abstract Mesh class~~
         - ~~Render modes~~
     - ~~Floating Camera controls~~
-    - Procedurally generated terrain
+    - ~~Procedurally generated terrain~~
         - ~~Grid~~
         - ~~Terrain height generation~~
         - ~~Recursion on grid & terrain generation~~
-        - Texture
-        - Infinite (reload on advancement)
+ 	- ~~Texture~~
+     - Attempt: Infinite terrain (reload on advancement)
     
 - Tarik
     - Add Skybox with a day/night cycle.
@@ -85,13 +85,21 @@ Floating Camera:
 
 **Arch Linux**
 
-Dependencies: ```glew glm glfw-x11 mesa-demos```
+Dependencies: ```glew glm glfw-x11 mesa-demos soil```
 
     make arch
 
 **GNU / Linux**
 
     make linux
+
+## Libraries
+
+- SOIL : loads texture image
+
+## Assets
+
+- Terrain textures : https://opengameart.org/node/24221
 
 ## Coding Style
 

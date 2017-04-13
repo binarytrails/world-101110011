@@ -21,6 +21,7 @@
 #include "Mesh.hpp"
 
 #include "TerrainHeight.hpp"
+#include <SOIL/SOIL.h>
 
 class Terrain : public Mesh
 {
@@ -48,6 +49,8 @@ class Terrain : public Mesh
 
         void build();
 
+        void loadTexture();
+
         void genPlaneVertices();
         void genPlaneVerticesRecursive(uint16_t x, uint16_t z);
 
@@ -66,7 +69,10 @@ class Terrain : public Mesh
 
         GLuint vboId,
                vaoId,
-               eboId;
+               eboId,
+               texture;
+
+        const std::string texFilepath;
 
         GLenum renderMode;
         glm::mat4 model;
