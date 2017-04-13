@@ -30,6 +30,13 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
     this->rotate(glm::vec3(5, 0, 0));
 
     this->updateMVP();
+
+    lastX = this->window->width()/2;
+    lastY = this->window->height()/2;
+
+    pitch = 0.0f;
+    yaw = -90.0f;
+
 }
 
 World::~World()
@@ -79,6 +86,9 @@ void World::setWindowCallbacks()
                                    framebufferSizeCallback);
 
     glfwSetScrollCallback(this->window->get(), mouseScrollCallback);
+
+    // TODO
+    // glfwSetCursorPosCallback(this->window->get(), mousePositionCallback);
 }
 
 void World::updateMVP()
@@ -116,6 +126,7 @@ void World::draw()
     while (!glfwWindowShouldClose(this->window->get()))
     {
         glfwPollEvents();
+        doMovement(this->window->get());
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

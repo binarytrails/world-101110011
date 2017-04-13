@@ -6,7 +6,7 @@ const uint WIDTH = 800, HEIGHT = 600;
 // Function prototypes 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void mousePositionCallback(GLFWwindow* window, double xpos, double ypos);
 void Do_Movement();
 
 
@@ -16,6 +16,9 @@ bool keys[1024];
 GLfloat lastX = 400, lastY = 300;
 bool firstMouse = true;
 
+GLfloat yaw = 0.0f;
+GLfloat pitch = 0.0f;
+
 int main()
 {	
 
@@ -24,11 +27,9 @@ int main()
 
 	// 2. Set up our callback functions.
 	 glfwSetKeyCallback(window->get(), key_callback);
-    // glfwSetCursorPosCallback(window->get(), mouse_callback);
+    glfwSetCursorPosCallback(window->get(), mousePositionCallback);
     // glfwSetScrollCallback(window->get(), scroll_callback);
-	
-    // 3. Set input mode of GLFW window.
-	glfwSetInputMode(window->get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 
 	// 4. Define our cube map using six textures.
 	// Order should be:
@@ -81,5 +82,42 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if(key == GLFW_KEY_LEFT && action == GLFW_PRESS)
 		camera->moveLeft();
 }
+
+void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
+{
+
+	std::cout << "Inside Mouse Position Callback..." << std::endl;
+    // Delta of position along x-axis.
+    GLfloat xoffset = xpos - lastX;
+
+    // Delta of positon along y-axis.
+    GLfloat yoffset = ypos - lastY;
+
+    // Reset our x and y positions for the frame. 
+    lastX = xpos;
+    lastY = ypos;
+
+    // In order to lessen the jerk of mouse movement, we add this sensitivity to offsets. 
+    GLfloat sensitivity = 0.05f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    yaw += xoffset;
+    pitch += yoffset;
+
+    // Make sure that pitch is in the domain [-89.0, 89.0] (not exactly 90 due to cosine).
+    if(pitch > 89.0f)
+        pitch = 89.0f;
+    if(pitch < -89.0f)
+        pitch = -89.0f;
+
+    glm::vec3 viewDirection;
+    viewDirection.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+    viewDirection.y = sin(glm::radians(pitch));
+    viewDirection.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+    camera->getAt() = glm::normalize(viewDirection);
+
+}
+
 
 #pragma endregion

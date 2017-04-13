@@ -7,7 +7,7 @@ OPENGL_MAC=-framework Cocoa -framework OpenGL \
 
 LIBS = -lGLEW -lglfw3 -lSOIL
 
-SRC = Skybox.cpp SkyboxMain.cpp ../Camera.cpp ../Window.cpp ../Shader.cpp
+SRC = Skybox.cpp SkyboxMain.cpp ../../src/Camera.cpp ../../src/Window.cpp ../../src/Shader.cpp
 
 BIN = -o Skybox.out
 

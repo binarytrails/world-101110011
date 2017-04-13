@@ -21,6 +21,8 @@ class Camera
 
         glm::mat4 view() const;
 
+        glm::vec3 getAt();
+
         void moveUp();
         void moveRight();
         void moveDown();
@@ -30,10 +32,14 @@ class Camera
         void moveBackward();
 
         void printView() const;
+        void printEyePos() const;
 
     private:
+        //! Camera position.
         glm::vec3 eye;
+        //! Point being observed. 
         glm::vec3 at;
+        //! Up direction of camera.
         glm::vec3 up;
 
         GLfloat speed;

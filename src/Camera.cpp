@@ -7,7 +7,7 @@
 
 Camera::Camera() :
     eye(0.0f, 3.0f, 0.0f),
-    at(1.0f, 0.0f, 1.0f),
+    at(0.0f, 0.0f, 1.0f),
     up(0.0f, 1.0f, 0.0f),
     speed(0.8f)
 {
@@ -18,6 +18,11 @@ Camera::~Camera(){}
 glm::mat4 Camera::view() const
 {
     return glm::lookAt(eye, eye + at, up);
+}
+
+glm::vec3 Camera::getAt()
+{
+    return at;
 }
 
 void Camera::moveForward()
@@ -61,4 +66,9 @@ void Camera::printView() const
             printf("\n");
     }
     printf("\n+-----------------------------------------+\n");
+}
+
+void Camera::printEyePos() const 
+{
+    printf("Position of eye: (%.0f, %.0f, %.0f)\n", eye.x, eye.y, eye.z);
 }

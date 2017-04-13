@@ -15,9 +15,9 @@
 #include <SOIL/SOIL.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../Camera.hpp" 
-#include "../Window.hpp"
-#include "../Shader.hpp"
+#include "../../src/Camera.hpp" 
+#include "../../src/Window.hpp"
+#include "../../src/Shader.hpp"
 
 
 class Skybox 
