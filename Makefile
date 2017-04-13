@@ -12,7 +12,7 @@ OPENGL_MAC=-lGLEW -lglfw3 -framework Cocoa -framework OpenGL \
 GLFW_ARCH=-lglfw
 GLFW_UNIX=-lglfw3
 
-EXTRA_LIBS=#-lname
+EXTRA_LIBS=-lSOIL
 
 INCLUDES=-I./src
 CXX_FILES=src/Main.cpp src/Window.cpp src/Shader.cpp src/Camera.cpp \
