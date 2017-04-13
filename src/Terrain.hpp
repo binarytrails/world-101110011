@@ -48,6 +48,7 @@ class Terrain : public Mesh
         float getElevation(const float x, const float z);
 
         void build();
+
         void loadTexture();
 
         void genPlaneVertices();
@@ -71,7 +72,7 @@ class Terrain : public Mesh
                eboId,
                texture;
 
-        std::string textureFilepath;
+        const std::string texFilepath;
 
         GLenum renderMode;
         glm::mat4 model;

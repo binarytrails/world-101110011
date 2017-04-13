@@ -7,12 +7,15 @@
 
 Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
     X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES),
-    textureFilepath("assets/images/ground_cracked_n.jpg")
+    texFilepath("assets/images/desert_sand_bigx_d.jpg")
 {
     this->shader = new Shader("src/shaders/terrain.vs",
                               "src/shaders/terrain.fs");
     this->loadTexture();
     this->build();
+
+    glPointSize(3);
+
     this->initBuffers();
 }
 
@@ -71,6 +74,8 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 
 void Terrain::loadTexture()
 {
+    glEnable(GL_TEXTURE_2D);
+
     glGenTextures(1, &this->texture);
     glBindTexture(GL_TEXTURE_2D, this->texture);
 
@@ -82,7 +87,7 @@ void Terrain::loadTexture()
 
     int w, h;
     unsigned char* image = SOIL_load_image(
-        this->textureFilepath.c_str(), &w, &h, 0, SOIL_LOAD_RGB);
+        this->texFilepath.c_str(), &w, &h, 0, SOIL_LOAD_RGB);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0,
                      GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -97,6 +102,8 @@ void Terrain::loadTexture()
 void Terrain::build()
 {
     this->elevation = new TerrainHeight();
+
+    // Note: size*2 because each vertex has a texture
 
     //this->genPlaneVertices();
     //this->genPlaneVerticesRecursive(0, 0);
@@ -157,7 +164,7 @@ void Terrain::genTerrainVerticesRecursive(
         if (z < max_z)
         {
             glm::vec3 v(x, this->elevation->get(x, z), z);
-            //printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+            printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
             this->vertices.push_back(v);
 
             // recur
@@ -292,8 +299,8 @@ void Terrain::initBuffers()
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), NULL);
     // texture coordinates attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat),
-                          (GLvoid*)(6 * sizeof(GLfloat)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), NULL);
+
     glEnableVertexAttribArray(1);
 
     // unbind vbo
@@ -304,9 +311,8 @@ void Terrain::initBuffers()
 
 void Terrain::upload()
 {
-    // TODO send matrices
-    //
-    //
+    // TODO resend vertices for advancing (infinite terrain)
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->eboId);
 
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,
