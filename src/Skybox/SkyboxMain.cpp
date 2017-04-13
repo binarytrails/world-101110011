@@ -39,12 +39,12 @@ int main()
 	// +Z (front) 
 	// -Z (back)
 	std::vector<const GLchar*> faces;
-    faces.push_back("skybox/right.jpg");
-    faces.push_back("skybox/left.jpg");
-    faces.push_back("skybox/top.jpg");
-    faces.push_back("skybox/bottom.jpg");
-    faces.push_back("skybox/front.jpg");
-    faces.push_back("skybox/back.jpg");
+    faces.push_back("cubemap/right.jpg");
+    faces.push_back("cubemap/left.jpg");
+    faces.push_back("cubemap/top.jpg");
+    faces.push_back("cubemap/bottom.jpg");
+    faces.push_back("cubemap/front.jpg");
+    faces.push_back("cubemap/back.jpg");
 
 	//5. Create Skybox object
 	Skybox* skybox = new Skybox(faces);
