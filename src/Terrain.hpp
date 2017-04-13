@@ -58,6 +58,8 @@ class Terrain : public Mesh
                                 uint16_t max_x,    uint16_t max_z);
         void genTerrainVerticesRecursive(uint16_t x,        uint16_t z,
                                          uint16_t max_x,    uint16_t max_z);
+        void regenTerrainVerticesRecursive(uint16_t x,        uint16_t z,
+                                           uint16_t x_off,    uint16_t z_off);
 
         void genVerticesI();
 

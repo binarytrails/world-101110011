@@ -117,6 +117,7 @@ void Terrain::build()
 // by directions steps
 void Terrain::advance(const glm::ivec3 ds)
 {
+    printf("terrain : advance\n");
     /* TODO implement
      *
      */
@@ -126,15 +127,15 @@ void Terrain::advance(const glm::ivec3 ds)
     this->verticesI.clear();
 
     // TODO do not regenerate entirely but only in step size
-    this->genTerrainVerticesRecursive(
-            ds.x,                 ds.z,
-            this->X_CELLS + ds.x, this->Z_CELLS + ds.z
-    );
+
+    this->regenTerrainVerticesRecursive(0, 0, ds.x, ds.z);
     this->genVerticesI();
 
     this->upload();
 
     printf("terrain : advance(%i, %i, %i)\n", ds.x, ds.y, ds.z);
+    printf("terrain : rebuild(%i -> %i, %i -> %i)\n",
+            ds.x, this->X_CELLS + ds.x, ds.z, this->Z_CELLS + ds.z);
 }
 
 // Note: takes only positive range
@@ -176,6 +177,36 @@ void Terrain::genTerrainVerticesRecursive(
         else
         {
             genTerrainVerticesRecursive(x + 1, 0, max_x, max_z);
+        }
+    }
+}
+
+void Terrain::regenTerrainVerticesRecursive(
+    uint16_t x, uint16_t z, uint16_t x_off, uint16_t z_off)
+{
+    if (x == this->X_CELLS && z == this->Z_CELLS)
+    {
+        glm::vec3 v(x, this->elevation->get(x + x_off, z + z_off), z);
+        printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+        this->vertices.push_back(v);
+        return;
+    }
+    else
+    {
+        if (z < this->Z_CELLS)
+        {
+            glm::vec3 v(x, this->elevation->get(x + x_off, z + z_off), z);
+            printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+            this->vertices.push_back(v);
+
+            // recur
+            printf("terrain : recur : (%f, %f, %f, %f)\n", x, z, x_off, z_off);
+            genTerrainVerticesRecursive(x, z + 1, x_off, z_off);
+        }
+        else
+        {
+            printf("terrain : recur : (%f, %f, %f, %f)\n", x, z, x_off, z_off);
+            genTerrainVerticesRecursive(x + 1, 0, x_off, z_off);
         }
     }
 }
@@ -315,7 +346,14 @@ void Terrain::initBuffers()
 
 void Terrain::upload()
 {
-    // TODO resend vertices for advancing (infinite terrain)
+    glBindBuffer(GL_ARRAY_BUFFER, this->vboId);
+
+        glBufferData(GL_ARRAY_BUFFER,
+                     sizeof(glm::vec3) * this->vertices.size(),
+                     &this->vertices[0],
+                     GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->eboId);
 
