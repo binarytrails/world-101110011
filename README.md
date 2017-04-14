@@ -117,14 +117,21 @@ Dependencies: ```glew glm glfw-x11 mesa-demos soil```
 
 ## Assets
 
-- Terrain textures : https://opengameart.org/node/24221
-- Soundscape
+- Textures
+
+    - Terrain
     
-    ```assets/sound/amb-forest.ogg```
+        https://opengameart.org/content/terrain-textures-pack-from-stunt-rally-23
 
-    The size was reduced using Audacity software.
+- Sound
+    
+    - Background
 
-    http://www.freesound.org/people/bajko/sounds/385280
+        ```assets/sound/amb-forest.ogg```
+
+        The size was reduced using Audacity software.
+
+        http://www.freesound.org/people/bajko/sounds/385280
 
 ## Coding Style
 

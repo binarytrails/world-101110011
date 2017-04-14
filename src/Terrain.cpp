@@ -7,7 +7,7 @@
 
 Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
     X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES),
-    texFilepath("assets/images/desert_sand_bigx_d.jpg")
+    texFilepath("assets/textures/grass_green_d.jpg")
 {
     this->shader = new Shader("src/shaders/terrain.vs",
                               "src/shaders/terrain.fs");
