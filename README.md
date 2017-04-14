@@ -9,7 +9,7 @@ Group project with OpenGL in C++.
 ## Roadmap
 
 - Seva
-    - Project architecture
+    - ~~Project architecture~~
         - ~~Makefile~~
         - ~~Window class~~
         - ~~Shader class~~
@@ -22,8 +22,16 @@ Group project with OpenGL in C++.
         - ~~Grid~~
         - ~~Terrain height generation~~
         - ~~Recursion on grid & terrain generation~~
- 	- ~~Texture~~
-     - Attempt: Infinite terrain (reload on advancement)
+        - ~~Texture~~
+    - Infinite terrain (Optional)
+    - ~~Compiling (Linux & OSX)~~
+        - ~~World with Terrain~~
+        - ~~Trees~~
+        - ~~Particles~~
+    - Documentation
+        - ~~Doxyfile~~
+        - Doxygen: ~~class headers~~, methods & attributes
+        - Final report: Goal, Architecture & Terrain
     
 - Tarik
     - Add Skybox with a day/night cycle.
