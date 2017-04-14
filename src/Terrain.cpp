@@ -128,11 +128,6 @@ void Terrain::advance(const bool forward)
 
     std::vector<glm::vec3> vbuffer(this->vertices);
 
-    this->vertices.clear();
-    this->verticesI.clear();
-    this->upload();
-
-
     std::vector<glm::vec3> zcells;
 
     // for each z cell
@@ -154,6 +149,7 @@ void Terrain::advance(const bool forward)
         zcells.push_back(last);
     }
 
+    assert(vbuffer.size() == this->vertices.size() - this->Z_CELLS);
     assert(zcells.size() == this->Z_CELLS);
 
     // add them back in reverse
@@ -169,9 +165,13 @@ void Terrain::advance(const bool forward)
     printf("\nterrain : x_offset (%i)\n", this->x_offset);
     printf("terrain : z_offset (%i)\n\n", this->z_offset);
 
-    // copy it back into vertices
+    // erase current
+    this->vertices.clear();
+    this->verticesI.clear();
+    this->upload();
+
+    // load new
     this->vertices = vbuffer;
-    // Should remain the same
     this->genVerticesI();
     this->upload();
 

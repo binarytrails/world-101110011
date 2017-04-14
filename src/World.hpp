@@ -119,13 +119,9 @@ static void mouseKeyCallback(GLFWwindow* w, int key, int action, int mode)
 
 static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
 {
-    uint16_t step = 0;
-    const uint16_t step_size = 1;
-
     CallbackContext* cbcPtr = getWindowContext(w);
-    Terrain* terrain = cbcPtr->world->getTerrain();
-
     /* TODO
+     *  avance:
      *      1. detect direction
      *      2. if going on positive x or z axis then
      *              advance terrain in this direction
@@ -133,18 +129,12 @@ static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
 
     if (yoffset > 0)
     {
-        //cbcPtr->steps++;
-        //step = cbcPtr->steps * step_size;
-
-        terrain->advance(true);
+        cbcPtr->world->getTerrain()->advance(true);
         //cbcPtr->world->getCamera()->moveForward();
     }
     else if (yoffset < 0)
     {
-        //cbcPtr->steps--;
-        //step = cbcPtr->steps * step_size * -1;
-
-        terrain->advance(false);
+        cbcPtr->world->getTerrain()->advance(false);
         //cbcPtr->world->getCamera()->moveBackward();
     }
 }
