@@ -31,12 +31,23 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
 
     this->updateMVP();
 
+    // mouse camera controls
     lastX = this->window->width()/2;
     lastY = this->window->height()/2;
-
     pitch = 0.0f;
     yaw = -90.0f;
 
+    // sound
+    if (!this->bgMusicBuffer.loadFromFile("./assets/sound/amb-forest.ogg"))
+    {
+        fprintf(stderr, "Failed to load background music");
+    }
+    else
+    {
+        this->bgMusic.setBuffer(this->bgMusicBuffer);
+        this->bgMusic.setLoop(true);
+        this->bgMusic.play();
+    }
 }
 
 World::~World()

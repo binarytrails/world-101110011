@@ -16,6 +16,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+//! Sound library
+#include <SFML/Audio.hpp>
+
 #include "Window.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
@@ -71,6 +74,8 @@ class World
         const uint16_t TERRAIN_WIDTH;
         const uint16_t TERRAIN_HEIGHT;
 
+        sf::Sound       bgMusic;
+        sf::SoundBuffer bgMusicBuffer;
 };
 
 // Window context

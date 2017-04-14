@@ -23,7 +23,8 @@ Group project with OpenGL in C++.
         - ~~Terrain height generation~~
         - ~~Recursion on grid & terrain generation~~
         - ~~Texture~~
-    - Infinite terrain (Optional)
+    - ~~Ambiance~~
+        - ~~Sound engine~~
     - ~~Compiling (Linux & OSX)~~
         - ~~World with Terrain~~
         - ~~Trees~~
@@ -31,7 +32,9 @@ Group project with OpenGL in C++.
     - Documentation
         - ~~Doxyfile~~
         - Doxygen: ~~class headers~~, methods & attributes
-        - Final report: Goal, Architecture & Terrain
+        - Final report: Goal, Architecture, Terrain & Ambiance
+    - Optional
+        - Infinite terrain, see: terrain-infinite branch
     
 - Tarik
     - Add Skybox with a day/night cycle.
@@ -68,19 +71,25 @@ Group project with OpenGL in C++.
 
 ## Controls
 
-Floating Camera:
+**Basic:**
 
-    scroll      z-zoom
-    arrows      rotate
+    ESC         exit
+    
+    touchpad    look around
+    
+    i           zoom in
+    o           zoom out
+    scroll      zoom in / out
     
     w           move forward
     s           move backward
     a           move left
     d           move right
     
-    i           zoom in
-    o           zoom out
-    
+**Extra:**
+
+    arrows      rotate everything
+
     t           display triangles
     l           display lines
     p           display points
@@ -104,10 +113,18 @@ Dependencies: ```glew glm glfw-x11 mesa-demos soil```
 ## Libraries
 
 - SOIL : loads texture image
+- SFML : sound engine
 
 ## Assets
 
 - Terrain textures : https://opengameart.org/node/24221
+- Soundscape
+    
+    ```assets/sound/amb-forest.ogg```
+
+    The size was reduced using Audacity software.
+
+    http://www.freesound.org/people/bajko/sounds/385280
 
 ## Coding Style
 
