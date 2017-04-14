@@ -7,9 +7,11 @@
 
 layout (location = 0) in vec3 _pos;
 layout (location = 1) in vec2 _texCoord;
+layout (location = 2) in vec3 _normal;
 
 out vec3 pos;
 out vec2 texCoord;
+out vec3 normal;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -22,4 +24,6 @@ void main()
 
     pos = _pos;
     texCoord = _texCoord;
+	normal = _normal;
+	
 }

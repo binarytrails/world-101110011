@@ -35,6 +35,14 @@ mac: all
 	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} ${EXTRA_LIBS} \
 		${INCLUDES} ${CXX_FILES} ${BIN}
 
+# Change code to use a different PGTree to compile a different one
+trees-arch: all
+	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} ${EXTRA_LIBS} \
+		${INCLUDES} -o build/trees.out \
+		src/GLObject.cpp src/Helper.cpp src/lNode.cpp src/PGObject.cpp \
+		src/MainTrees.cpp src/Shader.h src/Point.cpp src/PGTree*.cpp \
+		src/Vector.cpp src/RotationalObject.cpp
+
 skybox-arch: all
 	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} ${EXTRA_LIBS} \
 		${INCLUDES} -o build/skybox.out \
@@ -44,6 +52,11 @@ skybox-mac: all
 	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} ${EXTRA_LIBS} \
 		${INCLUDES} -o build/skybox.out \
 		src/Skybox.cpp src/Camera.cpp src/Window.cpp src/Shader.cpp
+
+weather-arch: all
+	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} ${EXTRA_LIBS} \
+		${INCLUDES} -o build/weather.out \
+		src/MainCloud.cpp src/Cloud.cpp src/Particle.cpp src/Wind.cpp
 
 clean:
 	rm -rf build/

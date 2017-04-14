@@ -8,7 +8,7 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z) {
 	_x = x;
 	_y = y;
 	_z = z;
-	velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+	velocity = glm::vec3(0.0f, randomBetween(0.0f, -0.005f), 0.0f);
 
 	_acceleration = -0.00001f;
 }
@@ -43,4 +43,11 @@ void Particle::increment() {
 
 bool Particle::checkLife() {
 	if (_y <= floor) return false;
+}
+
+float Particle::randomBetween(float a, float b) {
+	float random = ((float)rand()) / (float)RAND_MAX;
+	float diff = b - a;
+	float r = random * diff;
+	return a + r;
 }
