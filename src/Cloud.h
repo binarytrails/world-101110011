@@ -11,6 +11,8 @@
 #include <vector>
 #include <time.h>
 
+#include <stdio.h>
+
 class Cloud {
 
 public:
