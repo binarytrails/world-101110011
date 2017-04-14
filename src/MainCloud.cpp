@@ -97,7 +97,7 @@ int main() {
 
 	// create new cloud and set all it's starting drops
 	Wind* breeze = new Wind(0.0005f, 0.0f, 0.0f);
-	Cloud* test = new Cloud(-0.5f, 5.0f, 0.5f, 0.75, 0.75, maxParticles, breeze, 1);
+	Cloud* test = new Cloud(-0.5f, 2.0f, 0.5f, 0.75, 0.75, maxParticles, breeze, 1);
 	test->setAllDrops();
 
 
