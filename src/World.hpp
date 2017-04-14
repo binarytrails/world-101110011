@@ -133,18 +133,18 @@ static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
 
     if (yoffset > 0)
     {
-        cbcPtr->steps++;
-        step = cbcPtr->steps * step_size;
+        //cbcPtr->steps++;
+        //step = cbcPtr->steps * step_size;
 
-        terrain->advance(glm::ivec3(step, 0, step));
+        terrain->advance(true);
         //cbcPtr->world->getCamera()->moveForward();
     }
     else if (yoffset < 0)
     {
-        cbcPtr->steps--;
-        step = cbcPtr->steps * step_size * -1;
+        //cbcPtr->steps--;
+        //step = cbcPtr->steps * step_size * -1;
 
-        terrain->advance(glm::ivec3(step, 0, step));
+        terrain->advance(false);
         //cbcPtr->world->getCamera()->moveBackward();
     }
 }
