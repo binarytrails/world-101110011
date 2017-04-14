@@ -41,7 +41,7 @@ class Terrain : public Mesh
 
         void rotate(const glm::vec3 spin);
 
-        void advance(const bool forward);
+        bool advance(const bool forward);
 
     private:
         void initBuffers();

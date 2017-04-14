@@ -116,51 +116,41 @@ void Terrain::build()
 }
 
 // curently one at the time
-void Terrain::advance(const bool forward)
+bool Terrain::advance(const bool forward)
 {
+    if (this->X_CELLS + this->x_offset <= 0 ||
+        this->Z_CELLS + this->z_offset <= 0)
+        return false;
+
     printf("\nterrain : advance");//(%i, %i)\n", x_steps, z_steps);
     printf("terrain : vertices.size()->%i\n", this->vertices.size());
 
 
     this->x_offset += (forward) ? 1 : -1;
+    //this->x_offset = 0;
     this->z_offset += (forward) ? 1 : -1;
 
 
     std::vector<glm::vec3> vbuffer(this->vertices);
 
-    std::vector<glm::vec3> zcells;
-
-    // for each z cell
-    //
-    for (uint16_t i = 0; i < this->Z_CELLS; i++)
+    for (uint16_t z = 0; z < this->Z_CELLS; z++)
     {
-        // get last
-        glm::vec3 last = vbuffer.back();
-        // remove last
-        vbuffer.pop_back();
+        uint16_t index = (this->X_CELLS - x_offset) * this->Z_CELLS + z;
 
+        glm::vec3 cell = vbuffer[index];
 
-        printf("terrain : advance : blast (%f, %f, %f)\n", last.x, last.y, last.z);
+        printf("terrain : advance : bcell (%f, %f, %f)\n", cell.x, cell.y, cell.z);
 
-        last.y = this->elevation->get(last.x + this->x_offset, last.z + z_offset);
+        cell.y = this->elevation->get(cell.x + this->x_offset, cell.z + z_offset);
 
-        printf("terrain : advance : alast (%f, %f, %f)\n\n", last.x, last.y, last.z);
+        printf("terrain : advance : acell (%f, %f, %f)\n\n", cell.x, cell.y, cell.z);
 
-        zcells.push_back(last);
+        vbuffer[index] = cell;
     }
 
-    assert(vbuffer.size() == this->vertices.size() - this->Z_CELLS);
-    assert(zcells.size() == this->Z_CELLS);
+    assert(vbuffer.size() == this->vertices.size());
 
-    // add them back in reverse
-    //
-    for (uint16_t i = 0; i < this->Z_CELLS; i++)
-    {
-        // get and add lastly added
-        vbuffer.push_back(zcells.back());
-        // remove it
-        zcells.pop_back();
-    }
+    //vbuffer.clear();
 
     printf("\nterrain : x_offset (%i)\n", this->x_offset);
     printf("terrain : z_offset (%i)\n\n", this->z_offset);
@@ -176,6 +166,7 @@ void Terrain::advance(const bool forward)
     this->upload();
 
     printf("terrain : vertices.size()->%i\n", this->vertices.size());
+    return true;
 }
 
 // Note: takes only positive range

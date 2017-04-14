@@ -14,7 +14,8 @@ TerrainHeight::TerrainHeight():
 //! Generate terrain height (y) using x >= 0 and y >= 0
 float TerrainHeight::get(const float x, const float z)
 {
-    assert(x >= 0); assert(z >= 0);
+    if (x <= 0.000000 && z <= 0.000000)
+        return 0.00;
 
     float height = 0;
     float divisor = (float) pow(2, this->OCTAVES - 1);
