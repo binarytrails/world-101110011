@@ -1,6 +1,7 @@
 /*
  * @file
  * @author Vsevolod (Seva) Ivanov
+ * @brief based on docs/research/PerlinNoise.pdf
 */
 
 #pragma once
@@ -8,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <assert.h>
 
 class TerrainHeight
 {
@@ -30,5 +32,7 @@ class TerrainHeight
         float randf(const unsigned int upperBound);
 
         int   SEED;
+        int   OCTAVES;
         float AMPLITUDE;
+        float IRREGULARITY;
 };

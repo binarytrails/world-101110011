@@ -6,35 +6,34 @@
 #include "TerrainHeight.hpp"
 
 TerrainHeight::TerrainHeight():
-    AMPLITUDE(6),
+    OCTAVES(4), AMPLITUDE(6.0f), IRREGULARITY(0.5f),
     SEED(rand() % (unsigned int)pow(10, 10))
 {
 }
 
-/* TODO
- *      assert positive numbers
- */
+//! Generate terrain height (y) using x >= 0 and y >= 0
 float TerrainHeight::get(const float x, const float z)
 {
-    // octaves & sharpness
-    float t =  inoise (x/4, z/4) * AMPLITUDE;
-          t += inoise (x/2, x/2) * AMPLITUDE/3;
-          t += inoise (x,   z)   * AMPLITUDE/9;
+    assert(x >= 0); assert(z >= 0);
 
-    /* TODO more controls
-    float d = (float) pow(2, o-1);
+    float height = 0;
+    float divisor = (float) pow(2, this->OCTAVES - 1);
 
-    for (int i=0; i < o; i++)
-        float f = (float) (pow(2, i) / d);
-        float a = (float) pow(r, i) * AMPLITUDE;
-        t += inoise(x*f, z*f) * a;
-    */
-    return t;
+    for (int octave = 0; octave < this->OCTAVES; octave++)
+    {
+        float frequency = (float) (pow(2, octave) / divisor);
+
+        float amplitude = (float) pow(this->IRREGULARITY, octave) * AMPLITUDE;
+
+        height += inoise(x * frequency, z * frequency) * amplitude;
+    }
+
+    return height;
 }
 
 // Private
 
-// smooth noise
+//! Smooth noise
 float TerrainHeight::snoise(float x, float z)
 {
     // dividor reduces their influence
@@ -53,7 +52,7 @@ float TerrainHeight::snoise(float x, float z)
     return c + s + m;
 }
 
-// sharp noise
+//! Sharp noise
 float TerrainHeight::noise(const float x, const float z)
 {
     // set random seed
@@ -77,7 +76,7 @@ float TerrainHeight::inoise(float x, float z)
     return     icurve  (i1,   i2,  fz);
 }
 
-// interpolated curve
+//! Interpolated curve
 float TerrainHeight::icurve(float a, float b, float bl)
 {
     double angle = bl * M_PI;
@@ -85,7 +84,7 @@ float TerrainHeight::icurve(float a, float b, float bl)
     return a * (1.0f - f) + b * f;
 }
 
-// [0, upperBound]
+//! Random float in range : [0, upperBound]
 float TerrainHeight::randf(const unsigned int upperBound)
 {
     return static_cast <float> (
