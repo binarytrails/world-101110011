@@ -7,7 +7,7 @@ const uint WIDTH = 800, HEIGHT = 600;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mousePositionCallback(GLFWwindow* window, double xpos, double ypos);
-void Do_Movement();
+// void Do_Movement();
 
 
 Camera* camera = new Camera();
@@ -16,7 +16,7 @@ bool keys[1024];
 GLfloat lastX = 400, lastY = 300;
 bool firstMouse = true;
 
-GLfloat yaw = 0.0f;
+GLfloat yaw = -90.0f;
 GLfloat pitch = 0.0f;
 
 int main()
@@ -44,8 +44,8 @@ int main()
     faces.push_back("cubemap/left.jpg");
     faces.push_back("cubemap/top.jpg");
     faces.push_back("cubemap/bottom.jpg");
-    faces.push_back("cubemap/front.jpg");
     faces.push_back("cubemap/back.jpg");
+    faces.push_back("cubemap/front.jpg");
 
 	//5. Create Skybox object
 	Skybox* skybox = new Skybox(faces);
@@ -85,8 +85,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
 {
-
-	std::cout << "Inside Mouse Position Callback..." << std::endl;
     // Delta of position along x-axis.
     GLfloat xoffset = xpos - lastX;
 
@@ -115,7 +113,8 @@ void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
     viewDirection.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
     viewDirection.y = sin(glm::radians(pitch));
     viewDirection.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-    camera->getAt() = glm::normalize(viewDirection);
+    glm::vec3 normalized = glm::normalize(viewDirection);
+    camera->setAt(normalized);
 
 }
 

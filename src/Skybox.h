@@ -15,9 +15,9 @@
 #include <SOIL/SOIL.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../../src/Camera.hpp" 
-#include "../../src/Window.hpp"
-#include "../../src/Shader.hpp"
+#include "Camera.hpp" 
+#include "Window.hpp"
+#include "Shader.hpp"
 
 
 class Skybox 
@@ -32,7 +32,10 @@ public:
 	void loadCubeMap(std::vector<const GLchar*>& faces);
 
 	//! Renders out our skybox.
-	void renderSkybox(Window* window, Camera* camera);
+	// void renderSkybox(Window* window, Camera* camera);
+	void renderSkybox(Window* window, Camera* camera, 
+					const glm::mat4& view,
+					const glm::mat4& projection);
 
 private:
 

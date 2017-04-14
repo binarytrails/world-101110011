@@ -20,6 +20,7 @@
 #include "Shader.hpp"
 #include "Camera.hpp"
 #include "Terrain.hpp"
+#include "Skybox.h"
 
 class World
 {
@@ -38,6 +39,13 @@ class World
 
         void rotate(const glm::vec3 axes);
 
+        // For our camera in order to calculate offset movement for mouse position.
+        GLfloat lastX, lastY;
+
+        // Again, for our camera.
+        GLfloat pitch;
+        GLfloat yaw;
+
     private:
         void setWindowContext();
         void setWindowCallbacks();
@@ -47,7 +55,8 @@ class World
         Window *window;
         Shader *shader;
         Camera *camera;
-
+        Skybox *skybox;
+        
         GLuint vboId,
                vaoId,
                eboId;
@@ -61,13 +70,6 @@ class World
         Terrain *terrain;
         const uint16_t TERRAIN_WIDTH;
         const uint16_t TERRAIN_HEIGHT;
-
-        // For our camera in order to calculate offset movement for mouse position.
-        GLfloat lastX, lastY;
-
-        // Again, for our camera.
-        GLfloat pitch;
-        GLfloat yaw;
 
 };
 
@@ -157,44 +159,45 @@ static void mouseKeyCallback(GLFWwindow* w, int key, int action, int mode)
 
 // TODO : Implement mouse control.
 
-// static void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
-// {
-//     CallbackContext* cbcPtr = getWindowContext(w);
+static void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
+{
+    CallbackContext* cbcPtr = getWindowContext(w);
 
-//     // Delta of position along x-axis.
-//     GLfloat xoffset = xpos - cbcPtr->world->lastX;
+    // Delta of position along x-axis.
+    GLfloat xoffset = xpos - cbcPtr->world->lastX;
 
-//     // Delta of positon along y-axis.
-//     GLfloat yoffset = ypos - cbcPtr->world->lastY;
+    // Delta of positon along y-axis.
+    GLfloat yoffset = ypos - cbcPtr->world->lastY;
 
-//     // Reset our x and y positions for the frame. 
-//     cbcPtr->world->lastX = xpos;
-//     cbcPtr->world->lastY = ypos;
+    // Reset our x and y positions for the frame. 
+    cbcPtr->world->lastX = xpos;
+    cbcPtr->world->lastY = ypos;
 
-//     // In order to lessen the jerk of mouse movement, we add this sensitivity to offsets. 
-//     GLfloat sensitivity = 0.05f;
-//     xoffset *= sensitivity;
-//     yoffset *= sensitivity;
+    // In order to lessen the jerk of mouse movement, we add this sensitivity to offsets. 
+    GLfloat sensitivity = 0.05f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
 
-//     cbcPtr->world->yaw += xoffset;
-//     cbcPtr->world->pitch += yoffset;
+    cbcPtr->world->yaw += xoffset;
+    cbcPtr->world->pitch += yoffset;
 
-//     // Make sure that pitch is in the domain [-89.0, 89.0] (not exactly 90 due to cosine).
-//     if(cbcPtr->world->pitch > 89.0f)
-//         cbcPtr->world->pitch = 89.0f;
-//     if(cbcPtr->world->pitch < -89.0f)
-//         cbcPtr->world->pitch = -89.0f;
+    // Make sure that pitch is in the domain [-89.0, 89.0] (not exactly 90 due to cosine).
+    if(cbcPtr->world->pitch > 89.0f)
+        cbcPtr->world->pitch = 89.0f;
+    if(cbcPtr->world->pitch < -89.0f)
+        cbcPtr->world->pitch = -89.0f;
 
-//     GLfloat final_pitch = cbcPtr->world->pitch;
-//     GLfloat final_yaw = cbcPtr->world->yaw;
+    GLfloat final_pitch = cbcPtr->world->pitch;
+    GLfloat final_yaw = cbcPtr->world->yaw;
 
-//     glm::vec3 viewDirection;
-//     viewDirection.x = cos(glm::radians(final_pitch)) * cos(glm::radians(final_yaw));
-//     viewDirection.y = sin(glm::radians(final_pitch));
-//     viewDirection.z = cos(glm::radians(final_pitch)) * sin(glm::radians(final_yaw));
-//     cbcPtr->world->getCamera()->getAt() = glm::normalize(viewDirection);
+    glm::vec3 viewDirection;
+    viewDirection.x = cos(glm::radians(final_pitch)) * cos(glm::radians(final_yaw));
+    viewDirection.y = sin(glm::radians(final_pitch));
+    viewDirection.z = cos(glm::radians(final_pitch)) * sin(glm::radians(final_yaw));
+    glm::vec3 normalized =  glm::normalize(viewDirection);
+    cbcPtr->world->getCamera()->setAt(normalized); 
 
-// }
+}
 
 static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
 {

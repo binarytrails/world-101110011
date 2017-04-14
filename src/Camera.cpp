@@ -7,7 +7,7 @@
 
 Camera::Camera() :
     eye(0.0f, 3.0f, 0.0f),
-    at(0.0f, 0.0f, 1.0f),
+    at(0.0f, 0.0f, -1.0f),
     up(0.0f, 1.0f, 0.0f),
     speed(0.8f)
 {
@@ -20,9 +20,9 @@ glm::mat4 Camera::view() const
     return glm::lookAt(eye, eye + at, up);
 }
 
-glm::vec3 Camera::getAt()
+void Camera::setAt(glm::vec3& new_at)
 {
-    return at;
+    at = new_at;
 }
 
 void Camera::moveForward()

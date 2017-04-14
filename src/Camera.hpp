@@ -21,7 +21,7 @@ class Camera
 
         glm::mat4 view() const;
 
-        glm::vec3 getAt();
+        void setAt(glm::vec3& new_at);
 
         void moveUp();
         void moveRight();

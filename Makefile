@@ -16,7 +16,8 @@ EXTRA_LIBS=-lSOIL
 
 INCLUDES=-I./src
 CXX_FILES=src/Main.cpp src/Window.cpp src/Shader.cpp src/Camera.cpp \
-		  src/World.cpp src/Terrain.cpp src/TerrainHeight.cpp
+		  src/World.cpp src/Terrain.cpp src/TerrainHeight.cpp \
+		  src/Skybox.cpp
 
 BIN=-o build/world.out
 

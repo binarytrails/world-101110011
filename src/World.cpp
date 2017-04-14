@@ -88,7 +88,7 @@ void World::setWindowCallbacks()
     glfwSetScrollCallback(this->window->get(), mouseScrollCallback);
 
     // TODO
-    // glfwSetCursorPosCallback(this->window->get(), mousePositionCallback);
+    glfwSetCursorPosCallback(this->window->get(), mousePositionCallback);
 }
 
 void World::updateMVP()
@@ -117,6 +117,17 @@ void World::build()
 {
     this->terrain = new Terrain(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
 
+    // Faces for our cubemap.
+    std::vector<const GLchar*> faces;
+    faces.push_back("cubemap/right.jpg");
+    faces.push_back("cubemap/left.jpg");
+    faces.push_back("cubemap/top.jpg");
+    faces.push_back("cubemap/bottom.jpg");
+    faces.push_back("cubemap/back.jpg");
+    faces.push_back("cubemap/front.jpg");
+    
+    this->skybox = new Skybox(faces);
+
     this->setWindowContext();
     this->setWindowCallbacks();
 }
@@ -135,6 +146,9 @@ void World::draw()
 
         this->terrain->render(this->window, this->camera,
                               this->view, this->projection);
+
+        this->skybox->renderSkybox(this->window, this->camera,
+                                    this->view, this->projection);
 
         // continuous rotation
         //this->rotate(glm::vec3(0, 0, 0));

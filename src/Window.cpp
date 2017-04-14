@@ -24,7 +24,7 @@ Window::Window(const int w, const int h,
     glfwMakeContextCurrent(this->window);
 
     // Used for capturing mouse (camera system). 
-    // glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 Window::~Window()
