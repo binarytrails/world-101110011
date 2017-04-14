@@ -152,6 +152,7 @@ void Terrain::advance(const bool forward)
     assert(vbuffer.size() == this->vertices.size() - this->Z_CELLS);
     assert(zcells.size() == this->Z_CELLS);
 
+    vbuffer.clear();
     // add them back in reverse
     //
     for (uint16_t i = 0; i < this->Z_CELLS; i++)
