@@ -200,8 +200,10 @@ static void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
     viewDirection.y = sin(glm::radians(final_pitch));
     viewDirection.z = cos(glm::radians(final_pitch)) * sin(glm::radians(final_yaw));
     glm::vec3 normalized =  glm::normalize(viewDirection);
+    /* FIXME you need to start by using the initialized at value;
+     *  In order, to avoid seeing nothing by overwriting its configuration
+     */
     cbcPtr->world->getCamera()->setAt(normalized); 
-
 }
 
 static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
