@@ -35,7 +35,7 @@
 
 class Forest : public Mesh {
 public:
-    Forest();
+    Forest(const uint16_t xcells, const uint16_t zcells);
     virtual ~Forest();
     
     virtual GLenum getRenderMode() const;
@@ -55,6 +55,9 @@ private:
     
     glm::mat4 model;
     glm::mat4 view;
+    
+    const uint16_t X_CELLS;
+    const uint16_t Z_CELLS;
     
     void build();
     void updateMVP(const glm::mat4 view, const glm::mat4 projection);

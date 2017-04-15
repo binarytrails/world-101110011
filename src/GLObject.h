@@ -53,7 +53,7 @@ public:
 protected:
     int vCursor = 0;
     int iCursor = 0;
-    void addPoint(float x, float y, float z, float nx = 0, float ny = 0, float nz = 0, float r = 1.0f, float g = 1.0f, float b = 1.0f);
+    void addPoint(float x, float y, float z, float nx = 0, float ny = 0, float nz = 0, float r = 0.5f, float g = 0.5f, float b = 0.5f);
     void addindice(int p1, int p2, int p3);
     void addTriangle(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);//assume color data is provided in vectors
 	

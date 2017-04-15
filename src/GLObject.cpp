@@ -9,7 +9,7 @@ void GLObject::draw(glm::vec3* translations, int count) {
         // Store instance data in an array buffer
         glGenBuffers(1, &instanceVBO);
         glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * 100, &translations[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * instanceCount, &translations[0], GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         
         glGenVertexArrays(1, &VAO);
@@ -51,7 +51,9 @@ void GLObject::draw(glm::vec3* translations, int count) {
         glBindVertexArray(VAO);
     }
     
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDrawElementsInstanced(GL_TRIANGLES, iSize, GL_UNSIGNED_INT, 0, instanceCount);
+    glBindVertexArray(0);
 }
 
 void GLObject::addPoint(float x, float y, float z, float nx, float ny, float nz, float r, float g, float b) {
