@@ -42,10 +42,10 @@ class World
 
         void rotate(const glm::vec3 axes);
 
-        // For our camera in order to calculate offset movement for mouse position.
+        //! For camera to calculate offset movement for mouse position
         GLfloat lastX, lastY;
 
-        // Again, for our camera.
+        //! For camera controls
         GLfloat pitch;
         GLfloat yaw;
 
@@ -59,7 +59,7 @@ class World
         Shader *shader;
         Camera *camera;
         Skybox *skybox;
-        
+
         GLuint vboId,
                vaoId,
                eboId;
@@ -106,25 +106,25 @@ static void framebufferSizeCallback(GLFWwindow* w, int width, int height)
 }
 
 /*
-    Note: In order to ensure a smooth input handling from our application, 
+    Note: In order to ensure a smooth input handling from our application,
     a boolean array is created to hold GLFW key values. If a key's particular
     index is 0 (i.e. false), then it is not pressed or has been released by the
     user. If a key's particular index is 1 (i.e true), then the key is pressed.
 
-    This array is then used in conjunction with function doMovement(), which 
+    This array is then used in conjunction with function doMovement(), which
     effectively carries out the neccesary camera system adjustments based on input.
 
-    This code was taken from www.learnopengl.com. 
+    This code was taken from www.learnopengl.com.
 
-    TODO: Possible adjustments to camera speed. 
+    TODO: Possible adjustments to camera speed.
 */
 static bool keys[256];
 static void doMovement(GLFWwindow* w);
 
-// END OF LEARNOPENGL CODE. 
+// END OF LEARNOPENGL CODE.
 
 static void keyCallback(GLFWwindow* w, int key, int scancode, int action, int mode)
-{   
+{
     if(action == GLFW_PRESS)
         keys[key] = true;
     else if(action == GLFW_RELEASE)
@@ -174,11 +174,11 @@ static void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
     // Delta of positon along y-axis.
     GLfloat yoffset = ypos - cbcPtr->world->lastY;
 
-    // Reset our x and y positions for the frame. 
+    // Reset our x and y positions for the frame.
     cbcPtr->world->lastX = xpos;
     cbcPtr->world->lastY = ypos;
 
-    // In order to lessen the jerk of mouse movement, we add this sensitivity to offsets. 
+    // In order to lessen the jerk of mouse movement, we add this sensitivity to offsets.
     GLfloat sensitivity = 0.05f;
     xoffset *= sensitivity;
     yoffset *= sensitivity;
@@ -196,14 +196,14 @@ static void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
     GLfloat final_yaw = cbcPtr->world->yaw;
 
     glm::vec3 viewDirection;
+
     viewDirection.x = cos(glm::radians(final_pitch)) * cos(glm::radians(final_yaw));
     viewDirection.y = sin(glm::radians(final_pitch));
     viewDirection.z = cos(glm::radians(final_pitch)) * sin(glm::radians(final_yaw));
+
     glm::vec3 normalized =  glm::normalize(viewDirection);
-    /* FIXME you need to start by using the initialized at value;
-     *  In order, to avoid seeing nothing by overwriting its configuration
-     */
-    cbcPtr->world->getCamera()->setAt(normalized); 
+
+    cbcPtr->world->getCamera()->setAt(normalized);
 }
 
 static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)

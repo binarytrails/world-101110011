@@ -8,7 +8,8 @@
 World::World(const uint16_t width, const uint16_t height, const char* name):
     TERRAIN_WIDTH(width), TERRAIN_HEIGHT(height),
     window(new Window(1280, 720, name)),
-    camera(new Camera())
+    camera(new Camera()),
+    pitch(0.0f), yaw(45.0f)
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -20,6 +21,10 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
     // TODO add to frame buffer callback
     glViewport(0, 0, this->window->width(), this->window->height());
 
+    // Camera mouse controls
+    lastX = this->window->width() / 2;
+    lastY = this->window->height() / 2;
+
     this->shader = new Shader("src/shaders/world.vs",
                               "src/shaders/world.fs");
 
@@ -30,12 +35,6 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
     this->rotate(glm::vec3(5, 0, 0));
 
     this->updateMVP();
-
-    // mouse camera controls
-    lastX = this->window->width()/2;
-    lastY = this->window->height()/2;
-    pitch = 0.0f;
-    yaw = -90.0f;
 
     // sound
     if (!this->bgMusicBuffer.loadFromFile("./assets/sound/amb-forest.ogg"))
@@ -136,7 +135,7 @@ void World::build()
     faces.push_back("cubemap/bottom.jpg");
     faces.push_back("cubemap/back.jpg");
     faces.push_back("cubemap/front.jpg");
-    
+
     this->skybox = new Skybox(faces);
 
     this->setWindowContext();
