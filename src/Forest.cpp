@@ -13,7 +13,8 @@
 
 #include "Forest.h"
 
-Forest::Forest() {
+Forest::Forest(const uint16_t xcells, const uint16_t zcells):
+    X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES) {
     this->shader = new Shader("src/shaders/object.vs",
                               "src/shaders/object.fs");
     this->build();
@@ -47,7 +48,7 @@ void Forest::rotate(const glm::vec3 spin) {
 
 void Forest::build() {
     Point offset(0,0,0,Vector(0,1,0));
-    PGTree1 tree1 = PGTree1(offset,10);
+    PGTree1 tree1 = PGTree1(offset,6);
     objects.push_back(new GLObject(tree1.objects));
 }
 
@@ -70,9 +71,9 @@ void Forest::draw()
     glm::vec3 translations[100];
     int index = 0;
     glm::vec3 translation;
-    translation.x = 10;
-    translation.y = 5;
-    translation.z = 10;
+    translation.x = 0;
+    translation.y = 0;
+    translation.z = 0;
     translations[index] = translation;
     
     for(int c = 0; c < objects.size(); c++) {

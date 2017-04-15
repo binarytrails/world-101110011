@@ -127,7 +127,7 @@ void World::updateMVP()
 void World::build()
 {
     this->terrain = new Terrain(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
-    this->forest = new Forest();
+    this->forest = new Forest(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
 
     // Faces for our cubemap.
     std::vector<const GLchar*> faces;

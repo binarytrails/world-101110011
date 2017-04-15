@@ -29,8 +29,8 @@ PGTree1::PGTree1(Point offset, float radius) {
     r->nodes.push_back(d);
     
     float T[6] = {
-        10, 10, 10,
-        10, 20, 10
+        5, 0, 0,
+        5, 5, 0
     };
     
     loop(r, offset, radius, 2);
