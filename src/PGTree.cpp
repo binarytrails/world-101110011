@@ -4,7 +4,7 @@ void PGTree::loop(lNode* rootNode, Point offset, float limit, float step) {
     if(limit >= step) {
         float P[6] = {
             limit, 0.0f, 0.0f,
-            limit-step > 0 && rootNode->nodes.size() > 0 ? limit : 0, 0.2f, 0.0f
+            limit-step > 0 && rootNode->nodes.size() > 0 ? limit : 0, 20, 0.0f
         };
         
         //std::cout << limit << "--- ";

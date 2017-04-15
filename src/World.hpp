@@ -21,6 +21,7 @@
 #include "Camera.hpp"
 #include "Terrain.hpp"
 #include "Skybox.h"
+#include "Forest.h"
 
 class World
 {
@@ -68,6 +69,7 @@ class World
         glm::mat4 projection;
 
         Terrain *terrain;
+        Forest* forest;
         const uint16_t TERRAIN_WIDTH;
         const uint16_t TERRAIN_HEIGHT;
 

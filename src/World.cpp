@@ -52,6 +52,7 @@ World::~World()
 void World::setRenderMode(const GLenum mode)
 {
     this->terrain->setRenderMode(mode);
+    this->forest->setRenderMode(mode);
 }
 
 Window* World::getWindow()
@@ -116,6 +117,7 @@ void World::updateMVP()
 void World::build()
 {
     this->terrain = new Terrain(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
+    this->forest = new Forest();
 
     // Faces for our cubemap.
     std::vector<const GLchar*> faces;
@@ -146,6 +148,9 @@ void World::draw()
 
         this->terrain->render(this->window, this->camera,
                               this->view, this->projection);
+        
+        this->forest->render(this->window, this->camera,
+                              this->view, this->projection);
 
         this->skybox->renderSkybox(this->window, this->camera,
                                     this->view, this->projection);
@@ -166,4 +171,5 @@ void World::rotate(const glm::vec3 axes)
 {
     glm::vec3 terrainSpin = axes / 20.0f;
     this->terrain->rotate(terrainSpin);
+    this->forest->rotate(terrainSpin);
 }

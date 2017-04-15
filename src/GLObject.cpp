@@ -4,6 +4,8 @@ void GLObject::draw(glm::vec3* translations, int count) {
     if(this->instanceCount == -1) {
         instanceCount = count;
         
+        glPointSize(3);
+        
         // Store instance data in an array buffer
         glGenBuffers(1, &instanceVBO);
         glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
