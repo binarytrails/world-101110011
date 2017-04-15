@@ -12,7 +12,7 @@ OPENGL_MAC=-lGLEW -lglfw3 -framework Cocoa -framework OpenGL \
 GLFW_ARCH=-lglfw
 GLFW_UNIX=-lglfw3
 
-EXTRA_LIBS=-lSOIL
+EXTRA_LIBS=-lSOIL -lsfml-audio
 
 INCLUDES=-I./src
 CXX_FILES=src/Main.cpp src/Window.cpp src/Shader.cpp src/Camera.cpp \
@@ -28,7 +28,8 @@ all:
 	mkdir -p build
 
 arch: all
-	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} ${EXTRA_LIBS} \
+	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} \
+		${EXTRA_LIBS} ${SOUND_LINUX} \
 		${INCLUDES} ${CXX_FILES} ${BIN}
 
 linux: all
