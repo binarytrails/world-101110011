@@ -44,6 +44,7 @@ class World
 
         //! For camera to calculate offset movement for mouse position
         GLfloat lastX, lastY;
+        bool mousePressed;
 
         //! For camera controls
         GLfloat pitch;
@@ -133,7 +134,6 @@ static void keyCallback(GLFWwindow* w, int key, int scancode, int action, int mo
 
 static void doMovement(GLFWwindow* w)
 {
-    //printf("keyboard: %i\n", key);
     CallbackContext* cbcPtr = getWindowContext(w);
 
     if (keys[GLFW_KEY_LEFT])   cbcPtr->world->rotate(glm::vec3(0, 1, 0));
@@ -143,8 +143,8 @@ static void doMovement(GLFWwindow* w)
 
     if (keys[GLFW_KEY_W]) cbcPtr->world->getCamera()->moveUp();
     if (keys[GLFW_KEY_S]) cbcPtr->world->getCamera()->moveDown();
-    if (keys[GLFW_KEY_D]) cbcPtr->world->getCamera()->moveLeft(); //Modified D for Right
-    if (keys[GLFW_KEY_A]) cbcPtr->world->getCamera()->moveRight(); //Modified A for Left
+    if (keys[GLFW_KEY_D]) cbcPtr->world->getCamera()->moveLeft();
+    if (keys[GLFW_KEY_A]) cbcPtr->world->getCamera()->moveRight();
 
     if (keys[GLFW_KEY_I]) cbcPtr->world->getCamera()->moveForward();
     if (keys[GLFW_KEY_O]) cbcPtr->world->getCamera()->moveBackward();
@@ -159,7 +159,18 @@ static void doMovement(GLFWwindow* w)
 
 static void mouseKeyCallback(GLFWwindow* w, int key, int action, int mode)
 {
-    // TODO
+    CallbackContext* cbcPtr = getWindowContext(w);
+
+    if (key == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        cbcPtr->world->mousePressed = true;
+        cbcPtr->world->getWindow()->cursor(false);
+    }
+    else if (key == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+    {
+        cbcPtr->world->mousePressed = false;
+        cbcPtr->world->getWindow()->cursor(true);
+    }
 }
 
 // TODO : Implement mouse control.
@@ -168,42 +179,45 @@ static void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
 {
     CallbackContext* cbcPtr = getWindowContext(w);
 
-    // Delta of position along x-axis.
-    GLfloat xoffset = xpos - cbcPtr->world->lastX;
+    if (cbcPtr->world->mousePressed)
+    {
+        // Delta of position along x-axis.
+        GLfloat xoffset = xpos - cbcPtr->world->lastX;
 
-    // Delta of positon along y-axis.
-    GLfloat yoffset = ypos - cbcPtr->world->lastY;
+        // Delta of positon along y-axis.
+        GLfloat yoffset = ypos - cbcPtr->world->lastY;
 
-    // Reset our x and y positions for the frame.
-    cbcPtr->world->lastX = xpos;
-    cbcPtr->world->lastY = ypos;
+        // Reset our x and y positions for the frame.
+        cbcPtr->world->lastX = xpos;
+        cbcPtr->world->lastY = ypos;
 
-    // In order to lessen the jerk of mouse movement, we add this sensitivity to offsets.
-    GLfloat sensitivity = 0.05f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
+        // In order to lessen the jerk of mouse movement, we add this sensitivity to offsets.
+        GLfloat sensitivity = 0.05f;
+        xoffset *= sensitivity;
+        yoffset *= sensitivity;
 
-    cbcPtr->world->yaw += xoffset;
-    cbcPtr->world->pitch += yoffset;
+        cbcPtr->world->yaw += xoffset;
+        cbcPtr->world->pitch += yoffset;
 
-    // Make sure that pitch is in the domain [-89.0, 89.0] (not exactly 90 due to cosine).
-    if(cbcPtr->world->pitch > 89.0f)
-        cbcPtr->world->pitch = 89.0f;
-    if(cbcPtr->world->pitch < -89.0f)
-        cbcPtr->world->pitch = -89.0f;
+        // Make sure that pitch is in the domain [-89.0, 89.0] (not exactly 90 due to cosine).
+        if(cbcPtr->world->pitch > 89.0f)
+            cbcPtr->world->pitch = 89.0f;
+        if(cbcPtr->world->pitch < -89.0f)
+            cbcPtr->world->pitch = -89.0f;
 
-    GLfloat final_pitch = cbcPtr->world->pitch;
-    GLfloat final_yaw = cbcPtr->world->yaw;
+        GLfloat final_pitch = cbcPtr->world->pitch;
+        GLfloat final_yaw = cbcPtr->world->yaw;
 
-    glm::vec3 viewDirection;
+        glm::vec3 viewDirection;
 
-    viewDirection.x = cos(glm::radians(final_pitch)) * cos(glm::radians(final_yaw));
-    viewDirection.y = sin(glm::radians(final_pitch));
-    viewDirection.z = cos(glm::radians(final_pitch)) * sin(glm::radians(final_yaw));
+        viewDirection.x = cos(glm::radians(final_pitch)) * cos(glm::radians(final_yaw));
+        viewDirection.y = sin(glm::radians(final_pitch));
+        viewDirection.z = cos(glm::radians(final_pitch)) * sin(glm::radians(final_yaw));
 
-    glm::vec3 normalized =  glm::normalize(viewDirection);
+        glm::vec3 normalized =  glm::normalize(viewDirection);
 
-    cbcPtr->world->getCamera()->setAt(normalized);
+        cbcPtr->world->getCamera()->setAt(normalized);
+    }
 }
 
 static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)

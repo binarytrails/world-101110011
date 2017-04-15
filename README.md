@@ -59,11 +59,7 @@ Group project with OpenGL in C++.
 - Not assigned
     - Illumination
     - Mountains shadows
-    - Proper user motions
-        - Test and fix the camera see: World constructor FIXME tag
-        - Draw axes pointing arrows which you can toggle on / off with a key
-            
-            Note: this would enhance visual debugging
+    - Draw pointing arrows on axes + toggle it with a key
     - Water under certain elevation level
         - Reflection
     - Grass (multiple instantiations)
@@ -73,18 +69,18 @@ Group project with OpenGL in C++.
 
 **Basic:**
 
-    ESC         exit
+    ESC                     exit
     
-    touchpad    look around
+    i                       zoom in
+    o                       zoom out
+    scroll                  zoom in / out
     
-    i           zoom in
-    o           zoom out
-    scroll      zoom in / out
+    w                       move forward
+    s                       move backward
+    a                       move left
+    d                       move right
     
-    w           move forward
-    s           move backward
-    a           move left
-    d           move right
+    mouse + left click     look around
     
 **Extra:**
 

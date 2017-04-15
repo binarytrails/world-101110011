@@ -25,6 +25,8 @@ class Window
         void height(const GLuint height);
         void width(const GLuint widht);
 
+        void cursor(const bool enable);
+
     private:
         GLuint WIDTH;
         GLuint HEIGHT;
