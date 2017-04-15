@@ -46,6 +46,7 @@ class Terrain : public Mesh
     private:
         void initBuffers();
 
+        void addVertex(const float _x, const float _z, const bool elevate);
         float getElevation(const float x, const float z);
 
         void build();
