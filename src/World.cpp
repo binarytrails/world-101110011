@@ -131,12 +131,12 @@ void World::build()
 
     // Faces for our cubemap.
     std::vector<const GLchar*> faces;
-    faces.push_back("cubemap/right.jpg");
-    faces.push_back("cubemap/left.jpg");
-    faces.push_back("cubemap/top.jpg");
-    faces.push_back("cubemap/bottom.jpg");
-    faces.push_back("cubemap/back.jpg");
-    faces.push_back("cubemap/front.jpg");
+    faces.push_back("assets/cubemap/right.jpg");
+    faces.push_back("assets/cubemap/left.jpg");
+    faces.push_back("assets/cubemap/top.jpg");
+    faces.push_back("assets/cubemap/bottom.jpg");
+    faces.push_back("assets/cubemap/back.jpg");
+    faces.push_back("assets/cubemap/front.jpg");
 
     this->skybox = new Skybox(faces);
 
@@ -156,14 +156,14 @@ void World::draw()
 
         this->shader->use();
 
+        this->skybox->renderSkybox(this->window, this->camera,
+                                    this->view, this->projection);
+
         this->terrain->render(this->window, this->camera,
                               this->view, this->projection);
         
-        this->forest->render(this->window, this->camera,
-                              this->view, this->projection);
-
-        this->skybox->renderSkybox(this->window, this->camera,
-                                    this->view, this->projection);
+        // this->forest->render(this->window, this->camera,
+        //                       this->view, this->projection);
 
         // continuous rotation
         //this->rotate(glm::vec3(0, 0, 0));
