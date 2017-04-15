@@ -18,6 +18,8 @@ class TerrainHeight
 
         float get(const float x, const float z);
 
+        void setAmplitude(float a);
+
     private:
         // smooth noise
         float snoise(float x, float z);

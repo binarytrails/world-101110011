@@ -32,6 +32,11 @@ float TerrainHeight::get(const float x, const float z)
     return height;
 }
 
+void TerrainHeight::setAmplitude(float a)
+{
+    this->AMPLITUDE = a;
+}
+
 // Private
 
 //! Smooth noise

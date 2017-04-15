@@ -120,7 +120,10 @@ void Terrain::addVertex(const float _x, const float _z, const bool elevate)
     glm::vec3 v(_x, 0, _z);
 
     if (elevate)
+    {
+        // this->elevate->setAmplitude()
         v.y = this->elevation->get(v.x, v.z);
+    }
 
     printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
     this->vertices.push_back(v);
@@ -150,12 +153,20 @@ bool Terrain::advance(const bool forward)
 
         printf("terrain : advance : bcell (%f, %f, %f)\n", cell.x, cell.y, cell.z);
 
-        printf("terrain : advance : elevation->get(%f, %f)\n",
-                (float) cell.x + this->x_offset,
-                (float) cell.z + this->z_offset);
-        cell.y = this->elevation->get(
-                (float) cell.x + this->x_offset,
-                (float) cell.z + z_offset);
+        float _x = cell.x + this->x_offset;
+        float _z = cell.z + this->z_offset;
+
+
+        // clamp em
+        if (_x > this->X_CELLS)
+            _x = this->X_CELLS - fmod(_x, this->X_CELLS);
+
+        if (_z > this->Z_CELLS)
+            _z = this->Z_CELLS - fmod(_z, this->Z_CELLS);
+
+
+        printf("terrain : advance : elevation->get(%f, %f)\n", _x, _z);
+        cell.y = this->elevation->get(_x, _z);
 
         printf("terrain : advance : acell (%f, %f, %f)\n\n", cell.x, cell.y, cell.z);
 
