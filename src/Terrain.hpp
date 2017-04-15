@@ -6,6 +6,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <assert.h>
 
 #include <vector>
 
@@ -40,11 +41,12 @@ class Terrain : public Mesh
 
         void rotate(const glm::vec3 spin);
 
-        void advance(const glm::ivec3 ds);
+        bool advance(const bool forward);
 
     private:
         void initBuffers();
 
+        void addVertex(const float _x, const float _z, const bool elevate);
         float getElevation(const float x, const float z);
 
         void build();
@@ -83,6 +85,8 @@ class Terrain : public Mesh
 
         const uint16_t X_CELLS;
         const uint16_t Z_CELLS;
+        short x_offset;
+        short z_offset;
 
         TerrainHeight *elevation;
 };

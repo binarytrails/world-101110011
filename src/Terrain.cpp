@@ -6,7 +6,8 @@
 #include "Terrain.hpp"
 
 Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
-    X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES),
+    X_CELLS(xcells), Z_CELLS(zcells), x_offset(0), z_offset(0),
+    renderMode(GL_TRIANGLES),
     texFilepath("assets/textures/grass_green_d.jpg")
 {
     this->shader = new Shader("src/shaders/terrain.vs",
@@ -114,27 +115,86 @@ void Terrain::build()
     this->genVerticesI();
 }
 
-// by directions steps
-void Terrain::advance(const glm::ivec3 ds)
+void Terrain::addVertex(const float _x, const float _z, const bool elevate)
 {
-    /* TODO implement
-     *
-     */
-    std::vector<glm::vec3> vx = this->vertices;
+    glm::vec3 v(_x, 0, _z);
 
+    if (elevate)
+    {
+        // this->elevate->setAmplitude()
+        v.y = this->elevation->get(v.x, v.z);
+    }
+
+    printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+    this->vertices.push_back(v);
+}
+
+// curently one at the time
+bool Terrain::advance(const bool forward)
+{
+    // TODO work in progress;
+    return false;
+
+    this->x_offset += (forward) ? 1 : -1;
+    //this->x_offset = 0;
+    this->z_offset += (forward) ? 1 : -1;
+
+    if (this->X_CELLS + this->x_offset <= 0 ||
+        this->Z_CELLS + this->z_offset <= 0)
+        return false;
+
+    printf("\nterrain : advance");//(%i, %i)\n", x_steps, z_steps);
+    printf("terrain : vertices.size()->%i\n", this->vertices.size());
+
+    std::vector<glm::vec3> vbuffer(this->vertices);
+
+    for (uint16_t z = 0; z < this->Z_CELLS; z++)
+    {
+        uint16_t index = (this->X_CELLS - x_offset) * this->Z_CELLS + z;
+
+        glm::vec3 cell = vbuffer[index];
+
+        printf("terrain : advance : bcell (%f, %f, %f)\n", cell.x, cell.y, cell.z);
+
+        float _x = cell.x + this->x_offset;
+        float _z = cell.z + this->z_offset;
+
+
+        // clamp em
+        if (_x > this->X_CELLS)
+            _x = this->X_CELLS - fmod(_x, this->X_CELLS);
+
+        if (_z > this->Z_CELLS)
+            _z = this->Z_CELLS - fmod(_z, this->Z_CELLS);
+
+
+        printf("terrain : advance : elevation->get(%f, %f)\n", _x, _z);
+        cell.y = this->elevation->get(_x, _z);
+
+        printf("terrain : advance : acell (%f, %f, %f)\n\n", cell.x, cell.y, cell.z);
+
+        vbuffer[index] = cell;
+    }
+
+    assert(vbuffer.size() == this->vertices.size());
+
+    //vbuffer.clear();
+
+    printf("\nterrain : x_offset (%i)\n", this->x_offset);
+    printf("terrain : z_offset (%i)\n\n", this->z_offset);
+
+    // erase current
     this->vertices.clear();
     this->verticesI.clear();
-
-    // TODO do not regenerate entirely but only in step size
-    this->genTerrainVerticesRecursive(
-            ds.x,                 ds.z,
-            this->X_CELLS + ds.x, this->Z_CELLS + ds.z
-    );
-    this->genVerticesI();
-
     this->upload();
 
-    printf("terrain : advance(%i, %i, %i)\n", ds.x, ds.y, ds.z);
+    // load new
+    this->vertices = vbuffer;
+    this->genVerticesI();
+    this->upload();
+
+    printf("terrain : vertices.size()->%i\n", this->vertices.size());
+    return true;
 }
 
 // Note: takes only positive range
@@ -145,9 +205,7 @@ void Terrain::genTerrainVertices(
     {
         for (GLfloat z = 0; z < max_z; z+=1)
         {
-            glm::vec3 v(x, this->elevation->get(x, z), z);
-            printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
-            this->vertices.push_back(v);
+            this->addVertex(x, z, true);
         }
     }
 }
@@ -157,20 +215,14 @@ void Terrain::genTerrainVerticesRecursive(
 {
     if (x == max_x && z == max_z)
     {
-        glm::vec3 v(x, this->elevation->get(x, z), z);
-        printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
-        this->vertices.push_back(v);
+        this->addVertex(x, z, true);
         return;
     }
     else
     {
         if (z < max_z)
         {
-            glm::vec3 v(x, this->elevation->get(x, z), z);
-            printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
-            this->vertices.push_back(v);
-
-            // recur
+            this->addVertex(x, z, true);
             genTerrainVerticesRecursive(x, z + 1, max_x, max_z);
         }
         else
@@ -186,8 +238,7 @@ void Terrain::genPlaneVertices()
     {
         for (uint16_t z = 0; z < this->Z_CELLS; z++)
         {
-            printf("terrain : push : vertex(%i, %i, %i)\n", x, 0, z * -1);
-            this->vertices.push_back(glm::vec3(x, 0, z));
+            this->addVertex(x, z, false);
         }
     }
 }
@@ -196,18 +247,14 @@ void Terrain::genPlaneVerticesRecursive(uint16_t x, uint16_t z)
 {
     if (x == this->X_CELLS && z == this->Z_CELLS)
     {
-        printf("terrain : push : vertex(%i, %i, %i)\n", x, 0, z);
-        this->vertices.push_back(glm::vec3(x, 0, z));
+        this->addVertex(x, z, false);
         return;
     }
     else
     {
         if (z < this->Z_CELLS)
         {
-            printf("terrain : push : vertex(%i, %i, %i)\n", x, 0, z);
-            this->vertices.push_back(glm::vec3(x, 0, z));
-
-            // recur
+            this->addVertex(x, z, false);
             genPlaneVerticesRecursive(x, z + 1);
         }
         else
@@ -315,16 +362,30 @@ void Terrain::initBuffers()
 
 void Terrain::upload()
 {
-    // TODO resend vertices for advancing (infinite terrain)
+    glBindBuffer(GL_ARRAY_BUFFER, this->vboId);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->eboId);
+        //glBufferData(GL_ARRAY_BUFFER, NULL, NULL, GL_STATIC_DRAW);
 
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                     sizeof(GLushort) * this->verticesI.size(),
-                    &this->verticesI[0],
-                    GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER,
+                     sizeof(glm::vec3) * this->vertices.size(),
+                     &this->vertices[0],
+                     GL_STATIC_DRAW);
 
-    // don't disconnect to draw
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glBindVertexArray(this->vaoId);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->eboId);
+
+            //glBufferData(GL_ELEMENT_ARRAY_BUFFER, NULL, NULL, GL_STATIC_DRAW);
+
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                         sizeof(GLushort) * this->verticesI.size(),
+                        &this->verticesI[0],
+                        GL_STATIC_DRAW);
+
+        // don't disconnect to draw
+    glBindVertexArray(0);
 }
 
 void Terrain::draw()

@@ -5,45 +5,62 @@
 
 #include "TerrainHeight.hpp"
 
+<<<<<<< HEAD
+TerrainHeight::TerrainHeight(): AMPLITUDE(50)
+=======
 TerrainHeight::TerrainHeight():
-    OCTAVES(4), AMPLITUDE(6.0f), IRREGULARITY(0.5f),
-    SEED(rand() % (unsigned int)pow(10, 10))
+    AMPLITUDE(10),
+    SEED(rand() % (unsigned int) std::pow(10, 10))
+>>>>>>> master
 {
 }
 
-//! Generate terrain height (y) using x >= 0 and y >= 0
+<<<<<<< HEAD
+// TODO assert positive numbers
+=======
+/* TODO
+ *      assert positive numbers
+ */
+>>>>>>> master
 float TerrainHeight::get(const float x, const float z)
 {
-    if (x <= 0.000000 && z <= 0.000000)
-        return 0.00;
+    // octaves & sharpness
+    float t =  inoise (x/4, z/4) * AMPLITUDE;
+          t += inoise (x/2, x/2) * AMPLITUDE/3;
+          t += inoise (x,   z)   * AMPLITUDE/9;
+<<<<<<< HEAD
+=======
 
-    float height = 0;
-    float divisor = (float) pow(2, this->OCTAVES - 1);
+    /* TODO more controls
+    float d = (float) pow(2, o-1);
 
-    for (int octave = 0; octave < this->OCTAVES; octave++)
-    {
-        float frequency = (float) (pow(2, octave) / divisor);
-
-        float amplitude = (float) pow(this->IRREGULARITY, octave) * AMPLITUDE;
-
-        height += inoise(x * frequency, z * frequency) * amplitude;
-    }
-
-    return height;
-}
-
-void TerrainHeight::setAmplitude(float a)
-{
-    this->AMPLITUDE = a;
+    for (int i=0; i < o; i++)
+        float f = (float) (pow(2, i) / d);
+        float a = (float) pow(r, i) * AMPLITUDE;
+        t += inoise(x*f, z*f) * a;
+    */
+>>>>>>> master
+    return t;
 }
 
 // Private
 
-//! Smooth noise
+// smooth noise
 float TerrainHeight::snoise(float x, float z)
 {
     // dividor reduces their influence
     // corners
+<<<<<<< HEAD
+    float c = noise(z-1, z+1) + noise(x+1, z+1) +
+              noise(x-1, z-1) + noise(x+1, z-1) / 16;
+    // sides
+    float s = noise(x-1, z) + (x, z-1) +
+              noise(x+1, z) + (x, z+1) / 8;
+    // middle
+    float m = noise(x, z) / 4;
+    // combined influence
+    return c + s + c;
+=======
     float c = noise(x-1, z+1) + noise(x+1, z+1) +
               noise(x-1, z-1) + noise(x+1, z-1);
     c /= 16;
@@ -56,21 +73,31 @@ float TerrainHeight::snoise(float x, float z)
     m /= 4;
     // combined influence
     return c + s + m;
+>>>>>>> master
 }
 
-//! Sharp noise
+// sharp noise
 float TerrainHeight::noise(const float x, const float z)
 {
     // set random seed
+<<<<<<< HEAD
+    srand(x * 6786 + z * 23054 + this->seed);
+=======
     srand(x * 6786 + z * 23054 + this->SEED);
+>>>>>>> master
     return this->randf(1.0f) * 2 - 1;
 }
 
 float TerrainHeight::inoise(float x, float z)
 {
     // noise input
+<<<<<<< HEAD
+    int ix = (int) ix; int iz = (int) iz;
+    float fx = x - ix; float fz = z - iz;
+=======
     int ix = (int) x; float fx = x - ix;
     int iz = (int) z; float fz = z - iz;
+>>>>>>> master
     // smooth noise
     float n  = snoise   (ix,   iz);
     float n2 = snoise   (ix+1, iz);
@@ -78,19 +105,31 @@ float TerrainHeight::inoise(float x, float z)
     float n4 = snoise   (ix+1, iz+1);
     // interpolated curves
     float i1 = icurve  (n,    n2,  fx);
+<<<<<<< HEAD
+    float i2 = icurve  (n3,   n4,  fz);
+}
+
+// interpolated curve
+float TerrainHeight::icurve(float a, float c, float b)
+{
+    double angle = b * M_PI;
+    float f = (float)(1.0f - cos(angle)) * 0.5f;
+    return a * (1.0f - f) + c * f;
+=======
     float i2 = icurve  (n3,   n4,  fx);
     return     icurve  (i1,   i2,  fz);
 }
 
-//! Interpolated curve
+// interpolated curve
 float TerrainHeight::icurve(float a, float b, float bl)
 {
     double angle = bl * M_PI;
     float f = (float)(1.0f - cos(angle)) * 0.5f;
     return a * (1.0f - f) + b * f;
+>>>>>>> master
 }
 
-//! Random float in range : [0, upperBound]
+// [0, upperBound]
 float TerrainHeight::randf(const unsigned int upperBound)
 {
     return static_cast <float> (
