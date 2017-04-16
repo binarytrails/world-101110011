@@ -16,7 +16,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-//! Sound library for the Sound Engine
+// Sound library for the Sound Engine
 #include <SFML/Audio.hpp>
 
 #include "Window.hpp"
@@ -26,6 +26,7 @@
 #include "Skybox.h"
 #include "Forest.h"
 
+//! Class to contain & control all of the procedural world elements
 class World
 {
     public:
@@ -84,7 +85,7 @@ class World
         sf::SoundBuffer bgMusicBuffer;
 };
 
-//! Window context to allow GLFW callbacks to use class instances
+//! GLFW Window context to allow the usage of class instances in callbacks
 struct CallbackContext
 {
     World *world;

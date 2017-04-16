@@ -24,6 +24,7 @@
 #include "TerrainHeight.hpp"
 #include <SOIL/SOIL.h>
 
+//! Class for the ground of the world
 class Terrain : public Mesh
 {
     public:

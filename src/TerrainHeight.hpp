@@ -11,7 +11,7 @@
 #include <math.h>
 #include <assert.h>
 
-//! Generates terrain elevation
+//! Generates the terrain elevation by using custom HeightMap with noise funcs
 class TerrainHeight
 {
     public:
