@@ -29,6 +29,12 @@ Terrain::~Terrain()
     delete this->elevation;
 }
 
+float Terrain::getElevation(const float x, const float z)
+{
+    return (this->vertices[floor(x * this->X_CELLS + z * Z_CELLS)].y +
+            this->vertices[floor(x * this->X_CELLS + z * Z_CELLS)].y) / 2;
+}
+
 GLenum Terrain::getRenderMode() const
 {
     return this->renderMode;

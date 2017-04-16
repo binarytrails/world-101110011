@@ -53,10 +53,11 @@ class World
         //! For camera to calculate offset movement for mouse position
         GLfloat lastX, lastY;
         bool mousePressed;
-
         //! For camera controls
         GLfloat pitch;
         GLfloat yaw;
+        //! Centering the camera on the terrain
+        void centerCamera();
 
     private:
         void setWindowContext();

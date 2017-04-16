@@ -31,6 +31,8 @@ class Terrain : public Mesh
         Terrain(const uint16_t xcells, const uint16_t zcells);
         ~Terrain();
 
+        //! Returns the elevation at a given cell for the y (height) value
+        float getElevation(const float x, const float z);
         GLenum getRenderMode() const;
 
         void setRenderMode(const GLenum renderMode);
@@ -52,9 +54,6 @@ class Terrain : public Mesh
 
         //! Centralizing the action of adding a vertex for the terrain cell
         void addVertex(const float _x, const float _z, const bool elevate);
-
-        //! Returns the elevation at a given cell for the y (height) value
-        float getElevation(const float x, const float z);
 
         void build();
 

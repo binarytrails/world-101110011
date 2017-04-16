@@ -56,12 +56,6 @@ void World::initCamera()
     // Mouse controls
     lastX = this->window->width() / 2;
     lastY = this->window->height() / 2;
-
-    // Position at the center
-    this->camera->setEye(glm::vec3(
-        this->TERRAIN_WIDTH / 2.0f,     // x
-        2,                              // y
-        this->TERRAIN_HEIGHT / 2.0f));  // z
 }
 
 void World::initSound()
@@ -99,6 +93,18 @@ Terrain* World::getTerrain()
     return this->terrain;
 }
 
+void World::centerCamera()
+{
+    glm::vec3 eye;
+
+    eye.x = this->TERRAIN_WIDTH  / 2.0f;
+    eye.z = this->TERRAIN_HEIGHT / 2.0f;
+    // above the ground
+    eye.y = this->terrain->getElevation(eye.x, eye.z) + 3;
+
+    this->camera->setEye(eye);
+}
+
 /*! Binding of callbackContext with a World instance
  *  to the GLFW window held inside it in order to allow
  *  World methods references from the GLFW callbacks
@@ -127,7 +133,7 @@ void World::setWindowCallbacks()
 void World::updateMVP()
 {
     // update states
-    this->view = this->camera->view();
+    this->view = this->camera->getView();
 
     this->projection = glm::perspective(
         45.0f,
@@ -153,6 +159,8 @@ void World::build()
 
     // FIXME adjusted for current terrain elevation
     this->rotate(glm::vec3(12.5, 0, 0));
+
+    this->centerCamera();
 
     // Faces for our cubemap.
     std::vector<const GLchar*> faces;
