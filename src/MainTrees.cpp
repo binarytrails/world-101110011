@@ -121,12 +121,14 @@ int main()
     glm::vec3 translations[100];
     glm::vec3 translations2[100];
     int index = 0;
-    GLfloat offset2 = 0.1f;
+    GLfloat offset2 = 0.2f;
     for(GLint y = -10; y < 10; y += 2)
     {
         for(GLint x = -10; x < 10; x += 2)
         {
             glm::vec3 translation;
+            /*translation.x = (GLfloat)x / 10.0f + offset2;
+            translation.y = (GLfloat)y / 10.0f + offset2;*/
             translation.x = 0;
             translation.y = 0;
             translation.z = 0;
@@ -142,10 +144,11 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);*/
 
     Point offset(0,0,0,Vector(0,1,0));
-    PGTree1 tree1 = PGTree1(offset);
-    GLObject* obj1 = new GLObject(tree1.objects);
-    PGTree2 tree2 = PGTree2(offset);
+    //PGTree1 tree1 = PGTree1(offset);
+    //GLObject* obj2 = new GLObject(tree1.objects);
+    PGTree2 tree2 = PGTree2(offset, 0.05f, 0.01f, 0.3f);
     GLObject* obj2 = new GLObject(tree2.objects);
+    obj2->initBuffers(translations2, 1);
     //draw(obj);
 
     // Game loop
@@ -178,7 +181,7 @@ int main()
         glPolygonMode(GL_FRONT_AND_BACK, (glMode == 2) ? GL_LINE : GL_FILL);
         //glDrawElementsInstanced(GL_TRIANGLES, obj->iSize, GL_UNSIGNED_INT, 0, 3);
         //obj1->draw(translations, 100);
-        obj2->draw(translations2, 1);
+        obj2->draw();
 
         glBindVertexArray(0);
 

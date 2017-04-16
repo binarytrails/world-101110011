@@ -15,8 +15,8 @@
 
 Forest::Forest(const uint16_t xcells, const uint16_t zcells):
     X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES) {
-    this->shader = new Shader("src/shaders/objecttest.vs",
-                              "src/shaders/objecttest.fs");
+    this->shader = new Shader("src/shaders/object.vs",
+                              "src/shaders/object.fs");
     this->build();
 }
 
@@ -48,8 +48,19 @@ void Forest::rotate(const glm::vec3 spin) {
 
 void Forest::build() {
     Point offset(0,0,0,Vector(0,1,0));
-    PGTree1 tree1 = PGTree1(offset,6);
-    objects.push_back(new GLObject(tree1.objects));
+    PGTree2 tree1 = PGTree2(offset, 2.0f, 0.5f, 1.0f);
+    GLObject* myObj = new GLObject(tree1.objects);
+    
+    // TODO remove
+    glm::vec3 translations[1];
+    glm::vec3 translation;
+    translation.x = 0;
+    translation.y = 0;
+    translation.z = 0;
+    translations[0] = translation;
+    
+    myObj->initBuffers(translations, 1);
+    objects.push_back(myObj);
 }
 
 void Forest::updateMVP(const glm::mat4 view, const glm::mat4 projection)
@@ -67,15 +78,7 @@ void Forest::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 
 void Forest::draw()
 {
-    // TODO remove
-    glm::vec3 translations[1];
-    glm::vec3 translation;
-    translation.x = 10;
-    translation.y = 0;
-    translation.z = 10;
-    translations[0] = translation;
-    
     for(int c = 0; c < objects.size(); c++) {
-        objects.at(c)->draw(translations, 1);
+        objects.at(c)->draw();
     }
 }

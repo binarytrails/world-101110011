@@ -1,6 +1,7 @@
 #ifndef ROTATIONALOBJECT_H
 #define ROTATIONALOBJECT_H
 
+#include <iostream>
 #include "GLObject.h"
 #include "Vector.h"
 

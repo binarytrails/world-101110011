@@ -8,7 +8,7 @@
 
 class PGTree : public PGObject {
 protected:
-    virtual void loop(lNode* rootNode, Point offset, float limit, float step);
+    virtual void loop(lNode* rootNode, Point offset, float height, float limit, float step);
 };
 
 #endif /* PGTREE_H */

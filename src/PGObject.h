@@ -15,7 +15,7 @@ public:
     std::vector<GLObject*> objects;
 protected:
     float randNum(float min = -0.05f, float max = 0.05f);
-    virtual void loop(lNode* rootNode, Point offset, float limit, float step) = 0;
+    virtual void loop(lNode* rootNode, Point offset, float height, float limit, float step) = 0;
 };
 
 #endif /* PGOBJECT_H */

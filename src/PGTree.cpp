@@ -1,10 +1,10 @@
 #include "PGTree.h"
 
-void PGTree::loop(lNode* rootNode, Point offset, float limit, float step) {
+void PGTree::loop(lNode* rootNode, Point offset, float height, float limit, float step) {
     if(limit >= step) {
         float P[6] = {
             limit, 0.0f, 0.0f,
-            limit-step > 0 && rootNode->nodes.size() > 0 ? limit : 0, 5, 0.0f
+            limit-step > 0 && rootNode->nodes.size() > 0 ? limit : 0, height, 0.0f
         };
         
         //std::cout << limit << "--- ";
@@ -12,6 +12,6 @@ void PGTree::loop(lNode* rootNode, Point offset, float limit, float step) {
         this->objects.push_back(rot);
         
         for(int c = 0; c < rootNode->nodes.size(); c++)
-            loop(rootNode->nodes.at(c), rot->offset, limit-step, step);
+            loop(rootNode->nodes.at(c), rot->offset, height, limit-step, step);
     }
 }

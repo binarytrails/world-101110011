@@ -9,7 +9,7 @@
 
 class PGTree1 : public PGTree {
 public:
-    PGTree1(Point offset, float radius = 0.05);
+    PGTree1(Point offset, float radius = 0.05f, float steps = 0.01, float height = 0.5f);
 };
 
 #endif /* PGTREE1_H */

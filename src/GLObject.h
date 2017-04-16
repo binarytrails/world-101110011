@@ -47,7 +47,8 @@ public:
     float sizeMax[3] = {0, 0, 0};
     
     GLObject add(GLObject* other);
-    void draw(glm::vec3* translations, int count);
+    void initBuffers(glm::vec3* translations, int count);
+    void draw();
     
     virtual ~GLObject();
 protected:
