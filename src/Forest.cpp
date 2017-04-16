@@ -15,8 +15,8 @@
 
 Forest::Forest(const uint16_t xcells, const uint16_t zcells):
     X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES) {
-    this->shader = new Shader("src/shaders/object.vs",
-                              "src/shaders/object.fs");
+    this->shader = new Shader("src/shaders/objecttest.vs",
+                              "src/shaders/objecttest.fs");
     this->build();
 }
 
