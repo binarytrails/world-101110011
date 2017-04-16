@@ -48,18 +48,24 @@ void Forest::rotate(const glm::vec3 spin) {
 
 void Forest::build() {
     Point offset(0,0,0,Vector(0,1,0));
-    PGTree2 tree1 = PGTree2(offset, 2.0f, 0.5f, 1.0f);
+    PGTree2 tree1 = PGTree2(offset, 5.0f, 1.0f, 5.0f);
     GLObject* myObj = new GLObject(tree1.objects);
     
     // TODO remove
-    glm::vec3 translations[1];
-    glm::vec3 translation;
-    translation.x = 0;
-    translation.y = 0;
-    translation.z = 0;
-    translations[0] = translation;
+    glm::vec3 translations[100];
+    int index = 0;
+    for(GLint y = 0; y < 50; y += 1)
+    {
+        glm::vec3 translation;
+        /*translation.x = (GLfloat)x / 10.0f + offset2;
+        translation.y = (GLfloat)y / 10.0f + offset2;*/
+        translation.x = y;
+        translation.y = 0;
+        translation.z = y;
+        translations[index] = translation;
+    }
     
-    myObj->initBuffers(translations, 1);
+    myObj->initBuffers(translations, 50);
     objects.push_back(myObj);
 }
 
