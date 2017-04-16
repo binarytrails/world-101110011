@@ -49,7 +49,7 @@ void GLObject::draw(glm::vec3* translations, int count) {
         glBindVertexArray(VAO);
     }
     
-    glDrawElementsInstanced(GL_TRIANGLES, iSize, GL_UNSIGNED_SHORT, 0, instanceCount);
+    glDrawElementsInstanced(GL_TRIANGLES, iSize, GL_UNSIGNED_INT, 0, instanceCount);
     glBindVertexArray(0);
 }
 
