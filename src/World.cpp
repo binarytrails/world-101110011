@@ -18,7 +18,6 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
 
     glEnable(GL_DEPTH_TEST);
 
-    // TODO add to frame buffer callback
     glViewport(0, 0, this->window->width(), this->window->height());
 
     // Camera mouse controls
@@ -30,9 +29,6 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
 
     this->build();
     this->setRenderMode(GL_TRIANGLES);
-
-    // FIXME hack display
-    this->rotate(glm::vec3(5, 0, 0));
 
     this->updateMVP();
 
@@ -129,6 +125,9 @@ void World::build()
     this->terrain = new Terrain(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
     this->forest = new Forest(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
 
+    // FIXME adjusted for current terrain elevation
+    this->rotate(glm::vec3(12.5, 0, 0));
+
     // Faces for our cubemap.
     std::vector<const GLchar*> faces;
     faces.push_back("assets/cubemap/right.jpg");
@@ -161,7 +160,7 @@ void World::draw()
 
         this->terrain->render(this->window, this->camera,
                               this->view, this->projection);
-        
+
         // this->forest->render(this->window, this->camera,
         //                       this->view, this->projection);
 
