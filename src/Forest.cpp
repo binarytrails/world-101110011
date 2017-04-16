@@ -15,8 +15,8 @@
 
 Forest::Forest(const uint16_t xcells, const uint16_t zcells):
     X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES) {
-    this->shader = new Shader("src/shaders/object.vs",
-                              "src/shaders/object.fs");
+    this->shader = new Shader("src/shaders/objecttest.vs",
+                              "src/shaders/objecttest.fs");
     this->build();
 }
 
@@ -68,13 +68,12 @@ void Forest::updateMVP(const glm::mat4 view, const glm::mat4 projection)
 void Forest::draw()
 {
     // TODO remove
-    glm::vec3 translations[100];
-    int index = 0;
+    glm::vec3 translations[1];
     glm::vec3 translation;
-    translation.x = 0;
+    translation.x = 10;
     translation.y = 0;
-    translation.z = 0;
-    translations[index] = translation;
+    translation.z = 10;
+    translations[0] = translation;
     
     for(int c = 0; c < objects.size(); c++) {
         objects.at(c)->draw(translations, 1);
