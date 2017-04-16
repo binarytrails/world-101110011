@@ -11,6 +11,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+//! GLFW Window wrapper class
 class Window
 {
     public:
@@ -25,6 +26,7 @@ class Window
         void height(const GLuint height);
         void width(const GLuint widht);
 
+        //! toggle window cursor
         void cursor(const bool enable);
 
     private:

@@ -11,23 +11,13 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
     camera(new Camera()),
     pitch(0.0f), yaw(45.0f)
 {
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
     glewExperimental = GL_TRUE;
     glewInit();
 
-    glEnable(GL_DEPTH_TEST);
+    this->initOpenGL();
+    this->initCamera();
 
-    // Transparency
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    glViewport(0, 0, this->window->width(), this->window->height());
-
-    // Camera mouse controls
-    lastX = this->window->width() / 2;
-    lastY = this->window->height() / 2;
-
+    // It has to be after glewInit
     this->shader = new Shader("src/shaders/world.vs",
                               "src/shaders/world.fs");
 
@@ -35,18 +25,7 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
     this->setRenderMode(GL_TRIANGLES);
 
     this->updateMVP();
-
-    // sound
-    if (!this->bgMusicBuffer.loadFromFile("./assets/sound/amb-forest.ogg"))
-    {
-        fprintf(stderr, "Failed to load background music");
-    }
-    else
-    {
-        this->bgMusic.setBuffer(this->bgMusicBuffer);
-        this->bgMusic.setLoop(true);
-        this->bgMusic.play();
-    }
+    this->initSound();
 }
 
 World::~World()
@@ -57,6 +36,40 @@ World::~World()
     delete this->camera;
     delete this->shader;
     delete this->window;
+}
+
+void World::initOpenGL()
+{
+    glEnable(GL_DEPTH_TEST);
+
+    // Transparency
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    glViewport(0, 0, this->window->width(), this->window->height());
+}
+
+void World::initCamera()
+{
+    // Mouse controls
+    lastX = this->window->width() / 2;
+    lastY = this->window->height() / 2;
+}
+
+void World::initSound()
+{
+    if (!this->bgMusicBuffer.loadFromFile("./assets/sound/amb-forest.ogg"))
+    {
+        fprintf(stderr, "Failed to load background music");
+    }
+    else
+    {
+        this->bgMusic.setBuffer(this->bgMusicBuffer);
+        this->bgMusic.setLoop(true);
+        this->bgMusic.play();
+    }
 }
 
 void World::setRenderMode(const GLenum mode)
@@ -80,6 +93,22 @@ Terrain* World::getTerrain()
     return this->terrain;
 }
 
+void World::centerCamera()
+{
+    glm::vec3 eye;
+
+    eye.x = this->TERRAIN_WIDTH  / 2.0f;
+    eye.z = this->TERRAIN_HEIGHT / 2.0f;
+    // above the ground
+    eye.y = this->terrain->getElevation(eye.x, eye.z) + 3;
+
+    this->camera->setEye(eye);
+}
+
+/*! Binding of callbackContext with a World instance
+ *  to the GLFW window held inside it in order to allow
+ *  World methods references from the GLFW callbacks
+ */
 void World::setWindowContext()
 {
     callbackContext.world = this;
@@ -98,14 +127,13 @@ void World::setWindowCallbacks()
 
     glfwSetScrollCallback(this->window->get(), mouseScrollCallback);
 
-    // TODO
     glfwSetCursorPosCallback(this->window->get(), mousePositionCallback);
 }
 
 void World::updateMVP()
 {
     // update states
-    this->view = this->camera->view();
+    this->view = this->camera->getView();
 
     this->projection = glm::perspective(
         45.0f,
@@ -131,6 +159,8 @@ void World::build()
 
     // FIXME adjusted for current terrain elevation
     this->rotate(glm::vec3(12.5, 0, 0));
+
+    this->centerCamera();
 
     // Faces for our cubemap.
     std::vector<const GLchar*> faces;
@@ -159,7 +189,7 @@ void World::draw()
     while (!glfwWindowShouldClose(this->window->get()))
     {
         glfwPollEvents();
-        doMovement(this->window->get());
+        applyKeyboardBindings(this->window->get());
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

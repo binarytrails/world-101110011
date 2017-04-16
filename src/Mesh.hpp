@@ -5,6 +5,7 @@
 
 #pragma once
 
+//! Abstract class made to facilitate & uniformalize the integration of Meshes
 class Mesh
 {
     public:

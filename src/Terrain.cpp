@@ -29,6 +29,12 @@ Terrain::~Terrain()
     delete this->elevation;
 }
 
+float Terrain::getElevation(const float x, const float z)
+{
+    return (this->vertices[floor(x * this->X_CELLS + z * Z_CELLS)].y +
+            this->vertices[floor(x * this->X_CELLS + z * Z_CELLS)].y) / 2;
+}
+
 GLenum Terrain::getRenderMode() const
 {
     return this->renderMode;
@@ -104,13 +110,8 @@ void Terrain::build()
 {
     this->elevation = new TerrainHeight();
 
-    // Note: size*2 because each vertex has a texture
-
-    //this->genPlaneVertices();
-    //this->genPlaneVerticesRecursive(0, 0);
-
-    //this->genTerrainVertices(0, 0, this->X_CELLS, this->Z_CELLS);
-    this->genTerrainVerticesRecursive(0, 0, this->X_CELLS, this->Z_CELLS);
+    //this->genPlaneVertices(0, 0);
+    this->genTerrainVertices(0, 0, this->X_CELLS, this->Z_CELLS);
 
     this->genVerticesI();
 }
@@ -197,21 +198,8 @@ bool Terrain::advance(const bool forward)
     return true;
 }
 
-// Note: takes only positive range
-void Terrain::genTerrainVertices(
-    uint16_t x, uint16_t z, uint16_t max_x, uint16_t max_z)
-{
-    for (GLfloat x = 0; x < max_x; x+=1)
-    {
-        for (GLfloat z = 0; z < max_z; z+=1)
-        {
-            this->addVertex(x, z, true);
-        }
-    }
-}
-
-void Terrain::genTerrainVerticesRecursive(
-    uint16_t x, uint16_t z, uint16_t max_x, uint16_t max_z)
+void Terrain::genTerrainVertices(uint16_t x, uint16_t z,
+                                 uint16_t max_x, uint16_t max_z)
 {
     if (x == max_x && z == max_z)
     {
@@ -223,27 +211,16 @@ void Terrain::genTerrainVerticesRecursive(
         if (z < max_z)
         {
             this->addVertex(x, z, true);
-            genTerrainVerticesRecursive(x, z + 1, max_x, max_z);
+            genTerrainVertices(x, z + 1, max_x, max_z);
         }
         else
         {
-            genTerrainVerticesRecursive(x + 1, 0, max_x, max_z);
+            genTerrainVertices(x + 1, 0, max_x, max_z);
         }
     }
 }
 
-void Terrain::genPlaneVertices()
-{
-    for (uint16_t x = 0; x < this->X_CELLS; x++)
-    {
-        for (uint16_t z = 0; z < this->Z_CELLS; z++)
-        {
-            this->addVertex(x, z, false);
-        }
-    }
-}
-
-void Terrain::genPlaneVerticesRecursive(uint16_t x, uint16_t z)
+void Terrain::genPlaneVertices(uint16_t x, uint16_t z)
 {
     if (x == this->X_CELLS && z == this->Z_CELLS)
     {
@@ -255,11 +232,11 @@ void Terrain::genPlaneVerticesRecursive(uint16_t x, uint16_t z)
         if (z < this->Z_CELLS)
         {
             this->addVertex(x, z, false);
-            genPlaneVerticesRecursive(x, z + 1);
+            genPlaneVertices(x, z + 1);
         }
         else
         {
-            genPlaneVerticesRecursive(x + 1, 0);
+            genPlaneVertices(x + 1, 0);
         }
     }
 }

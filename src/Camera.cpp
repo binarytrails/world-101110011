@@ -15,14 +15,29 @@ Camera::Camera() :
 
 Camera::~Camera(){}
 
-glm::mat4 Camera::view() const
+glm::mat4 Camera::getView() const
 {
     return glm::lookAt(eye, eye + at, up);
 }
 
-void Camera::setAt(glm::vec3& new_at)
+glm::vec3 Camera::getEye() const
 {
-    at = new_at;
+    return this->eye;
+}
+
+glm::vec3 Camera::getAt() const
+{
+    return this->at;
+}
+
+void Camera::setEye(glm::vec3 _eye)
+{
+    this->eye = _eye;
+}
+
+void Camera::setAt(glm::vec3 _at)
+{
+    this->at = _at;
 }
 
 void Camera::moveForward()
@@ -57,7 +72,7 @@ void Camera::moveLeft()
 
 void Camera::printView() const
 {
-    const float *pSource = (const float*) glm::value_ptr(this->view());
+    const float *pSource = (const float*) glm::value_ptr(this->getView());
     printf("+-----------------------------------------+\n");
     for (int i = 0; i < 16; i++)
     {
@@ -68,7 +83,7 @@ void Camera::printView() const
     printf("\n+-----------------------------------------+\n");
 }
 
-void Camera::printEyePos() const 
+void Camera::printEyePos() const
 {
     printf("Position of eye: (%.0f, %.0f, %.0f)\n", eye.x, eye.y, eye.z);
 }

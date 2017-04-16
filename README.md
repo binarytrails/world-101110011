@@ -1,5 +1,7 @@
 # World-101110011
 
+![preview](docs/progress/world-1.png)
+
 Group project with OpenGL in C++.
 
     COMP 371
@@ -29,10 +31,11 @@ Group project with OpenGL in C++.
         - ~~World with Terrain~~
         - ~~Trees~~
         - ~~Particles~~
-    - Documentation
-        - ~~Doxyfile~~
-        - Doxygen: ~~class headers~~, methods & attributes
-        - Final report: Goal, Architecture, Terrain & Ambiance
+    - ~~Documentation~~
+        - ~~REAMDE~~
+        - ~~Doxyfile to generate Doxygen~~
+        - ~~Doxygen: class headers, methods & attributes of my classes~~
+        - ~~Final report: Overview, Architecture, Terrain & Ambiance Sound~~
     - Optional
         - Infinite terrain, see: terrain-infinite branch
     
@@ -129,6 +132,10 @@ Dependencies: ```glew glm glfw-x11 mesa-demos soil```
         The size was reduced using Audacity software.
 
         http://www.freesound.org/people/bajko/sounds/385280
+
+## Documentation
+
+Look into ```docs/``` folder; generate code documentation using ```doxygen``` command at project root.
 
 ## Coding Style
 

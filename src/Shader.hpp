@@ -14,6 +14,7 @@
   
 #include <GL/glew.h>
 
+//! Class to facilitate the shaders integration by wrapping their operations
 class Shader
 {
     public:
