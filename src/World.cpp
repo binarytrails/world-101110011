@@ -172,8 +172,8 @@ void World::draw()
         this->terrain->render(this->window, this->camera,
                               this->view, this->projection);
 
-        // this->forest->render(this->window, this->camera,
-        //                       this->view, this->projection);
+        this->forest->render(this->window, this->camera,
+                               this->view, this->projection);
 
         // continuous rotation
         //this->rotate(glm::vec3(0, 0, 0));

@@ -4,8 +4,6 @@ void GLObject::draw(glm::vec3* translations, int count) {
     if(this->instanceCount == -1) {
         instanceCount = count;
         
-        glPointSize(3);
-        
         // Store instance data in an array buffer
         glGenBuffers(1, &instanceVBO);
         glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
@@ -51,8 +49,7 @@ void GLObject::draw(glm::vec3* translations, int count) {
         glBindVertexArray(VAO);
     }
     
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    glDrawElementsInstanced(GL_TRIANGLES, iSize, GL_UNSIGNED_INT, 0, instanceCount);
+    glDrawElementsInstanced(GL_TRIANGLES, iSize, GL_UNSIGNED_SHORT, 0, instanceCount);
     glBindVertexArray(0);
 }
 
