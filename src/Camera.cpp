@@ -20,9 +20,14 @@ glm::mat4 Camera::view() const
     return glm::lookAt(eye, eye + at, up);
 }
 
-void Camera::setAt(glm::vec3& new_at)
+void Camera::setEye(glm::vec3 _eye)
 {
-    at = new_at;
+    this->eye = _eye;
+}
+
+void Camera::setAt(glm::vec3 _at)
+{
+    this->at = _at;
 }
 
 void Camera::moveForward()

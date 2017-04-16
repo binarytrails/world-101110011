@@ -39,7 +39,12 @@ class World
         Camera*  getCamera();
         Terrain* getTerrain();
 
+        void initOpenGL();
+        void initCamera();
+        void initSound();
+
         void build();
+
         //! GLFW draw loop
         void draw();
 

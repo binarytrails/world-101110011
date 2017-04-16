@@ -23,7 +23,8 @@ class Camera
         //! View matrice to analyse camera in real-time
         glm::mat4 view() const;
 
-        void setAt(glm::vec3& new_at);
+        void setEye(glm::vec3 _eye);
+        void setAt(glm::vec3 _at);
 
         void moveUp();
         void moveRight();
