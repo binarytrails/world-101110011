@@ -19,6 +19,7 @@ class Camera
         Camera();
         ~Camera();
 
+        //! View matrice to analyse camera in real-time
         glm::mat4 view() const;
 
         void setAt(glm::vec3& new_at);
@@ -41,6 +42,6 @@ class Camera
         glm::vec3 at;
         //! Up direction of camera.
         glm::vec3 up;
-
+        //! Motions speed
         GLfloat speed;
 };

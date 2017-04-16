@@ -80,6 +80,10 @@ Terrain* World::getTerrain()
     return this->terrain;
 }
 
+/*! Binding of callbackContext with a World instance
+ *  to the GLFW window held inside it in order to allow
+ *  World methods references from the GLFW callbacks
+ */
 void World::setWindowContext()
 {
     callbackContext.world = this;
@@ -98,7 +102,6 @@ void World::setWindowCallbacks()
 
     glfwSetScrollCallback(this->window->get(), mouseScrollCallback);
 
-    // TODO
     glfwSetCursorPosCallback(this->window->get(), mousePositionCallback);
 }
 

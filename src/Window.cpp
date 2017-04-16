@@ -15,12 +15,13 @@ Window::Window(const int w, const int h,
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE,
                    GLFW_OPENGL_CORE_PROFILE);
-    // Comment out following line if NOT using a Mac. 
+
+    // Essential for OSX compatibility
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
-    this->window = glfwCreateWindow(
-        w, h, title, nullptr, nullptr);
+    this->window = glfwCreateWindow(w, h, title, nullptr, nullptr);
     glfwMakeContextCurrent(this->window);
 }
 

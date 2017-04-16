@@ -57,7 +57,7 @@ void main()
 */
 
     // opacity
-    texColor.w = 0.7;
+    texColor.w = 0.9;
 
     color = texColor;
 }

@@ -39,32 +39,43 @@ class Terrain : public Mesh
                     const glm::mat4 view,
                     const glm::mat4 projection);
 
+        //! Rotates the terrain by n spins on a given x, y, z values
         void rotate(const glm::vec3 spin);
 
+        //! TODO WIP method to generate more terrain on the same grid range
         bool advance(const bool forward);
 
     private:
+        //! Initializes the buffers for the shaders
         void initBuffers();
 
+        //! Centralizing the action of adding a vertex for the terrain cell
         void addVertex(const float _x, const float _z, const bool elevate);
+
+        //! Returns the elevation at a given cell for the y (height) value
         float getElevation(const float x, const float z);
 
         void build();
 
+        //! Prepares the texture for the shaders
         void loadTexture();
 
-        void genPlaneVertices();
-        void genPlaneVerticesRecursive(uint16_t x, uint16_t z);
+        //! Recursive method to generate a plane
+        void genPlaneVertices(uint16_t x, uint16_t z);
 
-        void genTerrainVertices(uint16_t x,        uint16_t z,
-                                uint16_t max_x,    uint16_t max_z);
-        void genTerrainVerticesRecursive(uint16_t x,        uint16_t z,
-                                         uint16_t max_x,    uint16_t max_z);
+        //! Recursive method to generate a terrain with elevation
+        void genTerrainVertices(uint16_t x,     uint16_t z,
+                                uint16_t max_x, uint16_t max_z);
 
+        //! Generates terrain vertices indices with three render modes
         void genVerticesI();
 
+        //! Uploads vertices to the GPU
         void upload();
+        //! Updates the Homogeneous coordinates matrices in the vertex shader
         void updateMVP(const glm::mat4 view, const glm::mat4 projection);
+
+        //! Draws the terrain using EBO indices
         void draw();
 
         Shader *shader;
@@ -74,6 +85,7 @@ class Terrain : public Mesh
                eboId,
                texture;
 
+        //! Texture filepath
         const std::string texFilepath;
 
         GLenum renderMode;
@@ -85,8 +97,10 @@ class Terrain : public Mesh
 
         const uint16_t X_CELLS;
         const uint16_t Z_CELLS;
+        //! The x and z offset attributes are used by the advance method
         short x_offset;
         short z_offset;
 
+        //! Embeded custom noise functions to generate height map values
         TerrainHeight *elevation;
 };

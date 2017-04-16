@@ -16,7 +16,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-//! Sound library
+//! Sound library for the Sound Engine
 #include <SFML/Audio.hpp>
 
 #include "Window.hpp"
@@ -39,6 +39,7 @@ class World
         Terrain* getTerrain();
 
         void build();
+        //! GLFW draw loop
         void draw();
 
         void rotate(const glm::vec3 axes);
@@ -68,6 +69,7 @@ class World
 
         GLenum renderMode;
 
+        //! Homogeneous coordinates matrices
         glm::mat4 model;
         glm::mat4 view;
         glm::mat4 projection;
@@ -77,18 +79,19 @@ class World
         const uint16_t TERRAIN_WIDTH;
         const uint16_t TERRAIN_HEIGHT;
 
+        //! Sound Engine
         sf::Sound       bgMusic;
         sf::SoundBuffer bgMusicBuffer;
 };
 
-// Window context
-
+//! Window context to allow GLFW callbacks to use class instances
 struct CallbackContext
 {
     World *world;
     uint16_t steps;
 };
 
+//! Returning a CallbackContext attached to a GLFW window
 static CallbackContext* getWindowContext(GLFWwindow* w)
 {
     return static_cast<CallbackContext*>(glfwGetWindowUserPointer(w));
@@ -96,8 +99,7 @@ static CallbackContext* getWindowContext(GLFWwindow* w)
 
 static CallbackContext callbackContext;
 
-// Window callbacks
-
+//! GLFW window framebuffer callback
 static void framebufferSizeCallback(GLFWwindow* w, int width, int height)
 {
     CallbackContext* cbcPtr = getWindowContext(w);
@@ -243,4 +245,3 @@ static void mouseScrollCallback(GLFWwindow *w, double xoffset, double yoffset)
         cbcPtr->world->getCamera()->moveBackward();
     }
 }
-

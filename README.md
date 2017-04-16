@@ -31,7 +31,7 @@ Group project with OpenGL in C++.
         - ~~Particles~~
     - Documentation
         - ~~Doxyfile~~
-        - Doxygen: ~~class headers~~, methods & attributes
+        - Doxygen: ~~class headers~~, ~~methods~~ & ~~attributes~~
         - Final report: Goal, Architecture, Terrain & Ambiance
     - Optional
         - Infinite terrain, see: terrain-infinite branch
