@@ -137,6 +137,13 @@ void World::build()
     faces.push_back("assets/cubemap/back.jpg");
     faces.push_back("assets/cubemap/front.jpg");
 
+    // faces.push_back("assets/cubemap/hills_rt.jpg");
+    // faces.push_back("assets/cubemap/hills_lf.jpg");
+    // faces.push_back("assets/cubemap/hills_up.jpg");
+    // faces.push_back("assets/cubemap/hills_dn.jpg");
+    // faces.push_back("assets/cubemap/hills_bk.jpg");
+    // faces.push_back("assets/cubemap/hills_ft.jpg");
+
     this->skybox = new Skybox(faces);
 
     this->setWindowContext();
