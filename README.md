@@ -37,10 +37,11 @@ Group project with OpenGL in C++.
         - Infinite terrain, see: terrain-infinite branch
     
 - Tarik
-    - Add Skybox with a day/night cycle.
+    - ~~Add Skybox~~ 
+    - Add a day/night cycle to Skybox.
     - Add Eric's particle effects alongside Skybox
     - Add Terrain collision detection
-    - Add object collision detection
+    - Add tree collision detection
     - (Optional) Add mini HUD
     - (Optional) Add fog 
 
