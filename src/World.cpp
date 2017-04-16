@@ -18,6 +18,10 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
 
     glEnable(GL_DEPTH_TEST);
 
+    // Transparency
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glViewport(0, 0, this->window->width(), this->window->height());
 
     // Camera mouse controls

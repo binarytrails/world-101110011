@@ -23,34 +23,41 @@ void main()
     rgb = rgb / d;
     color = texture(soilTexture, texCoord); //* vec4(rgb, 1.0f);
 */
+
 // TODO texture influenced by elevation
+
 // TODO illumination
+
+    vec4 texColor = texture(soilTexture, texCoord);
+
 /*
-	vec4 textureColor = texture(soilTexture, texCoord);
-	
 	float ambientStrength = 0.1f;
     vec3 ambient = ambientStrength * lightColor;
-  	
-    // Diffuse 
+
+    // Diffuse
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(lightPos - pos);
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * lightColor;
-    
+
     // Specular
     float specularStrength = 0.5f;
     vec3 viewDir = normalize(viewPos - pos);
-    vec3 reflectDir = reflect(-lightDir, norm);  
+    vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 specular = specularStrength * spec * lightColor;  
-        
+    vec3 specular = specularStrength * spec * lightColor;
+
     vec4 result;
 	result.x = (ambient + diffuse + specular) * textureColor.x;
 	result.y = (ambient + diffuse + specular) * textureColor.y;
 	result.z = (ambient + diffuse + specular) * textureColor.z;
 	result.w = textureColor.w;
-		
+
     color = result;
 */
-    color = texture(soilTexture, texCoord);
+
+    // opacity
+    texColor.w = 0.7;
+
+    color = texColor;
 }
