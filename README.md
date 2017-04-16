@@ -1,5 +1,7 @@
 # World-101110011
 
+![preview](docs/progress/world-1.png)
+
 Group project with OpenGL in C++.
 
     COMP 371
