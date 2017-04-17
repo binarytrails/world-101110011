@@ -10,7 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 //include shader class from learnopengl.com
-#include "Shader.h"
+#include "Shader.hpp"
 
 #include "Cloud.h"
 #include "Wind.h"
@@ -46,7 +46,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void do_movement();
 
 //variables for VBO and VAO
-GLuint VBO, VAO;
+//GLuint VBO, VAO;
 
 //maximum number of particles
 #define maxParticles 1000
@@ -100,7 +100,8 @@ int main() {
 	Cloud* test = new Cloud(0, 1, 0, 0.5, 0.5, maxParticles, breeze, 1);
 
 
-
+	test->initBuffers();
+	/*
 
 	//generate the vertex buffer object(s), vertex array object
 	glGenVertexArrays(1, &VAO);
@@ -120,7 +121,7 @@ int main() {
 	// Unbind VAO
 	glBindVertexArray(0);
 
-
+	*/
 
 
 
@@ -134,14 +135,16 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		test->render();
+		/*
 
 		// use our Shader Program
-		ourShader.Use();
+		ourShader.use();
 
 		// Get their uniform location
-		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
-		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
-		GLint projLoc = glGetUniformLocation(ourShader.Program, "projection");
+		GLint modelLoc = glGetUniformLocation(ourShader.programId, "model");
+		GLint viewLoc = glGetUniformLocation(ourShader.programId, "view");
+		GLint projLoc = glGetUniformLocation(ourShader.programId, "projection");
 
 		// Create projection matrix
 		glm::mat4 projection;
@@ -155,6 +158,7 @@ int main() {
 		// Set the view and projection matrixes each frame
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
 
 		//update all the drops positions
@@ -166,18 +170,17 @@ int main() {
 		//bind the VAO
 		glBindVertexArray(VAO);
 
-
 		//camera rotations
 		do_movement();
 
-		//set the model matrix each frame
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
 		//draw all the drops
 		glDrawArrays(GL_LINES, 0, maxParticles * 6);
 
 		//unbind VAO
 		glBindVertexArray(0);
+
+		*/
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
