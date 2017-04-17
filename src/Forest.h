@@ -15,6 +15,9 @@
 #define FOREST_H
 
 #include <vector>
+#include <ctime>
+#include <iostream>
+#include <random>
 
 #include <GL/glew.h>
 
@@ -63,6 +66,7 @@ private:
     void build(Terrain* terrain);
     void updateMVP(const glm::mat4 view, const glm::mat4 projection);
     void draw();
+    float randNum(float min = -0.05f, float max = 0.05f);
 };
 
 #endif /* FOREST_H */

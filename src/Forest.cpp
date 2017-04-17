@@ -48,25 +48,43 @@ void Forest::rotate(const glm::vec3 spin) {
 
 void Forest::build(Terrain* terrain) {
     Point offset(0,0,0,Vector(0,1,0));
-    PGTree2 tree1 = PGTree2(offset, 1.0f, 0.2f, 1.0f);
-    GLObject* myObj = new GLObject(tree1.objects);
+    PGTree1 tree1 = PGTree1(offset, 0.5f, 0.1f, 0.8f);
+    GLObject* myObj1 = new GLObject(tree1.objects);
+    PGTree2 tree2 = PGTree2(offset, 0.5f, 0.1f, 0.8f);
+    GLObject* myObj2 = new GLObject(tree2.objects);
     
     // TODO remove
-    glm::vec3 translations[100];
-    int index = 0;
-    for(GLint y = 0; y < 50; y += 1)
-    {
-        glm::vec3 translation;
-        /*translation.x = (GLfloat)x / 10.0f + offset2;
-        translation.y = (GLfloat)y / 10.0f + offset2;*/
-        translation.x = (GLfloat)y;
-        translation.z = (GLfloat)y;
-        translation.y = terrain->getElevation(translation.x, translation.y);
-        translations[index++] = translation;
+    glm::vec3 translations1[X_CELLS*Z_CELLS];
+    glm::vec3 translations2[X_CELLS*Z_CELLS];
+    int index1 = 0;
+    int index2 = 0;
+    for(int c = 0; c < 2; c++) {
+        for(GLint x = 0; x < X_CELLS; x += 10)
+        {
+            /*float maxTree = X_CELLS/2 >= x ? x : X_CELLS - x;
+            int num = randNum(0, maxTree);
+            float space = num > 0 ? x/num : 0;
+            std::cout << x << ' ' << maxTree << ' ' << num << ' ' << space << '\n';*/
+            for(GLint z = 0 + c * 5; z < Z_CELLS; z += 10)
+            {
+                glm::vec3 translation;
+                /*translation.x = (GLfloat)x / 10.0f + offset2;
+                translation.y = (GLfloat)y / 10.0f + offset2;*/
+                translation.x = (GLfloat)x;
+                translation.z = (GLfloat)z;
+                translation.y = terrain->getElevation(translation.x, translation.z);
+                if(c == 0)
+                    translations1[index1++] = translation;
+                else
+                    translations2[index2++] = translation;
+            }
+        }
     }
     
-    myObj->initBuffers(translations, 50);
-    objects.push_back(myObj);
+    myObj1->initBuffers(translations1, index1-1);
+    myObj2->initBuffers(translations2, index2-1);
+    objects.push_back(myObj1);
+    objects.push_back(myObj2);
 }
 
 void Forest::updateMVP(const glm::mat4 view, const glm::mat4 projection)
@@ -87,4 +105,12 @@ void Forest::draw()
     for(int c = 0; c < objects.size(); c++) {
         objects.at(c)->draw();
     }
+}
+
+float Forest::randNum(float min, float max) {
+    std::random_device rd;     // only used once to initialise (seed) engine
+    std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
+    std::uniform_real_distribution<float> uni(min,max); // guaranteed unbiased
+
+    return uni(rng);
 }

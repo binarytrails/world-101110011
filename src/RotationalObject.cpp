@@ -39,7 +39,7 @@ RotationalObject::RotationalObject(int PCount, int TCount, float P[], Point off,
             p = p.rotate(axisSin, axisCos, axisN);
             p = p.translate(Vector(offset.x, offset.y, offset.z));
             
-            this->addPoint(p.x,p.y,p.z);
+            this->addPoint(p.x,p.y,p.z,0,0,0,0.552, 0.541, 0.486);
             std::cout << "Tree: " << p.x << ' ' << p.y << ' ' << p.z << '\n';
 
             //create indices
