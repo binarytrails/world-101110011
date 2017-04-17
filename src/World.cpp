@@ -97,10 +97,10 @@ void World::centerCamera()
 {
     glm::vec3 eye;
 
-    eye.x = this->TERRAIN_WIDTH  / 2.0f;
-    eye.z = this->TERRAIN_HEIGHT / 2.0f;
+    eye.x = floor(this->TERRAIN_WIDTH  / 2.0f);
+    eye.z = floor(this->TERRAIN_HEIGHT / 2.0f);
     // above the ground
-    eye.y = this->terrain->getElevation(eye.x, eye.z) + 3;
+    eye.y = this->terrain->getElevation(eye.x, eye.z);
 
     this->camera->setEye(eye);
 }
