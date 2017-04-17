@@ -43,8 +43,8 @@ public:
     
     //Two points used to form a hitbox
     bool sizeFirst = true;
-    float sizeMin[3] = {0, 0, 0};
-    float sizeMax[3] = {0, 0, 0};
+    float sizeMin[3];
+    float sizeMax[3];
     
     GLObject add(GLObject* other);
     void initBuffers(glm::vec3* translations, int count);

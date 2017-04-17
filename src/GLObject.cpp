@@ -175,6 +175,11 @@ GLObject::GLObject(const std::vector<GLObject*>& others){
     vSize = 0;
     iSize = 0;
     
+    for(int c = 0; c < 2; c++) {
+        sizeMin[c] = 0;
+        sizeMax[c] = 0;
+    }
+    
     for(int c = 0; c < others.size(); c++) {
         vSize += others.at(c)->vSize;
         iSize += others.at(c)->iSize;
