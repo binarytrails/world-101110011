@@ -25,11 +25,12 @@ class Skybox
 
 public:
 	Skybox();
-	Skybox(std::vector<const GLchar*>& faces);
 	~Skybox();
 
 	//! Combines textures into cubemap and returns texture ID.
 	void loadCubeMap(std::vector<const GLchar*>& faces);
+
+	void initBuffers();
 
 	//! Renders out our skybox.
 	// void renderSkybox(Window* window, Camera* camera);
