@@ -162,23 +162,7 @@ void World::build()
 
     this->centerCamera();
 
-    // Faces for our cubemap.
-    std::vector<const GLchar*> faces;
-    faces.push_back("assets/cubemap/right.jpg");
-    faces.push_back("assets/cubemap/left.jpg");
-    faces.push_back("assets/cubemap/top.jpg");
-    faces.push_back("assets/cubemap/bottom.jpg");
-    faces.push_back("assets/cubemap/back.jpg");
-    faces.push_back("assets/cubemap/front.jpg");
-
-    // faces.push_back("assets/cubemap/hills_rt.jpg");
-    // faces.push_back("assets/cubemap/hills_lf.jpg");
-    // faces.push_back("assets/cubemap/hills_up.jpg");
-    // faces.push_back("assets/cubemap/hills_dn.jpg");
-    // faces.push_back("assets/cubemap/hills_bk.jpg");
-    // faces.push_back("assets/cubemap/hills_ft.jpg");
-
-    this->skybox = new Skybox(faces);
+    this->skybox = new Skybox();
 
     this->setWindowContext();
     this->setWindowCallbacks();
