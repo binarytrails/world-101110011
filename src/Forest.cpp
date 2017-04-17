@@ -56,8 +56,11 @@ void Forest::build(Terrain* terrain) {
     GLObject* myObj2 = new GLObject(tree2.objects);
     
     // TODO remove
-    glm::vec3 translations1[X_CELLS*Z_CELLS];
-    glm::vec3 translations2[X_CELLS*Z_CELLS];
+    //glm::vec3 translations1[X_CELLS*Z_CELLS];
+    //glm::vec3 translations2[X_CELLS*Z_CELLS];
+    
+    glm::vec3 translations1[2500];
+    glm::vec3 translations2[2500];
     int index1 = 0;
     int index2 = 0;
     for(int c = 0; c < 2; c++) {
