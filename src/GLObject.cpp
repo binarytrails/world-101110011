@@ -149,6 +149,11 @@ GLObject::GLObject(int vSize, int iSize, GLfloat* v, GLuint* i) : vSize(vSize), 
     vertices = new GLfloat[vSize];
     indices = new GLuint[iSize];
     
+    for(int c = 0; c < 2; c++) {
+        sizeMin[c] = 0;
+        sizeMax[c] = 0;
+    }
+    
     for(int c = 0; c < vSize; c+=3) {
         addPoint(v[c], v[c+1], v[c+2]);
     }
