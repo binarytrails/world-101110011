@@ -163,7 +163,7 @@ void World::build()
     this->forest = new Forest(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT, this->terrain);
 
     // FIXME adjusted for current terrain elevation
-    this->terrain->rotate(glm::vec3(12.5, 0, 0) / 20.0f);
+    this->rotate(glm::vec3(12.5, 0, 0));
 
     this->centerCamera();
 
