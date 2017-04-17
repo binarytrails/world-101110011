@@ -99,8 +99,13 @@ void World::centerCamera()
 
     eye.x = floor(this->TERRAIN_WIDTH  / 2.0f);
     eye.z = floor(this->TERRAIN_HEIGHT / 2.0f);
+
     // above the ground
     eye.y = this->terrain->getElevation(eye.x, eye.z);
+
+    // FIXME
+    //this->terrain->rotate(glm::vec3(12.5, 0, 0) / 20.0f);
+    //printf("eye.y: %f\n", eye.y);
 
     this->camera->setEye(eye);
 }

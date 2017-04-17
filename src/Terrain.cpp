@@ -31,9 +31,7 @@ Terrain::~Terrain()
 
 float Terrain::getElevation(const float x, const float z)
 {
-    glm::vec3 vertex = this->vertices[(uint16_t) x * this->X_CELLS +
-                                      (uint16_t) z * this->Z_CELLS];
-    return vertex.y;
+    return this->elevation->get(x, z);
 }
 
 GLenum Terrain::getRenderMode() const
