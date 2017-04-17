@@ -1,4 +1,7 @@
 #pragma once
+#include <vector>
+#include <time.h>
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -7,13 +10,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Window.hpp"
+#include "Camera.hpp"
+#include "Shader.hpp"
+#include "Mesh.hpp"
 #include "Wind.h"
-#include <vector>
-#include <time.h>
 
 #include <stdio.h>
 
-class Cloud {
+class Cloud : public Mesh {
 
 public:
 
@@ -47,6 +52,20 @@ public:
 	//update all the drops
 	void updateAll();
 
+	void initBuffers();
+
+	GLenum getRenderMode() const;
+
+	void setRenderMode(const GLenum renderMode);
+
+	void render(const Window* window, const Camera* camera, const glm::mat4 view, const glm::mat4 projection);
+
+	void rotate(const glm::vec3 spin);
+
+	void mvp(glm::mat4 view, glm::mat4 projection);
+
+	void draw();
+
 	void seed();
 
 
@@ -61,7 +80,13 @@ private:
 	Particle* drops[1000];
 	GLfloat allVertices[6000];
 
+	Shader *shader;
 	Wind *wind;
+
+	GLenum renderMode;
+	GLuint VBO, VAO;
+	glm::mat4 model;
+	glm::mat4 view;
 
 	bool isSeeded = false;
 };
