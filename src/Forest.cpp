@@ -13,11 +13,11 @@
 
 #include "Forest.h"
 
-Forest::Forest(const uint16_t xcells, const uint16_t zcells):
+Forest::Forest(const uint16_t xcells, const uint16_t zcells, Terrain* terrain):
     X_CELLS(xcells), Z_CELLS(zcells), renderMode(GL_TRIANGLES) {
     this->shader = new Shader("src/shaders/objecttest.vs",
                               "src/shaders/objecttest.fs");
-    this->build();
+    this->build(terrain);
 }
 
 Forest::~Forest() {
@@ -46,9 +46,9 @@ void Forest::rotate(const glm::vec3 spin) {
     this->model = glm::rotate(this->model, spin.z, glm::vec3(0, 0, 1));
 }
 
-void Forest::build() {
+void Forest::build(Terrain* terrain) {
     Point offset(0,0,0,Vector(0,1,0));
-    PGTree2 tree1 = PGTree2(offset, 5.0f, 1.0f, 5.0f);
+    PGTree2 tree1 = PGTree2(offset, 1.0f, 0.2f, 1.0f);
     GLObject* myObj = new GLObject(tree1.objects);
     
     // TODO remove
@@ -59,10 +59,10 @@ void Forest::build() {
         glm::vec3 translation;
         /*translation.x = (GLfloat)x / 10.0f + offset2;
         translation.y = (GLfloat)y / 10.0f + offset2;*/
-        translation.x = y;
-        translation.y = 0;
-        translation.z = y;
-        translations[index] = translation;
+        translation.x = (GLfloat)y;
+        translation.z = (GLfloat)y;
+        translation.y = terrain->getElevation(translation.x, translation.y);
+        translations[index++] = translation;
     }
     
     myObj->initBuffers(translations, 50);

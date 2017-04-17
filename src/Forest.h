@@ -31,11 +31,12 @@
 #include "PGTree.h"
 #include "PGTree1.h"
 #include "PGTree2.h"
+#include "Terrain.hpp"
 
 
 class Forest : public Mesh {
 public:
-    Forest(const uint16_t xcells, const uint16_t zcells);
+    Forest(const uint16_t xcells, const uint16_t zcells, Terrain* terrain);
     virtual ~Forest();
     
     virtual GLenum getRenderMode() const;
@@ -59,7 +60,7 @@ private:
     const uint16_t X_CELLS;
     const uint16_t Z_CELLS;
     
-    void build();
+    void build(Terrain* terrain);
     void updateMVP(const glm::mat4 view, const glm::mat4 projection);
     void draw();
 };

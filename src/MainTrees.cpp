@@ -64,7 +64,7 @@ void init() {
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
     // Create a GLFWwindow object that we can use for GLFW's functions
-    window = glfwCreateWindow(WIDTH, HEIGHT, "Assignment 2", nullptr, nullptr);
+    window = glfwCreateWindow(WIDTH, HEIGHT, "Tree Demo", nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     // Set the required callback functions
@@ -119,21 +119,19 @@ int main()
     
     // Generate a list of 100 quad locations/translation-vectors
     glm::vec3 translations[100];
-    glm::vec3 translations2[100];
     int index = 0;
-    GLfloat offset2 = 0.2f;
-    for(GLint y = -10; y < 10; y += 2)
+    for(float y = -0.8f; y <= 0.4f; y += 1.1f)
     {
-        for(GLint x = -10; x < 10; x += 2)
+        for(float x = -0.5f; x <= 0.5f; x += 1.0f)
         {
             glm::vec3 translation;
             /*translation.x = (GLfloat)x / 10.0f + offset2;
             translation.y = (GLfloat)y / 10.0f + offset2;*/
-            translation.x = 0;
-            translation.y = 0;
+            translation.x = (GLfloat)x;
+            translation.y = (GLfloat)y;
             translation.z = 0;
-            translations[index] = translation;
-            translations2[99-index++] = translation;
+            translations[index++] = translation;
+            std::cout << x << ' ' << y << '\n';
         }
     }
 
@@ -143,12 +141,12 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * 100, &translations[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);*/
 
-    Point offset(0,0,0,Vector(0,1,0));
+    Point offset(0, 0 ,0,Vector(0,1,0));
     //PGTree1 tree1 = PGTree1(offset);
     //GLObject* obj2 = new GLObject(tree1.objects);
-    PGTree2 tree2 = PGTree2(offset, 0.05f, 0.01f, 0.3f);
+    PGTree1 tree2 = PGTree1(offset, 0.05f, 0.01f, 0.3f);
     GLObject* obj2 = new GLObject(tree2.objects);
-    obj2->initBuffers(translations2, 1);
+    obj2->initBuffers(translations, 4);
     //draw(obj);
 
     // Game loop

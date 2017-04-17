@@ -155,7 +155,7 @@ void World::updateMVP()
 void World::build()
 {
     this->terrain = new Terrain(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
-    this->forest = new Forest(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
+    this->forest = new Forest(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT, this->terrain);
 
     // FIXME adjusted for current terrain elevation
     this->rotate(glm::vec3(12.5, 0, 0));

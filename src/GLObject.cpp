@@ -12,6 +12,7 @@ void GLObject::initBuffers(glm::vec3* translations, int count) {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &colorVBO);
+    glGenBuffers(1, &normalVBO);
     glGenBuffers(1, &EBO);
 
     // Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
