@@ -7,7 +7,7 @@ Created by: Justin Velicogna.
 #define SHADOW_H
 
 #include "GLObject.h"
-#include "..\glm\glm.hpp"
+#include <glm\glm.hpp>
 #include "Point.h"
 #include <vector>
 
