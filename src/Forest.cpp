@@ -50,7 +50,7 @@ void Forest::rotate(const glm::vec3 spin) {
 void Forest::build(Terrain* terrain) {
     Point offset(0,0,0,Vector(0,1,0));
     
-	PGTree1 tree1 = PGTree1(offset, 0.25f, 0.04f, 1.0f);
+	PGTree1 tree1 = PGTree1(offset, 0.25f, 0.05f, 1.0f);
     GLObject* myObj1 = new GLObject(tree1.objects);
     
     PGTree2 tree2 = PGTree2(offset, 0.25f, 0.04f, 1.0f);
