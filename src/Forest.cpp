@@ -71,7 +71,7 @@ void Forest::build(Terrain* terrain) {
             for(GLint z = 5 + c * 5; z < Z_CELLS; z += 10)
             {
                 float numX = randNum(-2.0f,2.1f);
-                float numY  = randNum(-2.0f,2.1f);
+                float numY = randNum(-2.0f,2.1f);
                 
                 glm::vec3 translation;
                 /*translation.x = (GLfloat)x / 10.0f + offset2;
