@@ -84,9 +84,15 @@ void Forest::build(Terrain* terrain) {
                 glm::vec3 translation;
                 /*translation.x = (GLfloat)x / 10.0f + offset2;
                 translation.y = (GLfloat)y / 10.0f + offset2;*/
-                translation.x = (GLfloat)x;
-                translation.z = (GLfloat)z;
-                translation.y = terrain->getElevation(translation.x, translation.z);
+				float numX = randNum(-2.0f, 2.1f);
+				float numY = randNum(-2.0f, 2.1f);
+
+				//glm::vec3 translation;
+				/*translation.x = (GLfloat)x / 10.0f + offset2;
+				translation.y = (GLfloat)y / 10.0f + offset2;*/
+				translation.x = (GLfloat)x + numX;
+				translation.z = (GLfloat)z + numY;
+				translation.y = -(x + z * 4) / 80;
 				
 				if (c == 0)
 				{
@@ -109,8 +115,10 @@ void Forest::build(Terrain* terrain) {
 	//tree 1
 	for (int i = 0; i < numtrees1; i++)
 	{
-		float sampleoffset = 0.05;
+
 		glm::vec3 translation = translations1[i];
+		/*float sampleoffset = 0.05;
+		
 		glm::vec3 p1, p2, p3;
 		p1.x = translation.x + sampleoffset;
 		p1.z = translation.z;
@@ -120,9 +128,9 @@ void Forest::build(Terrain* terrain) {
 		p2.y = terrain->getElevation(p2.x, p2.z);
 		p3.x = translation.x - sampleoffset;
 		p3.z = translation.z + sampleoffset;
-		p3.y = terrain->getElevation(p3.x, p3.z);
+		p3.y = terrain->getElevation(p3.x, p3.z);*/
 
-		glm::vec3 normal = glm::normalize(glm::cross(p2 - p1, p3 - p1));
+		glm::vec3 normal = glm::vec3(0.0,1.0,0.0);
 
 		Point slope;
 		slope.x = translation.x;
@@ -136,11 +144,14 @@ void Forest::build(Terrain* terrain) {
 
 		for (int j = 0; j < tree1.objects.size(); j++)
 		{
+			glm::vec3 light = glm::vec3(0.0, 100.0, 0.0);
+			GLObject sparetree = GLObject(*tree1.objects[j]);
 
-			GLObject* myshadow = new Shadow(*tree1.objects[j], translation, slope);
+			GLObject myshadow = Shadow(sparetree, translation, slope,light);
+			GLObject* newshadow = new GLObject(myshadow);
 
-			myshadow->initBuffers(new glm::vec3(0.0, 0.0, 0.0), 1);
-			objects.push_back(myshadow);
+			newshadow->initBuffers(new glm::vec3(0.0, 0.0, 0.0), 1);
+			objects.push_back(newshadow);
 
 
 		}
@@ -174,14 +185,17 @@ void Forest::build(Terrain* terrain) {
 
 		//make the shadow
 
-		for (int j = 0; j < tree1.objects.size(); j++)
+		for (int j = 0; j < tree2.objects.size(); j++)
 		{
 
-			GLObject* myshadow = new Shadow(*tree2.objects[j], translation, slope);
+			glm::vec3 light = glm::vec3(0.0, 100.0, 0.0);
+			GLObject sparetree = GLObject(*tree2.objects[j]);
 
-			myshadow->initBuffers(new glm::vec3(0.0, 0.0, 0.0), 1);
-			objects.push_back(myshadow);
+			GLObject myshadow = Shadow(sparetree, translation, slope, light);
+			GLObject* newshadow = new GLObject(myshadow);
 
+			//newshadow->initBuffers(new glm::vec3(0.0, 0.0, 0.0), 1);
+			//objects.push_back(newshadow);
 
 		}
 	}

@@ -169,9 +169,33 @@ GLObject::~GLObject() {
 }
 
 GLObject::GLObject(const GLObject& orig) {
-    vertices = orig.vertices;
-    indices = orig.indices;
-    vSize = orig.vSize;
+	vertices = new GLfloat[orig.vSize];
+	for (int i = 0; i < orig.vCursor; i++)
+	{
+		vertices[i] = orig.vertices[i];
+	}
+	//vertices = orig.vertices;
+    //indices = orig.indices;
+	indices = new GLuint[orig.iSize];
+	for (int i = 0; i < orig.iCursor; i++)
+	{
+		indices[i] = orig.indices[i];
+	}
+
+	colors = new GLfloat[orig.vSize];
+	for (int i = 0; i < orig.vCursor; i++)
+	{
+		colors[i] = orig.colors[i];
+	}
+	
+	normals = new GLfloat[orig.vSize];
+	for (int i = 0; i < orig.vCursor; i++)
+	{
+		normals[i] = orig.normals[i];
+	}
+
+
+	vSize = orig.vSize;
     iSize = orig.iSize;
     iMax = orig.iMax;
 }
