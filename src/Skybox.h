@@ -2,7 +2,9 @@
 * @file
 * @author Tarik Abou-Saddik
 *
-*	Basic class definition for our Skybox.
+* Although the class implementation was my own, the basic functioning
+* of the code was copied from LearnOpenGL's article on "Cubemaps"
+* URL: https://learnopengl.com/#!Advanced-OpenGL/Cubemaps
 */
 
 #pragma once
@@ -24,12 +26,14 @@ class Skybox
 {
 
 public:
+	//! Default constructor
 	Skybox();
+	//! Default destructor
 	~Skybox();
 
 	//! Combines textures into cubemap and returns texture ID.
 	void loadCubeMap(std::vector<const GLchar*>& faces);
-
+	//! Initializes buffers and sends vertices of skybox to GPU.
 	void initBuffers();
 
 	//! Renders out our skybox.
@@ -40,10 +44,12 @@ public:
 
 private:
 
+	//! GL buffer objects.
 	GLuint skyboxVAO, skyboxVBO, cubeMapID;
+	//! Vector holding paths of cubemap texture.
 	std::vector<const GLchar*> cubeMapFaces;
 
-	Shader* shader;
+	//! Shader for our Skybox.
 	Shader* skyboxShader;
 
 };

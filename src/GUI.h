@@ -1,6 +1,9 @@
 /*
 * @file 
-* @author Tarik Abou-Saddik
+* @author
+* Although the class implementation was my own, the basic functioning
+* of the code was copied from LearnOpenGL's article on "Rendering Text"
+* URL: https://learnopengl.com/#!In-Practice/Text-Rendering
 */
 
 #pragma once 

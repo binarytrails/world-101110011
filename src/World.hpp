@@ -64,6 +64,8 @@ class World
         void centerCamera();
         //! Output text with instructions on screen.
         void outputUI();
+        //! Prevent camera from falling below y = 0
+        void controlCamPos();
 
         GLboolean displayText;
 

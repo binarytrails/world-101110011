@@ -1,14 +1,22 @@
+/** 
+* @file
+* @author Tarik Abou-Saddik
+*
+*  Although the class implementation was my own, the basic functioning
+*  of the code was copied from LearnOpenGL's article on "Cubemaps"
+*  URL: https://learnopengl.com/#!Advanced-OpenGL/Cubemaps
+*/
+
 #include "Skybox.h"
 #include "Shader.hpp"
 
 Skybox::Skybox()
 { 
 
-  // Set up and compile our shaders.
-  shader = new Shader("src/shaders/advanced.vs", "src/shaders/advanced.frag");
+  //! Set up and compile our shaders.
   skyboxShader = new Shader("src/shaders/skybox.vs", "src/shaders/skybox.frag");
 
-  // Faces of our cubemap.
+  //! Faces of our cubemap.
   this->cubeMapFaces.push_back("assets/cubemap/right.jpg");
   this->cubeMapFaces.push_back("assets/cubemap/left.jpg");
   this->cubeMapFaces.push_back("assets/cubemap/top.jpg");
@@ -16,17 +24,10 @@ Skybox::Skybox()
   this->cubeMapFaces.push_back("assets/cubemap/back.jpg");
   this->cubeMapFaces.push_back("assets/cubemap/front.jpg");
 
-  // Load our cubemap faces. 
+  //! Load our cubemap faces. 
   this->loadCubeMap(this->cubeMapFaces);
 
-  // cubeMapFaces.push_back("assets/cubemap/hills_rt.jpg");
-  // cubeMapFaces.push_back("assets/cubemap/hills_lf.jpg");
-  // cubeMapFaces.push_back("assets/cubemap/hills_up.jpg");
-  // cubeMapFaces.push_back("assets/cubemap/hills_dn.jpg");
-  // cubeMapFaces.push_back("assets/cubemap/hills_bk.jpg");
-  // cubeMapFaces.push_back("assets/cubemap/hills_ft.jpg");
-
-    this->initBuffers();
+  this->initBuffers();
 }
 
 Skybox::~Skybox()
@@ -127,17 +128,18 @@ void Skybox::renderSkybox(Window* window, Camera* camera,
       glDepthMask(GL_FALSE);
       
       this->skyboxShader->use();
-      // Removing translation component of vector.
+      //!Removing translation component of vector to eliminate
+      //! translating skybox.
       glm::mat4 view3 = glm::mat4(glm::mat3(view));
     
-      // Get location of uniform variables.
+      //! Get location of uniform variables.
       glUniformMatrix4fv(glGetUniformLocation(this->skyboxShader->programId, "view"), 1, GL_FALSE, glm::value_ptr(view3));
       glUniformMatrix4fv(glGetUniformLocation(this->skyboxShader->programId, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
       
-      // Render our skybox cube.
+      //! Render our skybox cube.
       glBindVertexArray(this->skyboxVAO);
         glActiveTexture(GL_TEXTURE0);
-        glUniform1i(glGetUniformLocation(this->shader->programId, "skybox"), 0);
+        glUniform1i(glGetUniformLocation(this->skyboxShader->programId, "skybox"), 0);
         glBindTexture(GL_TEXTURE_CUBE_MAP, this->cubeMapID);
         glDrawArrays(GL_TRIANGLES, 0, 36);
       glBindVertexArray(0);

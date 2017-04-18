@@ -220,6 +220,8 @@ void World::draw()
 
 	    this->outputUI();
 
+        this->controlCamPos();
+
         // continuous rotation
         //this->rotate(glm::vec3(0, 0, 0));
 
@@ -299,6 +301,15 @@ void World::outputUI()
         this->gui->renderText("h:  help screen", textXPos, textYPos, 0.3f,
             color, this->window);
     }
+}
+
+void World::controlCamPos()
+{
+    GLfloat xpos = this->camera->getEye().x;
+    GLfloat zpos = this->camera->getEye().z;
+
+    if(this->camera->getEye().y <= 0.0f)
+        this->camera->setEye(glm::vec3(xpos, 0.0f, zpos));
 }
 
 void World::rotate(const glm::vec3 axes)
