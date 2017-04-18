@@ -187,7 +187,9 @@ void World::build()
 void World::draw()
 {
     while (!glfwWindowShouldClose(this->window->get()))
-    {
+    {   
+        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+
         glfwPollEvents();
         applyKeyboardBindings(this->window->get());
 
@@ -208,7 +210,9 @@ void World::draw()
         this->cloud->render(this->window, this->camera,
                             this->view, this->projection);
 
-	this->outputUI();
+	   this->outputUI();
+
+       this->controlCamPos();
 
         // continuous rotation
         //this->rotate(glm::vec3(0, 0, 0));
@@ -289,6 +293,18 @@ void World::outputUI()
         this->gui->renderText("h:  help screen", textXPos, textYPos, 0.3f, 
             color, this->window);
     }
+}
+
+void World::controlCamPos()
+{
+
+    GLfloat xpos = this->camera->getEye().x;
+    GLfloat zpos = this->camera->getEye().z;
+
+    GLfloat terraintHeight
+
+    if(this->camera->getEye().y <= 0)
+        this->camera->setEye(glm::vec3(xpos, 0.0f, zpos));
 }
 
 void World::rotate(const glm::vec3 axes)
