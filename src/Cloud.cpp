@@ -84,16 +84,16 @@ int Cloud::setDrop(int k, int i) {
 		allVerticeSnow[k++] = drops[i]->getPosY();
 		allVerticeSnow[k++] = drops[i]->getPosZ();
 
-		allVerticeSnow[k++] = drops[i]->getPosX() + 0.05f;
+		allVerticeSnow[k++] = drops[i]->getPosX() + 0.075f;
 		allVerticeSnow[k++] = drops[i]->getPosY();
 		allVerticeSnow[k++] = drops[i]->getPosZ();
 
-		allVerticeSnow[k++] = drops[i]->getPosX() + 0.05f;
-		allVerticeSnow[k++] = drops[i]->getPosY() + 0.05f;
+		allVerticeSnow[k++] = drops[i]->getPosX() + 0.075f;
+		allVerticeSnow[k++] = drops[i]->getPosY() + 0.075f;
 		allVerticeSnow[k++] = drops[i]->getPosZ();
 
 		allVerticeSnow[k++] = drops[i]->getPosX();
-		allVerticeSnow[k++] = drops[i]->getPosY() + 0.05f;
+		allVerticeSnow[k++] = drops[i]->getPosY() + 0.075f;
 		allVerticeSnow[k++] = drops[i]->getPosZ();
 	}
 

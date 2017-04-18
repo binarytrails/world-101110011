@@ -4,10 +4,11 @@
 
 Particle::Particle() {}
 
-Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLuint type) {
+Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLuint mode) {
 	_x = x;
 	_y = y;
 	_z = z;
+	type = mode;
 	velocity = glm::vec3(0.0f, randomBetween(0.0f, -0.005f), 0.0f);
 
 	if (type == 1) {
@@ -41,7 +42,19 @@ void Particle::setVelocity(glm::vec3 v) {
 void Particle::increment() {
 	velocity.y += _acceleration;
 
-	_x += velocity.x;
+	if (type == 1) {
+		_x += velocity.x;
+	}
+	else if (type == 2) {
+		switchCounter++;
+		if (switchCounter % 999 > 450) {
+			_x += 0.001;
+		}
+		else {
+			_x -= 0.001;
+		}
+	}
+
 	_y += velocity.y;
 	_z += velocity.z;
 }

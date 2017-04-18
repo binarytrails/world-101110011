@@ -51,4 +51,8 @@ private:
 
 	//point where the particle dies
 	GLfloat floor = 0.0f;
+
+	GLuint type;
+
+	GLuint switchCounter = 0;
 };
