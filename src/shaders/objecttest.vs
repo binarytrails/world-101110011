@@ -23,5 +23,5 @@ void main()
     gl_PointSize = 5.0;
     
     pos = position;
-    col = color;
+    col = color - position.z/100;
 }
