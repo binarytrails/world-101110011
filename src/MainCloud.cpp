@@ -51,6 +51,8 @@ void do_movement();
 //maximum number of particles
 #define maxParticles 1000
 
+Window *window = new Window(WIDTH, HEIGHT, "cloud");
+Camera *camera = new Camera();
 
 
 
@@ -69,11 +71,11 @@ int main() {
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Cloud", nullptr, nullptr);
-	glfwMakeContextCurrent(window);
+	//GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Cloud", nullptr, nullptr);
+	glfwMakeContextCurrent(window->get());
 
 	// Set the required callback functions
-	glfwSetKeyCallback(window, key_callback);
+	glfwSetKeyCallback(window->get(), key_callback);
 
 	// Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
 	glewExperimental = GL_TRUE;
@@ -97,35 +99,15 @@ int main() {
 
 	// create new cloud and set all it's starting drops
 	Wind* breeze = new Wind(0.0005f, 0.0f, 0.0f);
-	Cloud* test = new Cloud(0, 1, 0, 0.5, 0.5, maxParticles, breeze, 1);
+	Cloud* test = new Cloud(0, 10, 0, 10, 10, maxParticles, breeze, 1);
 
-
+	//initialize buffers
 	test->initBuffers();
-	/*
-
-	//generate the vertex buffer object(s), vertex array object
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	// Bind VAO
-	glBindVertexArray(VAO);
-
-	// Bind VBO
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(test->getAllDrops()), test->getAllDrops(), GL_DYNAMIC_DRAW);
-
-	// Position attribute of the lines (location, # of float that make up a vertex (x,y,z), form (float, int, etc), normalised, distance between the starting point of each group of vertices, beginning offset) 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-
-	// Unbind VAO
-	glBindVertexArray(0);
-
-	*/
 
 
 
-	while (!glfwWindowShouldClose(window))
+
+	while (!glfwWindowShouldClose(window->get()))
 	{
 
 		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
@@ -135,61 +117,19 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		test->render();
-		/*
 
-		// use our Shader Program
-		ourShader.use();
+		glm::mat4 projection = glm::perspective(glm::radians(45.0f), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+		test->render(window, camera, camera->getView(), projection);
 
-		// Get their uniform location
-		GLint modelLoc = glGetUniformLocation(ourShader.programId, "model");
-		GLint viewLoc = glGetUniformLocation(ourShader.programId, "view");
-		GLint projLoc = glGetUniformLocation(ourShader.programId, "projection");
-
-		// Create projection matrix
-		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(45.0f), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
-
-		// Create view matrix
-		glm::mat4 view;
-		view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
-
-
-		// Set the view and projection matrixes each frame
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-
-		//update all the drops positions
-		test->updateAll();
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, maxParticles * 6, test->getAllDrops(), GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		//bind the VAO
-		glBindVertexArray(VAO);
-
-		//camera rotations
+		//camera movements
 		do_movement();
 
 
-		//draw all the drops
-		glDrawArrays(GL_LINES, 0, maxParticles * 6);
-
-		//unbind VAO
-		glBindVertexArray(0);
-
-		*/
-
 		// Swap the screen buffers
-		glfwSwapBuffers(window);
-
+		glfwSwapBuffers(window->get());
 	}
 
-	// de-allocate all resources
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	test->deallocate();
 
 	// terminate GLFW
 	glfwTerminate();
@@ -216,6 +156,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 
+/*
 // Camera controls
 // WASD rotate the shape in XYZ, UP/DOWN zooms in and out
 void do_movement()
@@ -261,3 +202,42 @@ void do_movement()
 	}
 
 }
+*/
+
+void do_movement()
+{
+
+	if (keys[GLFW_KEY_W])
+	{
+		camera->moveUp();
+	}
+
+	if (keys[GLFW_KEY_S])
+	{
+		camera->moveDown();
+	}
+
+	if (keys[GLFW_KEY_A])
+	{
+		camera->moveLeft();
+	}
+
+	if (keys[GLFW_KEY_D])
+	{
+		camera->moveRight();
+	}
+
+
+
+	if (keys[GLFW_KEY_UP])
+	{
+		camera->moveForward();
+	}
+
+	if (keys[GLFW_KEY_DOWN])
+	{
+		camera->moveBackward();
+	}
+
+}
+

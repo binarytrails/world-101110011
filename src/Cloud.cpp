@@ -19,8 +19,8 @@ Cloud::Cloud(GLfloat x, GLfloat y, GLfloat z, GLfloat wid, GLfloat len, GLuint d
 
 		if (_type == 1) drops[i] = new Particle(randomBetween(x, x + wid), y, randomBetween(z, z + len));
 
-       // printf("cloud : drop (%f, %f, %f)\n",
-              //  drops[i]->getPosX(), drops[i]->getPosY(), drops[i]->getPosZ());
+        printf("cloud : drop (%f, %f, %f)\n",
+                drops[i]->getPosX(), drops[i]->getPosY(), drops[i]->getPosZ());
 	}
 
 	//initialize drops and link shaders
@@ -170,8 +170,14 @@ void Cloud::draw() {
 
 	//unbind VAO
 	glBindVertexArray(0);
+
 }
 
+
+void Cloud::deallocate() {
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+}
 
 void Cloud::seed()
 {

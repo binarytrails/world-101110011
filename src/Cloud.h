@@ -66,8 +66,11 @@ public:
 
 	void draw();
 
+	void deallocate();
+
 	void seed();
 
+	GLuint VBO, VAO;
 
 private:
 	GLfloat _x, _y, _z;
@@ -84,7 +87,6 @@ private:
 	Wind *wind;
 
 	GLenum renderMode;
-	GLuint VBO, VAO;
 	glm::mat4 model;
 	glm::mat4 view;
 
