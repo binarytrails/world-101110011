@@ -20,7 +20,8 @@ CXX_FILES=src/Main.cpp src/Window.cpp src/Shader.cpp src/Camera.cpp \
 		  src/Skybox.cpp \
 		  src/GLObject.cpp src/Helper.cpp src/lNode.cpp src/PGObject.cpp \
 		  src/Forest.cpp  src/Point.cpp src/PGTree*.cpp \
-		  src/Vector.cpp src/RotationalObject.cpp
+		  src/Vector.cpp src/RotationalObject.cpp \
+		  src/Shadow.cpp
 
 BIN=-o build/world.out
 

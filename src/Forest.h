@@ -35,7 +35,7 @@
 #include "PGTree1.h"
 #include "PGTree2.h"
 #include "Terrain.hpp"
-
+#include "Shadow.hpp"
 
 class Forest : public Mesh {
 public:

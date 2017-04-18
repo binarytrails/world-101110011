@@ -11,7 +11,6 @@
  * Created on April 14, 2017, 12:12 PM
  */
 
-#include "shadow.hpp"
 #include "Forest.h"
 #include <vector>
 
