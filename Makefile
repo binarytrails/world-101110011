@@ -12,15 +12,16 @@ OPENGL_MAC=-lGLEW -lglfw3 -framework Cocoa -framework OpenGL \
 GLFW_ARCH=-lglfw
 GLFW_UNIX=-lglfw3
 
-EXTRA_LIBS=-lSOIL -lsfml-audio
+EXTRA_LIBS=-lSOIL -lsfml-audio -lfreetype 
 
 INCLUDES=-I./src
+INCLUDES_MAC = -I/usr/local/include/freetype2 -I./src
 CXX_FILES=src/Main.cpp src/Window.cpp src/Shader.cpp src/Camera.cpp \
 		  src/World.cpp src/Terrain.cpp src/TerrainHeight.cpp \
 		  src/Skybox.cpp \
 		  src/GLObject.cpp src/Helper.cpp src/lNode.cpp src/PGObject.cpp \
 		  src/Forest.cpp  src/Point.cpp src/PGTree*.cpp \
-		  src/Vector.cpp src/RotationalObject.cpp
+		  src/Vector.cpp src/RotationalObject.cpp src/GUI.cpp
 
 BIN=-o build/world.out
 
@@ -38,7 +39,7 @@ linux: all
 
 mac: all
 	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} ${EXTRA_LIBS} \
-		${INCLUDES} ${CXX_FILES} ${BIN}
+		${INCLUDES_MAC} ${CXX_FILES} ${BIN}
 
 # Change code to use a different PGTree to compile a different one
 trees-arch: all

@@ -25,6 +25,7 @@
 #include "Terrain.hpp"
 #include "Skybox.h"
 #include "Forest.h"
+#include "GUI.h"
 
 //! Class to contain & control all of the procedural world elements
 class World
@@ -58,6 +59,11 @@ class World
         GLfloat yaw;
         //! Centering the camera on the terrain
         void centerCamera();
+        //! Output text with instructions on screen.
+        void outputUI();
+
+        GLboolean displayText;
+        GLboolean displayTextCount;
 
     private:
         void setWindowContext();
@@ -69,6 +75,7 @@ class World
         Shader *shader;
         Camera *camera;
         Skybox *skybox;
+        GUI    *gui;
 
         GLuint vboId,
                vaoId,
@@ -153,6 +160,7 @@ static void applyKeyboardBindings(GLFWwindow* w)
     if (keys[GLFW_KEY_P])       cbcPtr->world->setRenderMode(GL_POINTS);
 
     if(keys[GLFW_KEY_ESCAPE])   glfwSetWindowShouldClose(w, GL_TRUE);
+    
 }
 
 static void mouseKeyCallback(GLFWwindow* w, int key, int action, int mode)
