@@ -164,7 +164,7 @@ void Cloud::initBuffers() {
 	if (_type == 2) {
 
 		GLuint j = 0;
-		for (int i = 0; i < 6000; i += 6) {
+		for (int i = 0; i < _dropCount*6; i += 6) {
 
 			//stores the index location with the appropriate relationship per group of 6 vertices 
 			indices[i] = j;
@@ -186,7 +186,7 @@ void Cloud::initBuffers() {
 
 		// Bind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, 12000, this->getAllDrops(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _dropCount*12, this->getAllDrops(), GL_DYNAMIC_DRAW);
 
 		// Position attribute of the triangles (location, size of vertex (in this case, 3 points), form (float, int, etc), normalised, distance between the starting point of each group of vertices, beginning offset) 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
@@ -194,7 +194,7 @@ void Cloud::initBuffers() {
 
 		// bind EBO
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, _dropCount*6, indices, GL_DYNAMIC_DRAW);
 
 		// unbind EBO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -249,14 +249,14 @@ void Cloud::draw() {
 	//rain
 	if (_type == 1) {
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, 6000, this->getAllDrops(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _dropCount*6, this->getAllDrops(), GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//bind the VAO
 		glBindVertexArray(VAO);
 
 		//draw all the drops
-		glDrawArrays(GL_LINES, 0, 6000);
+		glDrawArrays(GL_LINES, 0, _dropCount*6);
 
 		//unbind VAO
 		glBindVertexArray(0);
@@ -266,14 +266,14 @@ void Cloud::draw() {
 	else if (_type == 2) {
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, 12000, this->getAllDrops(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _dropCount*12, this->getAllDrops(), GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		//bind the VAO
 		glBindVertexArray(VAO);
 
 		//draw all the drops
-		glDrawElements(GL_TRIANGLES, 12000, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, _dropCount*12, GL_UNSIGNED_INT, 0);
 
 		//unbind VAO
 		glBindVertexArray(0);

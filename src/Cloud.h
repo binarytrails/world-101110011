@@ -80,10 +80,10 @@ private:
 	//the type of cloud: 1 for rain, 2 for snow
 	GLuint _type;
 	GLuint _dropCount;
-	Particle* drops[1000];
-	GLfloat allVertices[6000];
-	GLfloat allVerticeSnow[12000];
-	GLuint indices[6000];
+	Particle* drops[3000];
+	GLfloat allVertices[18000];
+	GLfloat allVerticeSnow[36000];
+	GLuint indices[18000];
 
 	Shader *shader;
 	Wind *wind;

@@ -49,7 +49,7 @@ void do_movement();
 //GLuint VBO, VAO;
 
 //maximum number of particles
-#define maxParticles 1000
+#define maxParticles 3000
 
 Window *window = new Window(WIDTH, HEIGHT, "cloud");
 Camera *camera = new Camera();
@@ -96,7 +96,7 @@ int main() {
 
 	// create new cloud and set all it's starting drops
 	Wind* breeze = new Wind(0.001f, 0.0f, 0.0f);
-	Cloud* test = new Cloud(0, 10, 0, 10, 10, maxParticles, breeze, 2);
+	Cloud* test = new Cloud(0, 10, 0, 50, 50, maxParticles, breeze, 2);
 
 
 
