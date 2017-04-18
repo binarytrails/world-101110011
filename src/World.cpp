@@ -278,10 +278,7 @@ void World::outputUI()
     {
         this->gui->renderText("h:  help screen", textXPos, textYPos, 0.3f, 
             color, this->window);
-
-        textYPos -= 30;
     }
-
 }
 
 void World::rotate(const glm::vec3 axes)
