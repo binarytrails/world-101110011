@@ -12,7 +12,10 @@ OPENGL_MAC=-lGLEW -lglfw3 -framework Cocoa -framework OpenGL \
 GLFW_ARCH=-lglfw
 GLFW_UNIX=-lglfw3
 
-EXTRA_LIBS=-lSOIL -lsfml-audio -lfreetype 
+FREETYPE_ARCH=-I/usr/include/freetype2
+FREETYPE_MAC=-I/usr/local/include/freetype2
+
+EXTRA_LIBS=-lSOIL -lsfml-audio -lfreetype
 
 INCLUDES=-I./src
 INCLUDES_MAC = -I/usr/local/include/freetype2 -I./src
@@ -30,7 +33,7 @@ all:
 
 arch: all
 	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} \
-		${EXTRA_LIBS} ${SOUND_LINUX} \
+		${EXTRA_LIBS} ${SOUND_LINUX} ${FREETYPE_ARCH} \
 		${INCLUDES} ${CXX_FILES} ${BIN}
 
 linux: all
@@ -38,7 +41,8 @@ linux: all
 		${INCLUDES} ${CXX_FILES} ${BIN}
 
 mac: all
-	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} ${EXTRA_LIBS} \
+	${CXX} ${CXXFLAGS} ${OPENGL_MAC} ${GLFW_UNIX} \
+		${EXTRA_LIBS} ${FREETYPE_MAC} \
 		${INCLUDES_MAC} ${CXX_FILES} ${BIN}
 
 # Change code to use a different PGTree to compile a different one
