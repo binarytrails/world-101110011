@@ -58,8 +58,9 @@ void Terrain::render(const Window* window,
     glUniform1i(glGetUniformLocation(this->shader->programId, "HighTex"), 2);
 
     this->upload();
-
     this->updateMVP(view, projection);
+
+    // Render types overlaying
 
     GLenum worldRenderMode = this->getRenderMode();
 
@@ -70,7 +71,7 @@ void Terrain::render(const Window* window,
 
     if (this->getRenderMode() == GL_TRIANGLES)
     {
-        // Render Triagles on top
+        // Render points on top
         this->setRenderMode(GL_POINTS);
         glUniform1i(colorLoc, 2);
         this->draw();
@@ -152,6 +153,9 @@ void Terrain::build()
     this->genTerrainVertices(0, 0, this->X_CELLS, this->Z_CELLS);
 
     this->genVerticesI();
+
+    // FIXME adjusted for current terrain elevation
+    this->rotate(glm::vec3(12.5, 0, 0) / 20.0f);
 }
 
 void Terrain::addVertex(const float _x, const float _z, const bool elevate)

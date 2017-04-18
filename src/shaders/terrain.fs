@@ -59,7 +59,8 @@ void main()
 
 // Texture influenced by elevation
 
-    float opacity = 0.9;
+    float texOpacity = 0.9;
+    float overOpacity = 0.7;
 
     if (_color == 1)
     {
@@ -74,11 +75,11 @@ void main()
             texColor = texture(SoilTex, texCoord);
         }
 
-        texColor.w = opacity;
+        texColor.w = texOpacity;
         color = texColor;
     }
     else if (_color == 2)
     {
-        color = vec4(255, 255, 20, opacity);
+        color = vec4(255, 255, 20, overOpacity);
     }
 }

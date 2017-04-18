@@ -172,8 +172,6 @@ void World::build()
     // (x-position, y-position, z-position, width, length, max_particles, wind, mode for rain or snow[may never happen])
 	this->cloud = new Cloud(this->TERRAIN_WIDTH / 2, 5, this->TERRAIN_WIDTH / 2, this->TERRAIN_WIDTH, this->TERRAIN_WIDTH, 1000, this->wind, 1);
 
-    // FIXME adjusted for current terrain elevation
-    this->rotate(glm::vec3(12.5, 0, 0));
 
     this->centerCamera();
 
@@ -209,7 +207,7 @@ void World::draw()
         this->cloud->render(this->window, this->camera,
                             this->view, this->projection);
 
-	this->outputUI();
+	    this->outputUI();
 
         // continuous rotation
         //this->rotate(glm::vec3(0, 0, 0));

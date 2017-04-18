@@ -20,10 +20,13 @@ uniform mat4 projection;
 void main()
 {
     gl_Position = projection * view * model * vec4(_pos, 1.0f);
-    gl_PointSize = 3.0;
+    gl_PointSize = 2.0;
 
+    // FIXME #3
+    //vec4 vpos = view * model * vec4(pos, 1.0f);
+    //pos = vpos.xyz;
     pos = _pos;
+
     texCoord = _texCoord;
 	normal = _normal;
-	
 }
