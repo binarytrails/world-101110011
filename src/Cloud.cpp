@@ -27,6 +27,9 @@ Cloud::Cloud(GLfloat x, GLfloat y, GLfloat z, GLfloat wid, GLfloat len, GLuint d
 	setAllDrops();
 	this->shader = new Shader("src/shaders/shaderRain.vs", "src/shaders/shaderRain.frag");
 
+	//initialize the buffers
+	initBuffers();
+
 }
 
 float Cloud::randomBetween(float a, float b) {

@@ -164,6 +164,13 @@ void World::build()
     this->terrain = new Terrain(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
     this->forest = new Forest(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT, this->terrain);
 
+    /* Creates new cloud and set all it's starting drops
+     * TODO define arguments clearly
+     */
+	this->wind  = new Wind(0.0005f, 0.0f, 0.0f);
+    // (?, ?, ?, ?, ?, max_particles, wind, ?)
+	this->cloud = new Cloud(0, 10, 0, 10, 10, 1000, this->wind, 1);
+
     // FIXME adjusted for current terrain elevation
     this->rotate(glm::vec3(12.5, 0, 0));
 
@@ -190,15 +197,18 @@ void World::draw()
         this->shader->use();
 
         this->skybox->renderSkybox(this->window, this->camera,
-                                    this->view, this->projection);
+                                   this->view, this->projection);
 
         this->terrain->render(this->window, this->camera,
                               this->view, this->projection);
 
         this->forest->render(this->window, this->camera,
-                               this->view, this->projection);
-        
-        this->outputUI();
+                             this->view, this->projection);
+
+        this->cloud->render(this->window, this->camera,
+                            this->view, this->projection);
+
+	this->outputUI();
 
         // continuous rotation
         //this->rotate(glm::vec3(0, 0, 0));
