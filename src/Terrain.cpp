@@ -125,7 +125,7 @@ void Terrain::addVertex(const float _x, const float _z, const bool elevate)
         v.y = this->elevation->get(v.x, v.z);
     }
 
-    printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+    //printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
     this->vertices.push_back(v);
 }
 
