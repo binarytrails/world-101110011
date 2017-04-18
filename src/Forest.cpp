@@ -78,7 +78,7 @@ void Forest::build(Terrain* terrain) {
                 translation.y = (GLfloat)y / 10.0f + offset2;*/
                 translation.x = (GLfloat)x + numX;
                 translation.z = (GLfloat)z + numY;
-                translation.y = 0;
+                translation.y = -(x+z*4)/80;
                 if(c == 0)
                     translations1[index1++] = translation;
                 else
