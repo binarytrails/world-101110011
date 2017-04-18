@@ -1,7 +1,8 @@
 #include "PGTree1.h"
 
 PGTree1::PGTree1(Point offset, float radius, float steps, float height) {
-    lNode* r = new lNode(offset.direction);
+    lNode* ro = new lNode(offset.direction);
+    lNode* r = new lNode(Vector(0,1,0));
     lNode* a = new lNode(Vector(-1,0.5,0));
     lNode* b = new lNode(Vector(1,0.5,0));
     lNode* c = new lNode(Vector(0,0.5,-1));
@@ -28,10 +29,12 @@ PGTree1::PGTree1(Point offset, float radius, float steps, float height) {
     r->nodes.push_back(c);
     r->nodes.push_back(d);
     
+    ro->nodes.push_back(r);
+    
     float T[6] = {
         radius, 0.0f, 0.0f,
         radius, height, 0.0f
     };
     
-    loop(r, offset, height, radius, steps);
+    loop(ro, offset, height, radius, steps);
 }

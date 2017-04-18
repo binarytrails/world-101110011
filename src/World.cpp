@@ -210,5 +210,5 @@ void World::rotate(const glm::vec3 axes)
 {
     glm::vec3 terrainSpin = axes / 20.0f;
     this->terrain->rotate(terrainSpin);
-    this->forest->rotate(terrainSpin);
+    //this->forest->rotate(terrainSpin);
 }
