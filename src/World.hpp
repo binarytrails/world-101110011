@@ -63,7 +63,6 @@ class World
         void outputUI();
 
         GLboolean displayText;
-        GLboolean displayTextCount;
 
     private:
         void setWindowContext();
@@ -158,6 +157,8 @@ static void applyKeyboardBindings(GLFWwindow* w)
     if (keys[GLFW_KEY_T])       cbcPtr->world->setRenderMode(GL_TRIANGLES);
     if (keys[GLFW_KEY_L])       cbcPtr->world->setRenderMode(GL_LINES);
     if (keys[GLFW_KEY_P])       cbcPtr->world->setRenderMode(GL_POINTS);
+    if(keys[GLFW_KEY_H])        cbcPtr->world->displayText = true;
+    if(keys[GLFW_KEY_Q])        cbcPtr->world->displayText = false;
 
     if(keys[GLFW_KEY_ESCAPE])   glfwSetWindowShouldClose(w, GL_TRUE);
     
