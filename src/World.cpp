@@ -169,7 +169,7 @@ void World::build()
      */
 	this->wind  = new Wind(0.001f, 0.0f, 0.0f);
     // (x-position, y-position, z-position, width, length, max_particles, wind, mode for rain or snow[may never happen])
-	this->cloud = new Cloud(0, 10, 0, 10, 10, 1000, this->wind, 1);
+	this->cloud = new Cloud(this->TERRAIN_WIDTH / 2, 5, this->TERRAIN_WIDTH / 2, this->TERRAIN_WIDTH, this->TERRAIN_WIDTH, 1000, this->wind, 1);
 
     // FIXME adjusted for current terrain elevation
     this->rotate(glm::vec3(12.5, 0, 0));
