@@ -58,7 +58,7 @@ class Terrain : public Mesh
         void build();
 
         //! Prepares the texture for the shaders
-        void loadTexture();
+        void loadTexture(GLuint *texture, const std::string fpath);
 
         //! Recursive method to generate a plane
         void genPlaneVertices(uint16_t x, uint16_t z);
@@ -83,10 +83,12 @@ class Terrain : public Mesh
         GLuint vboId,
                vaoId,
                eboId,
-               texture;
+               texGrass,
+               texRocks;
 
         //! Texture filepath
-        const std::string texFilepath;
+        const std::string texGrassFPath;
+        const std::string texRocksFPath;
 
         GLenum renderMode;
         glm::mat4 model;
