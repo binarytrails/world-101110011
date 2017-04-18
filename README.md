@@ -42,11 +42,9 @@ Group project with OpenGL in C++.
 - Tarik
     - ~~Add Skybox~~ 
     - Add a day/night cycle to Skybox.
-    - Add Eric's particle effects alongside Skybox
     - Add Terrain collision detection
     - Add tree collision detection
-    - (Optional) Add mini HUD
-    - (Optional) Add fog 
+    - ~~(Optional) Add mini HUD~~
 
 - Eric
     - Particles
@@ -114,6 +112,7 @@ Dependencies: ```glew glm glfw-x11 mesa-demos soil```
 
 - SOIL : loads texture image
 - SFML : sound engine
+- FreeType : loading fonts
 
 ## Assets
 
@@ -122,6 +121,10 @@ Dependencies: ```glew glm glfw-x11 mesa-demos soil```
     - Terrain
     
         https://opengameart.org/content/terrain-textures-pack-from-stunt-rally-23
+
+    - Skybox
+
+        http://www.custommapmakers.org/skyboxes.php
 
 - Sound
     
@@ -132,6 +135,11 @@ Dependencies: ```glew glm glfw-x11 mesa-demos soil```
         The size was reduced using Audacity software.
 
         http://www.freesound.org/people/bajko/sounds/385280
+
+- Code
+    
+    A vital ressource to the project and learning to implement
+    OpenGL concepts was [LearnOpenGL](https://learnopengl.com). It also helped with the implementation of our Shader, Skybox and GUI classes. 
 
 ## Documentation
 
