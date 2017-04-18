@@ -17,9 +17,16 @@ bool Shadow::intersect(glm::vec3 light, glm::vec3 point, Point slope, glm::vec3 
 		return false; //plane is paralell to line. Return bad value
 
 
+
 	intersect.x = light.x - point.x*numerator / divisor;
 	intersect.y = light.y - point.y*numerator / divisor;
 	intersect.z = light.z - point.z*numerator / divisor;
+
+	//Cheaty way to move shadow by the offset
+
+	glm::vec3 anoffset = glm::normalize(point - intersect)*offset;
+	intersect += anoffset;
+
 	return true;
 
 }
