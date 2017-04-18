@@ -301,10 +301,10 @@ void World::controlCamPos()
     GLfloat xpos = this->camera->getEye().x;
     GLfloat zpos = this->camera->getEye().z;
 
-    GLfloat terraintHeight
+    GLfloat ypos = this->terrain->getElevation(xpos, zpos);
 
-    if(this->camera->getEye().y <= 0)
-        this->camera->setEye(glm::vec3(xpos, 0.0f, zpos));
+    if(this->camera->getEye().y <= ypos)
+        this->camera->setEye(glm::vec3(xpos, ypos, zpos));
 }
 
 void World::rotate(const glm::vec3 axes)
