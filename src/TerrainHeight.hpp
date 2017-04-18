@@ -11,6 +11,8 @@
 #include <math.h>
 #include <assert.h>
 
+#define M_PI 3.14159265358979323846
+
 //! Generates the terrain elevation by using custom HeightMap with noise funcs
 class TerrainHeight
 {
