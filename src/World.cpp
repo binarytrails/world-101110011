@@ -165,15 +165,26 @@ void World::build()
     this->terrain = new Terrain(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT);
     this->forest = new Forest(this->TERRAIN_WIDTH, this->TERRAIN_HEIGHT, this->terrain);
 
+    this->centerCamera();
+
     /* Creates new cloud and set all it's starting drops
      * TODO define arguments clearly
      */
 	this->wind  = new Wind(0.001f, 0.0f, 0.0f);
-    // (x-position, y-position, z-position, width, length, max_particles, wind, mode for rain or snow[may never happen])
-	this->cloud = new Cloud(this->TERRAIN_WIDTH / 2, 5, this->TERRAIN_WIDTH / 2, this->TERRAIN_WIDTH, this->TERRAIN_WIDTH, 1000, this->wind, 1);
 
-
-    this->centerCamera();
+    // (x-position, y-position, z-position,
+    // width, length,
+    // max_particles, wind,
+    // mode for rain or snow)
+    //
+    // FIXME something is deeply wrong:
+    //  max_particles = 2000 causes SEGFAULT
+    //  However, this setup is good for the demo
+    //
+	this->cloud = new Cloud(0, this->camera->getEye().y, 0,
+                            this->TERRAIN_WIDTH, this->TERRAIN_WIDTH,
+                            1000, this->wind,
+                            2); // snow or rain
 
     this->skybox = new Skybox();
 
@@ -230,62 +241,62 @@ void World::outputUI()
 
     if(displayText)
     {
-        
-        this->gui->renderText("Controls:", textXPos, textYPos, 0.5f, 
+
+        this->gui->renderText("Controls:", textXPos, textYPos, 0.5f,
             color, this->window);
 
         textYPos -= 30;
 
-        this->gui->renderText("ESC :    exit", textXPos, textYPos, 0.3f, 
+        this->gui->renderText("ESC :    exit", textXPos, textYPos, 0.3f,
             color, this->window);
 
         textYPos -= 30;
 
-        this->gui->renderText("i :  zoom in", textXPos, textYPos, 0.3f, 
+        this->gui->renderText("i :  zoom in", textXPos, textYPos, 0.3f,
             color, this->window);
 
         textYPos -= 30;
 
-        this->gui->renderText("o :  zoom out", textXPos, textYPos, 0.3f, 
+        this->gui->renderText("o :  zoom out", textXPos, textYPos, 0.3f,
             color, this->window);
 
         textYPos -= 30;
 
-        this->gui->renderText("scroll:  zoom in/out", textXPos, textYPos, 0.3f, 
+        this->gui->renderText("scroll:  zoom in/out", textXPos, textYPos, 0.3f,
             color, this->window);
 
         textYPos -= 60;
 
-         this->gui->renderText("w:  move upward", textXPos, textYPos, 0.3f, 
+         this->gui->renderText("w:  move upward", textXPos, textYPos, 0.3f,
             color, this->window);
 
          textYPos -= 30;
 
-         this->gui->renderText("s:  move downward", textXPos, textYPos, 0.3f, 
-            color, this->window);
-
-
-         textYPos -= 30;
-
-         this->gui->renderText("a:  move left", textXPos, textYPos, 0.3f, 
+         this->gui->renderText("s:  move downward", textXPos, textYPos, 0.3f,
             color, this->window);
 
 
          textYPos -= 30;
 
-         this->gui->renderText("d:  move right", textXPos, textYPos, 0.3f, 
+         this->gui->renderText("a:  move left", textXPos, textYPos, 0.3f,
             color, this->window);
 
-        
+
+         textYPos -= 30;
+
+         this->gui->renderText("d:  move right", textXPos, textYPos, 0.3f,
+            color, this->window);
+
+
         textYPos -= 60;
 
-         this->gui->renderText("q:  quit help screen", textXPos, textYPos, 0.3f, 
+         this->gui->renderText("q:  quit help screen", textXPos, textYPos, 0.3f,
             color, this->window);
     }
 
     else
     {
-        this->gui->renderText("h:  help screen", textXPos, textYPos, 0.3f, 
+        this->gui->renderText("h:  help screen", textXPos, textYPos, 0.3f,
             color, this->window);
     }
 }
