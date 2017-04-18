@@ -64,7 +64,7 @@ class Shadow : public GLObject{
 		};
 		Shadow(GLObject orig, Point plane);//just places light at 0,100,0
 	private:
-		const float offset = 0.01;//offset from shadow to ground
+		const float shadowoffset = 0.01;//offset from shadow to ground
 		bool intersect(glm::vec3 light, glm::vec3 point, Point plane, glm::vec3 &intersect);
 
 };

@@ -24,7 +24,7 @@ bool Shadow::intersect(glm::vec3 light, glm::vec3 point, Point slope, glm::vec3 
 
 	//Cheaty way to move shadow by the offset
 
-	glm::vec3 anoffset = glm::normalize(point - intersect)*offset;
+	glm::vec3 anoffset = glm::normalize(point - intersect)*shadowoffset;
 	intersect += anoffset;
 
 	return true;
