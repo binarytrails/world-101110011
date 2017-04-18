@@ -4,13 +4,18 @@
 
 Particle::Particle() {}
 
-Particle::Particle(GLfloat x, GLfloat y, GLfloat z) {
+Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLuint type) {
 	_x = x;
 	_y = y;
 	_z = z;
 	velocity = glm::vec3(0.0f, randomBetween(0.0f, -0.005f), 0.0f);
 
-	_acceleration = -0.00001f;
+	if (type == 1) {
+		_acceleration = -0.00001f;
+	}
+	else if (type == 2) {
+		_acceleration = -0.000001f;
+	}
 }
 
 GLfloat Particle::getPosX() {

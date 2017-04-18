@@ -70,7 +70,7 @@ public:
 
 	void seed();
 
-	GLuint VBO, VAO;
+	GLuint VBO, VAO, EBO;
 
 private:
 	GLfloat _x, _y, _z;
@@ -82,6 +82,8 @@ private:
 	GLuint _dropCount;
 	Particle* drops[1000];
 	GLfloat allVertices[6000];
+	GLfloat allVerticeSnow[12000];
+	GLuint indices[6000];
 
 	Shader *shader;
 	Wind *wind;

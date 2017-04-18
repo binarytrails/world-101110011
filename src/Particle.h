@@ -17,7 +17,7 @@ public:
 	Particle();
 
 	//create a particle at a particular location
-	Particle(GLfloat x, GLfloat y, GLfloat z);
+	Particle(GLfloat x, GLfloat y, GLfloat z, GLuint type);
 
 	//getters
 	GLfloat getPosX();
