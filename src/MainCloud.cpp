@@ -98,9 +98,6 @@ int main() {
 	Wind* breeze = new Wind(0.0005f, 0.0f, 0.0f);
 	Cloud* test = new Cloud(0, 10, 0, 10, 10, maxParticles, breeze, 1);
 
-	//initialize buffers
-	test->initBuffers();
-
 
 
 
@@ -153,53 +150,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 
-/*
-// Camera controls
-// WASD rotate the shape in XYZ, UP/DOWN zooms in and out
-void do_movement()
-{
-	GLfloat distanceChange = 0.01f;
-
-	if (keys[GLFW_KEY_W])
-	{
-		GLfloat angle = glm::radians(0.1f);
-		model = glm::rotate(model, -angle, glm::vec3(1.0f, 0.0f, 0.0f));
-	}
-
-	if (keys[GLFW_KEY_S])
-	{
-		GLfloat angle = glm::radians(0.1f);
-		model = glm::rotate(model, angle, glm::vec3(1.0f, 0.0f, 0.0f));
-	}
-
-	if (keys[GLFW_KEY_A])
-	{
-		GLfloat angle = glm::radians(0.1f);
-		model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
-	}
-
-	if (keys[GLFW_KEY_D])
-	{
-		GLfloat angle = glm::radians(0.1f);
-		model = glm::rotate(model, -angle, glm::vec3(0.0f, 1.0f, 0.0f));
-	}
-
-
-
-	if (keys[GLFW_KEY_UP])
-	{
-		radius -= distanceChange;
-		cameraPos = glm::vec3(0.0f, 0.0f, radius);
-	}
-
-	if (keys[GLFW_KEY_DOWN])
-	{
-		radius += distanceChange;
-		cameraPos = glm::vec3(0.0f, 0.0f, radius);
-	}
-
-}
-*/
 
 void do_movement()
 {
