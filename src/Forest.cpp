@@ -68,17 +68,16 @@ void Forest::build(Terrain* terrain) {
     for(int c = 0; c < 2; c++) {
         for(GLint x = 5; x < X_CELLS; x += 10)
         {
-            /*float maxTree = X_CELLS/2 >= x ? x : X_CELLS - x;
-            int num = randNum(0, maxTree);
-            float space = num > 0 ? x/num : 0;
-            std::cout << x << ' ' << maxTree << ' ' << num << ' ' << space << '\n';*/
             for(GLint z = 5 + c * 5; z < Z_CELLS; z += 10)
             {
+                float numX = randNum(-2.0f,2.1f);
+                float numY = randNum(-2.0f,2.1f);
+                
                 glm::vec3 translation;
                 /*translation.x = (GLfloat)x / 10.0f + offset2;
                 translation.y = (GLfloat)y / 10.0f + offset2;*/
-                translation.x = (GLfloat)x;
-                translation.z = (GLfloat)z;
+                translation.x = (GLfloat)x + numX;
+                translation.z = (GLfloat)z + numY;
                 translation.y = 0;
                 if(c == 0)
                     translations1[index1++] = translation;
