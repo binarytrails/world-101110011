@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Point.cpp
- * Author: sami
- * 
- * Created on March 26, 2017, 6:09 PM
- */
-
 #include "Point.h"
+
+/*
+ * Store point position and direction
+ */
 
 Point::Point(const Point& orig) {
     x = orig.x;

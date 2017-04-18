@@ -5,6 +5,9 @@
 
 #include "Vector.h"
 
+/*
+ * Store a l-system command and list of l-system vocabulary
+ */
 
 class lNode {
 public:

@@ -17,6 +17,10 @@
 #include <vector>
 #include "Point.h"
 
+/*
+ * Store and manipulate Meshes
+*/
+
 class GLObject {
 public:
     GLfloat* vertices;

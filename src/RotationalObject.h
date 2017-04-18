@@ -5,6 +5,10 @@
 #include "GLObject.h"
 #include "Vector.h"
 
+/*
+ * Create a rotation sweep mesh
+ */
+
 class RotationalObject : public GLObject {
 public:
     RotationalObject(int PCount, int TCount, float P[], Point off = Point(), Vector axis = Vector(0,1,0));

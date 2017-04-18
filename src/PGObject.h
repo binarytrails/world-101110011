@@ -9,6 +9,10 @@
 #include "Vector.h"
 #include "lNode.h"
 
+/*
+ * Abstract class to create procedurally generated objects
+*/
+
 class PGObject {
 public:
     const float accuracy = 0.001; //used to exclude inaccuracy in low value computation errors
