@@ -18,6 +18,7 @@ Forest::Forest(const uint16_t xcells, const uint16_t zcells, Terrain* terrain):
     this->shader = new Shader("src/shaders/objecttest.vs",
                               "src/shaders/objecttest.fs");
     this->build(terrain);
+this->rotate(glm::vec3(12.5, 0, 0));
 }
 
 Forest::~Forest() {
@@ -49,11 +50,12 @@ void Forest::rotate(const glm::vec3 spin) {
 void Forest::build(Terrain* terrain) {
     Point offset(0,0,0,Vector(0,1,0));
     
-    PGTree1 tree1 = PGTree1(offset, 0.25f, 0.05f, 1.0f);
+	PGTree1 tree1 = PGTree1(offset, 0.25f, 0.04f, 1.0f);
     GLObject* myObj1 = new GLObject(tree1.objects);
     
-    PGTree2 tree2 = PGTree2(offset, 0.25f, 0.05f, 1.0f);
+    PGTree2 tree2 = PGTree2(offset, 0.25f, 0.04f, 1.0f);
     GLObject* myObj2 = new GLObject(tree2.objects);
+    
     
     // TODO remove
     //glm::vec3 translations1[X_CELLS*Z_CELLS];
@@ -64,20 +66,20 @@ void Forest::build(Terrain* terrain) {
     int index1 = 0;
     int index2 = 0;
     for(int c = 0; c < 2; c++) {
-        for(GLint x = 0; x < X_CELLS; x += 10)
+        for(GLint x = 5; x < X_CELLS; x += 10)
         {
             /*float maxTree = X_CELLS/2 >= x ? x : X_CELLS - x;
             int num = randNum(0, maxTree);
             float space = num > 0 ? x/num : 0;
             std::cout << x << ' ' << maxTree << ' ' << num << ' ' << space << '\n';*/
-            for(GLint z = 0 + c * 5; z < Z_CELLS; z += 10)
+            for(GLint z = 5 + c * 5; z < Z_CELLS; z += 10)
             {
                 glm::vec3 translation;
                 /*translation.x = (GLfloat)x / 10.0f + offset2;
                 translation.y = (GLfloat)y / 10.0f + offset2;*/
                 translation.x = (GLfloat)x;
                 translation.z = (GLfloat)z;
-                translation.y = terrain->getElevation(translation.x, translation.z);
+                translation.y = 0;
                 if(c == 0)
                     translations1[index1++] = translation;
                 else
