@@ -145,12 +145,12 @@ static void keyCallback(GLFWwindow* w, int key, int scancode, int action, int mo
 static void applyKeyboardBindings(GLFWwindow* w)
 {
     CallbackContext* cbcPtr = getWindowContext(w);
-
+/*
     if (keys[GLFW_KEY_LEFT])    cbcPtr->world->rotate(glm::vec3(0, 1, 0));
     if (keys[GLFW_KEY_RIGHT])   cbcPtr->world->rotate(glm::vec3(0, -1, 0));
     if (keys[GLFW_KEY_UP])      cbcPtr->world->rotate(glm::vec3(1, 0, 0));
     if (keys[GLFW_KEY_DOWN])    cbcPtr->world->rotate(glm::vec3(-1, 0, 0));
-
+*/
     if (keys[GLFW_KEY_W])       cbcPtr->world->getCamera()->moveUp();
     if (keys[GLFW_KEY_S])       cbcPtr->world->getCamera()->moveDown();
     if (keys[GLFW_KEY_D])       cbcPtr->world->getCamera()->moveLeft();

@@ -1,6 +1,6 @@
 # World-101110011
 
-![preview](docs/progress/world-1.png)
+![preview](docs/progress/world-2.png)
 
 Group project with OpenGL in C++.
 
@@ -36,6 +36,9 @@ Group project with OpenGL in C++.
         - ~~Doxyfile to generate Doxygen~~
         - ~~Doxygen: class headers, methods & attributes of my classes~~
         - ~~Final report: Overview, Architecture, Terrain & Ambiance Sound~~
+    - ~~Merging~~
+        - ~~GUI~~
+        - ~~Weather~~
     - Optional
         - Infinite terrain, see: terrain-infinite branch
     
@@ -47,13 +50,17 @@ Group project with OpenGL in C++.
     - ~~(Optional) Add mini HUD~~
 
 - Eric
-    - Particles
-        - Falling
-        - Cloud
+    - ~~Particles~~
+        - ~~Falling~~
+        - ~~Cloud~~
+            - ~~Rain~~
+            - ~~Snow~~
 
 - Sami
-    - Generating objects
-        - L-System
+    - ~~Generating objects~~
+        - ~~Trees (L-System)~~
+        - ~~Forest~~
+    - Textures
 
 - Justin
     - Shadows
@@ -85,8 +92,6 @@ Group project with OpenGL in C++.
     mouse + left click     look around
     
 **Extra:**
-
-    arrows      rotate everything
 
     t           display triangles
     l           display lines
