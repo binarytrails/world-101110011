@@ -22,9 +22,12 @@
 #include "Window.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
+
 #include "Terrain.hpp"
 #include "Skybox.h"
 #include "Forest.h"
+#include "Cloud.h"
+#include "Wind.h"
 
 //! Class to contain & control all of the procedural world elements
 class World
@@ -69,6 +72,8 @@ class World
         Shader *shader;
         Camera *camera;
         Skybox *skybox;
+        Cloud  *cloud;
+        Wind   *wind;
 
         GLuint vboId,
                vaoId,
