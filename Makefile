@@ -12,7 +12,8 @@ OPENGL_MAC=-lGLEW -lglfw3 -framework Cocoa -framework OpenGL \
 GLFW_ARCH=-lglfw
 GLFW_UNIX=-lglfw3
 
-EXTRA_LIBS=-lSOIL -lsfml-audio -lfreetype 
+EXTRA_LIBS=-lSOIL -lsfml-audio \
+		   -lfreetype  -I/usr/include/freetype2
 
 INCLUDES=-I./src
 INCLUDES_MAC = -I/usr/local/include/freetype2 -I./src
