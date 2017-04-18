@@ -13,13 +13,9 @@ Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
 {
     this->shader = new Shader("src/shaders/terrain.vs",
                               "src/shaders/terrain.fs");
-    // initTexture
-    glEnable(GL_TEXTURE_2D);
-    this->loadTexture(&this->texGrass, this->texGrassFPath);
-    this->loadTexture(&this->texRocks, this->texRocksFPath);
-
     this->build();
     this->initBuffers();
+    this->initTextures();
 }
 
 Terrain::~Terrain()
@@ -52,6 +48,14 @@ void Terrain::render(const Window* window,
                      const glm::mat4 projection)
 {
     this->shader->use();
+    // Texture 1 send
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, this->texGrass);
+    glUniform1i(glGetUniformLocation(this->shader->programId, "SoilTex"), 1);
+    // Texture 2 send
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, this->texRocks);
+    glUniform1i(glGetUniformLocation(this->shader->programId, "HighTex"), 2);
 
     this->upload();
 
@@ -96,16 +100,37 @@ void Terrain::updateMVP(const glm::mat4 view, const glm::mat4 projection)
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
-void Terrain::loadTexture(GLuint *texture, const std::string fpath)
+void Terrain::initTextures()
 {
-    glGenTextures(1, texture);
-    glBindTexture(GL_TEXTURE_2D, *texture);
+    glEnable(GL_TEXTURE_2D);
+
+    // Grass
+    glGenTextures(1, &this->texGrass);
+    glBindTexture(GL_TEXTURE_2D, this->texGrass);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    this->loadTexture(this->texGrassFPath);
 
+    glBindTexture(GL_TEXTURE_2D, 0); // unbind
+
+    // Rocks
+    glGenTextures(1, &this->texRocks);
+    glBindTexture(GL_TEXTURE_2D, this->texRocks);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    this->loadTexture(this->texRocksFPath);
+
+    glBindTexture(GL_TEXTURE_2D, 0); // unbind
+}
+
+void Terrain::loadTexture(const std::string fpath)
+{
     int w, h;
     unsigned char* image;
 
@@ -117,8 +142,6 @@ void Terrain::loadTexture(GLuint *texture, const std::string fpath)
         glGenerateMipmap(GL_TEXTURE_2D);
 
     SOIL_free_image_data(image);
-
-    glBindTexture(GL_TEXTURE_2D, 0); // unbind
 }
 
 void Terrain::build()
@@ -382,13 +405,10 @@ void Terrain::upload()
 
 void Terrain::draw()
 {
-    glBindTexture(GL_TEXTURE_2D, this->texGrass);
-
+    // Draw using indices
     glBindVertexArray(this->vaoId);
-
         glDrawElements(this->renderMode,
                        this->verticesI.size(),
                        GL_UNSIGNED_SHORT, 0);
-
     glBindVertexArray(0);
 }

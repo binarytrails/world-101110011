@@ -57,8 +57,9 @@ class Terrain : public Mesh
 
         void build();
 
+        void initTextures();
         //! Prepares the texture for the shaders
-        void loadTexture(GLuint *texture, const std::string fpath);
+        void loadTexture(const std::string fpath);
 
         //! Recursive method to generate a plane
         void genPlaneVertices(uint16_t x, uint16_t z);

@@ -11,7 +11,9 @@ in vec2 texCoord;
 
 out vec4 color;
 
-uniform sampler2D soilTexture;
+uniform sampler2D SoilTex;
+uniform sampler2D HighTex;
+
 uniform int _color;
 
 void main()
@@ -22,16 +24,14 @@ void main()
     uint d = uint(30);
     vec3 rgb = vec3(pos.x + s, pos.y + s, pos.z + s);
     rgb = rgb / d;
-    color = texture(soilTexture, texCoord); //* vec4(rgb, 1.0f);
+    color = texture(soilTex, texCoord); //* vec4(rgb, 1.0f);
 */
-
-// TODO texture influenced by elevation
 
 // TODO illumination
 
-    vec4 texColor = texture(soilTexture, texCoord);
-
 /*
+    vec4 texColor = texture(soilTex, texCoord);
+
 	float ambientStrength = 0.1f;
     vec3 ambient = ambientStrength * lightColor;
 
@@ -57,15 +57,28 @@ void main()
     color = result;
 */
 
-    // opacity
-    texColor.w = 0.9;
+// Texture influenced by elevation
+
+    float opacity = 0.9;
 
     if (_color == 1)
     {
+        vec4 texColor;
+
+        if (pos.y > 20)
+        {
+            texColor = texture(HighTex, texCoord);
+        }
+        else
+        {
+            texColor = texture(SoilTex, texCoord);
+        }
+
+        texColor.w = opacity;
         color = texColor;
     }
-    else if (_color == 2) // points on top
+    else if (_color == 2)
     {
-        color = vec4(255, 255, 20, 0.8);
+        color = vec4(255, 255, 20, opacity);
     }
 }
