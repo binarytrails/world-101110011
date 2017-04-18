@@ -9,7 +9,7 @@ World::World(const uint16_t width, const uint16_t height, const char* name):
     TERRAIN_WIDTH(width), TERRAIN_HEIGHT(height),
     window(new Window(1280, 720, name)),
     camera(new Camera()),
-    pitch(0.0f), yaw(45.0f)
+    pitch(0.0f), yaw(45.0f), displayText(false)
 {
     glewExperimental = GL_TRUE;
     glewInit();
@@ -36,6 +36,8 @@ World::~World()
     delete this->camera;
     delete this->shader;
     delete this->window;
+    delete this->skybox;
+    delete this->gui;
 }
 
 void World::initOpenGL()
@@ -169,6 +171,8 @@ void World::build()
 
     this->skybox = new Skybox();
 
+    this->gui = new GUI();
+
     this->setWindowContext();
     this->setWindowCallbacks();
 }
@@ -193,6 +197,8 @@ void World::draw()
 
         this->forest->render(this->window, this->camera,
                                this->view, this->projection);
+        
+        this->outputUI();
 
         // continuous rotation
         //this->rotate(glm::vec3(0, 0, 0));
@@ -203,6 +209,71 @@ void World::draw()
         glfwSwapBuffers(this->window->get());
 
         //this->camera->printView();
+    }
+}
+
+void World::outputUI()
+{
+     //! Code relevant to UI text.
+    glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
+    GLfloat textXPos = this->window->width() - 200;
+    GLfloat textYPos = this->window->height() - 50;
+
+    if(displayText)
+    {   
+        
+        this->gui->renderText("Controls:", textXPos, textYPos, 0.5f, 
+            color, this->window);
+
+        textYPos -= 30;
+
+        this->gui->renderText("ESC :    exit", textXPos, textYPos, 0.3f, 
+            color, this->window);
+
+        textYPos -= 30;
+
+        this->gui->renderText("i :  zoom in", textXPos, textYPos, 0.3f, 
+            color, this->window);
+
+        textYPos -= 30;
+
+        this->gui->renderText("o :  zoom out", textXPos, textYPos, 0.3f, 
+            color, this->window);
+
+        textYPos -= 30;
+
+        this->gui->renderText("scroll:  zoom in/out", textXPos, textYPos, 0.3f, 
+            color, this->window);
+
+        textYPos -= 60;
+
+        this->gui->renderText("w:  move upward", textXPos, textYPos, 0.3f, 
+            color, this->window);
+
+        textYPos -= 30;
+
+        this->gui->renderText("d:  move downward", textXPos, textYPos, 0.3f, 
+            color, this->window);
+
+        textYPos -= 30;
+
+        this->gui->renderText("a:  move left", textXPos, textYPos, 0.3f, 
+            color, this->window);
+
+        textYPos -= 30;
+
+        this->gui->renderText("d:  move right", textXPos, textYPos, 0.3f, 
+            color, this->window);
+
+        textYPos -= 60;
+
+        this->gui->renderText("q:  quit help screen", textXPos, textYPos, 0.3f, 
+            color, this->window);
+    }
+    else
+    {
+        this->gui->renderText("h:  help screen", textXPos, textYPos, 0.3f, 
+            color, this->window);
     }
 }
 
