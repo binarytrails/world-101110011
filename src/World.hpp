@@ -87,8 +87,8 @@ class World
         const uint16_t TERRAIN_HEIGHT;
 
         //! Sound Engine
-        sf::Sound       bgMusic;
-        sf::SoundBuffer bgMusicBuffer;
+        //sf::Sound       bgMusic;
+        //sf::SoundBuffer bgMusicBuffer;
 };
 
 //! GLFW Window context to allow the usage of class instances in callbacks

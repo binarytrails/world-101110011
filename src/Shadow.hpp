@@ -14,13 +14,13 @@ Created by: Justin Velicogna.
 
 class Shadow : public GLObject{
 	public:
-		Shadow(GLObject orig, Point plane, glm::vec3 light): GLObject(orig.vSize,orig.iSize){
+		Shadow(GLObject orig, glm::vec3 translation, Point plane, glm::vec3 light): GLObject(orig.vSize,orig.iSize){
 			std::vector<float> points;
 			
 			for (int i = 0; i < orig.vSize; i+=3)
 			{
 				glm::vec3 point;
-				if (intersect(light, glm::vec3(orig.vertices[i],orig.vertices[i+1],orig.vertices[i+2]), plane, point))
+				if (intersect(light, glm::vec3(orig.vertices[i],orig.vertices[i+1],orig.vertices[i+2])+translation, plane, point))
 				{
 					points.push_back(point.x);
 					points.push_back(point.y);
@@ -62,7 +62,7 @@ class Shadow : public GLObject{
 			}
 			
 		};
-		Shadow(GLObject orig, Point plane);//just places light at 0,100,0
+		Shadow(GLObject orig, glm::vec3 traslation, Point plane) : Shadow(orig, traslation, plane, glm::vec3(0, 100, 0)){};//just places light at 0,100,0
 	private:
 		const float shadowoffset = 0.01;//offset from shadow to ground
 		bool intersect(glm::vec3 light, glm::vec3 point, Point plane, glm::vec3 &intersect);

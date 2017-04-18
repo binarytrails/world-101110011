@@ -60,6 +60,7 @@ void World::initCamera()
 
 void World::initSound()
 {
+	/*
     if (!this->bgMusicBuffer.loadFromFile("./assets/sound/amb-forest.ogg"))
     {
         fprintf(stderr, "Failed to load background music");
@@ -70,6 +71,7 @@ void World::initSound()
         this->bgMusic.setLoop(true);
         this->bgMusic.play();
     }
+	*/
 }
 
 void World::setRenderMode(const GLenum mode)

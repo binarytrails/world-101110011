@@ -4,6 +4,9 @@
 */
 
 #include "TerrainHeight.hpp"
+#define _USE_MATH_DEFINES // for C++  
+#include <cmath>  
+
 
 TerrainHeight::TerrainHeight():
     OCTAVES(4), AMPLITUDE(6.0f), IRREGULARITY(0.5f),
