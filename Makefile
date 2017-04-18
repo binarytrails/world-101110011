@@ -18,13 +18,15 @@ FREETYPE_MAC=-I/usr/local/include/freetype2
 EXTRA_LIBS=-lSOIL -lsfml-audio -lfreetype
 
 INCLUDES=-I./src
-INCLUDES_MAC = -I/usr/local/include/freetype2 -I./src
+
 CXX_FILES=src/Main.cpp src/Window.cpp src/Shader.cpp src/Camera.cpp \
 		  src/World.cpp src/Terrain.cpp src/TerrainHeight.cpp \
 		  src/Skybox.cpp \
 		  src/GLObject.cpp src/Helper.cpp src/lNode.cpp src/PGObject.cpp \
 		  src/Forest.cpp  src/Point.cpp src/PGTree*.cpp \
-		  src/Vector.cpp src/RotationalObject.cpp src/GUI.cpp
+		  src/Vector.cpp src/RotationalObject.cpp \
+		  src/Cloud.cpp src/Wind.cpp src/Particle.cpp \
+		  src/GUI.cpp
 
 BIN=-o build/world.out
 

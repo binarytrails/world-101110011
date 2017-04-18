@@ -22,9 +22,12 @@
 #include "Window.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
+
 #include "Terrain.hpp"
 #include "Skybox.h"
 #include "Forest.h"
+#include "Cloud.h"
+#include "Wind.h"
 #include "GUI.h"
 
 //! Class to contain & control all of the procedural world elements
@@ -74,6 +77,8 @@ class World
         Shader *shader;
         Camera *camera;
         Skybox *skybox;
+        Cloud  *cloud;
+        Wind   *wind;
         GUI    *gui;
 
         GLuint vboId,
@@ -161,7 +166,6 @@ static void applyKeyboardBindings(GLFWwindow* w)
     if(keys[GLFW_KEY_Q])        cbcPtr->world->displayText = false;
 
     if(keys[GLFW_KEY_ESCAPE])   glfwSetWindowShouldClose(w, GL_TRUE);
-    
 }
 
 static void mouseKeyCallback(GLFWwindow* w, int key, int action, int mode)
