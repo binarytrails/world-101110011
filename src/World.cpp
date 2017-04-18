@@ -167,8 +167,8 @@ void World::build()
     /* Creates new cloud and set all it's starting drops
      * TODO define arguments clearly
      */
-	this->wind  = new Wind(0.0005f, 0.0f, 0.0f);
-    // (?, ?, ?, ?, ?, max_particles, wind, ?)
+	this->wind  = new Wind(0.001f, 0.0f, 0.0f);
+    // (x-position, y-position, z-position, width, length, max_particles, wind, mode for rain or snow[may never happen])
 	this->cloud = new Cloud(0, 10, 0, 10, 10, 1000, this->wind, 1);
 
     // FIXME adjusted for current terrain elevation

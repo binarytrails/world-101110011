@@ -50,5 +50,5 @@ private:
 	GLfloat _acceleration;
 
 	//point where the particle dies
-	GLfloat floor = -1.0f;
+	GLfloat floor = 0.0f;
 };
