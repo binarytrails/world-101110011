@@ -19,8 +19,8 @@ Cloud::Cloud(GLfloat x, GLfloat y, GLfloat z, GLfloat wid, GLfloat len, GLuint d
 
 		if (_type == 1) drops[i] = new Particle(randomBetween(x, x + wid), randomBetween(0, y), randomBetween(z, z + len));
 
-        printf("cloud : drop (%f, %f, %f)\n",
-                drops[i]->getPosX(), drops[i]->getPosY(), drops[i]->getPosZ());
+        //printf("cloud : drop (%f, %f, %f)\n",
+        //        drops[i]->getPosX(), drops[i]->getPosY(), drops[i]->getPosZ());
 	}
 
 	//initialize drops and link shaders

@@ -12,6 +12,7 @@ in vec2 texCoord;
 out vec4 color;
 
 uniform sampler2D soilTexture;
+uniform int _color;
 
 void main()
 {
@@ -59,5 +60,12 @@ void main()
     // opacity
     texColor.w = 0.9;
 
-    color = texColor;
+    if (_color == 1)
+    {
+        color = texColor;
+    }
+    else if (_color == 2) // points on top
+    {
+        color = vec4(255, 255, 20, 0.8);
+    }
 }

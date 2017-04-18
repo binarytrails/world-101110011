@@ -15,8 +15,6 @@ Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
     this->loadTexture();
     this->build();
 
-    glPointSize(3);
-
     this->initBuffers();
 }
 
@@ -55,7 +53,23 @@ void Terrain::render(const Window* window,
 
     this->updateMVP(view, projection);
 
+    GLenum worldRenderMode = this->getRenderMode();
+
+    // Render texture
+    GLint colorLoc = glGetUniformLocation(this->shader->programId, "_color");
+    glUniform1i(colorLoc, 1);
     this->draw();
+
+    if (this->getRenderMode() == GL_TRIANGLES)
+    {
+        // Render Triagles on top
+        this->setRenderMode(GL_POINTS);
+        glUniform1i(colorLoc, 2);
+        this->draw();
+
+        // Reset original
+        this->setRenderMode(worldRenderMode);
+    }
 }
 
 void Terrain::rotate(const glm::vec3 spin)

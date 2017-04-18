@@ -20,7 +20,7 @@ uniform mat4 projection;
 void main()
 {
     gl_Position = projection * view * model * vec4(_pos, 1.0f);
-    //gl_PointSize = 5.0;
+    gl_PointSize = 3.0;
 
     pos = _pos;
     texCoord = _texCoord;
