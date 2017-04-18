@@ -62,7 +62,8 @@ skybox-mac: all
 weather-arch: all
 	${CXX} ${CXXFLAGS} ${OPENGL_LINUX} ${GLFW_ARCH} ${EXTRA_LIBS} \
 		${INCLUDES} -o build/weather.out \
-		src/MainCloud.cpp src/Cloud.cpp src/Particle.cpp src/Wind.cpp
+		src/MainCloud.cpp src/Cloud.cpp src/Particle.cpp src/Wind.cpp \
+		src/Shader.cpp src/Camera.cpp src/Window.cpp
 
 clean:
 	rm -rf build/
