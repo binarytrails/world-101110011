@@ -6,7 +6,8 @@
 #include "Terrain.hpp"
 
 Terrain::Terrain(const uint16_t xcells, const uint16_t zcells):
-    X_CELLS(xcells), Z_CELLS(zcells), x_offset(0), z_offset(0),
+    X_CELLS(xcells), Z_CELLS(zcells), MAX_HEIGHT(1),
+    x_offset(0), z_offset(0),
     renderMode(GL_TRIANGLES),
     texGrassFPath("assets/textures/grass_green_d.jpg"),
     texRocksFPath("assets/textures/grass_rocky_d.jpg")
@@ -24,12 +25,18 @@ Terrain::~Terrain()
     glDeleteBuffers(1, &this->vboId);
 
     delete this->shader;
-    delete this->elevation;
+    delete this->elevation; // FIXME #3
 }
 
 float Terrain::getElevation(const float x, const float z)
 {
-    return this->elevation->get(x, z);
+    float y = this->perlinNoise.GetValue(x, 0.75, z);
+    y *= this->MAX_HEIGHT;
+    
+    //y = this->elevation->get(x, y); // FIXME #3
+
+
+    return y;
 }
 
 GLenum Terrain::getRenderMode() const
@@ -147,15 +154,15 @@ void Terrain::loadTexture(const std::string fpath)
 
 void Terrain::build()
 {
-    this->elevation = new TerrainHeight();
+    this->elevation = new TerrainHeight(); // FIXME #3
 
     //this->genPlaneVertices(0, 0);
     this->genTerrainVertices(0, 0, this->X_CELLS, this->Z_CELLS);
 
     this->genVerticesI();
 
-    // FIXME adjusted for current terrain elevation
-    this->rotate(glm::vec3(12.5, 0, 0) / 20.0f);
+    // FIXME #3 adjusted for current terrain elevation
+    //this->rotate(glm::vec3(12.5, 0, 0) / 20.0f);
 }
 
 void Terrain::addVertex(const float _x, const float _z, const bool elevate)
@@ -163,12 +170,9 @@ void Terrain::addVertex(const float _x, const float _z, const bool elevate)
     glm::vec3 v(_x, 0, _z);
 
     if (elevate)
-    {
-        // this->elevate->setAmplitude()
-        v.y = this->elevation->get(v.x, v.z);
-    }
+        v.y = this->getElevation(_x, _z);
 
-    //printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
+    printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
     this->vertices.push_back(v);
 }
 
@@ -212,7 +216,7 @@ bool Terrain::advance(const bool forward)
 
 
         printf("terrain : advance : elevation->get(%f, %f)\n", _x, _z);
-        cell.y = this->elevation->get(_x, _z);
+        cell.y = this->getElevation(_x, _z);
 
         printf("terrain : advance : acell (%f, %f, %f)\n\n", cell.x, cell.y, cell.z);
 

@@ -15,7 +15,7 @@ GLFW_UNIX=-lglfw3
 FREETYPE_ARCH=-I/usr/include/freetype2
 FREETYPE_MAC=-I/usr/local/include/freetype2
 
-EXTRA_LIBS=-lSOIL -lsfml-audio -lfreetype
+EXTRA_LIBS=-lSOIL -lsfml-audio -lfreetype -lnoise
 
 INCLUDES=-I./src
 

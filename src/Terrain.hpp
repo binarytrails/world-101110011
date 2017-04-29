@@ -21,8 +21,11 @@
 #include "Shader.hpp"
 #include "Mesh.hpp"
 
-#include "TerrainHeight.hpp"
 #include <SOIL/SOIL.h>
+
+#include <noise/noise.h>
+// FIXME #3 normalize and make vary in range; currenly linear grow with (x, z)
+#include "TerrainHeight.hpp"
 
 //! Class for the ground of the world
 class Terrain : public Mesh
@@ -100,10 +103,15 @@ class Terrain : public Mesh
 
         const uint16_t X_CELLS;
         const uint16_t Z_CELLS;
+        //! Keep it a small float value
+        const float MAX_HEIGHT;
         //! The x and z offset attributes are used by the advance method
         short x_offset;
         short z_offset;
 
-        //! Embeded custom noise functions to generate height map values
+        //! Libnoise::Perlin for terrain elevation
+        noise::module::Perlin perlinNoise;
+        // FIXME #3
+        //! Custom noise functions to generate height map values
         TerrainHeight *elevation;
 };

@@ -66,7 +66,7 @@ void main()
     {
         vec4 texColor;
 
-        if (pos.y > 20)
+        if (pos.y > 0.3)
         {
             texColor = texture(HighTex, texCoord);
         }
