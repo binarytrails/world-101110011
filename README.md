@@ -1,78 +1,8 @@
 # World-101110011
 
-![preview](docs/progress/world-2.png)
+Procedural world using modern OpenGL in C++.
 
-Group project with OpenGL in C++.
-
-    COMP 371
-    Concordia University
-    Winter 2017
-
-## Roadmap
-
-- Seva
-    - ~~Project architecture~~
-        - ~~Makefile~~
-        - ~~Window class~~
-        - ~~Shader class~~
-        - ~~Camera class~~
-        - ~~World class~~
-        - ~~Abstract Mesh class~~
-        - ~~Render modes~~
-    - ~~Floating Camera controls~~
-    - ~~Procedurally generated terrain~~
-        - ~~Grid~~
-        - ~~Terrain height generation~~
-        - ~~Recursion on grid & terrain generation~~
-        - ~~Texture~~
-    - ~~Ambiance~~
-        - ~~Sound engine~~
-    - ~~Compiling (Linux & OSX)~~
-        - ~~World with Terrain~~
-        - ~~Trees~~
-        - ~~Particles~~
-    - ~~Documentation~~
-        - ~~REAMDE~~
-        - ~~Doxyfile to generate Doxygen~~
-        - ~~Doxygen: class headers, methods & attributes of my classes~~
-        - ~~Final report: Overview, Architecture, Terrain & Ambiance Sound~~
-    - ~~Merging~~
-        - ~~GUI~~
-        - ~~Weather~~
-    - Optional
-        - Infinite terrain, see: terrain-infinite branch
-    
-- Tarik
-    - ~~Add Skybox~~ 
-    - Add a day/night cycle to Skybox.
-    - Add Terrain collision detection
-    - Add tree collision detection
-    - ~~(Optional) Add mini HUD~~
-
-- Eric
-    - ~~Particles~~
-        - ~~Falling~~
-        - ~~Cloud~~
-            - ~~Rain~~
-            - ~~Snow~~
-
-- Sami
-    - ~~Generating objects~~
-        - ~~Trees (L-System)~~
-        - ~~Forest~~
-    - Textures
-
-- Justin
-    - Shadows
-
-- Not assigned
-    - Illumination
-    - Mountains shadows
-    - Draw pointing arrows on axes + toggle it with a key
-    - Water under certain elevation level
-        - Reflection
-    - Grass (multiple instantiations)
-        - Wind influence
+See: [Roadmap](docs/roadmap.md)
 
 ## Controls
 
