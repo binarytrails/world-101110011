@@ -9,6 +9,7 @@ See: [Roadmap](docs/roadmap.md)
 **Basic:**
 
     ESC                     exit
+    h                       help
     
     i                       zoom in
     o                       zoom out
@@ -18,8 +19,10 @@ See: [Roadmap](docs/roadmap.md)
     s                       move backward
     a                       move left
     d                       move right
+
+    m                       toggle mute
     
-    mouse + left click     look around
+    mouse + left click      look around
     
 **Extra:**
 

@@ -45,7 +45,9 @@ class World
 
         void initOpenGL();
         void initCamera();
+
         void initSound();
+        void toggleSound();
 
         void build();
 
@@ -138,15 +140,28 @@ static void applyKeyboardBindings(GLFWwindow* w);
 //! Only registering as boolean if a key is pressed for faster processing
 static void keyCallback(GLFWwindow* w, int key, int scancode, int action, int mode)
 {
-    if(action == GLFW_PRESS)
-        keys[key] = true;
-    else if(action == GLFW_RELEASE)
-        keys[key] = false;
+    if (action == GLFW_PRESS)    keys[key] = true;
+    if (action == GLFW_RELEASE)  keys[key] = false;
+
+    // Slower but less sensible to be clicked many times of the keys actions
+    CallbackContext* cbcPtr = getWindowContext(w);
+
+    if (keys[GLFW_KEY_T])       cbcPtr->world->setRenderMode(GL_TRIANGLES);
+    if (keys[GLFW_KEY_L])       cbcPtr->world->setRenderMode(GL_LINES);
+    if (keys[GLFW_KEY_P])       cbcPtr->world->setRenderMode(GL_POINTS);
+
+    if (keys[GLFW_KEY_H])
+        cbcPtr->world->displayText = cbcPtr->world->displayText ? false : true;
+
+    if (keys[GLFW_KEY_M])       cbcPtr->world->toggleSound();
 }
 
+//! Faster rendering of the keys actions
 static void applyKeyboardBindings(GLFWwindow* w)
 {
     CallbackContext* cbcPtr = getWindowContext(w);
+
+    if(keys[GLFW_KEY_ESCAPE])   glfwSetWindowShouldClose(w, GL_TRUE);
 /*
     if (keys[GLFW_KEY_LEFT])    cbcPtr->world->rotate(glm::vec3(0, 1, 0));
     if (keys[GLFW_KEY_RIGHT])   cbcPtr->world->rotate(glm::vec3(0, -1, 0));
@@ -160,14 +175,6 @@ static void applyKeyboardBindings(GLFWwindow* w)
 
     if (keys[GLFW_KEY_I])       cbcPtr->world->getCamera()->moveForward();
     if (keys[GLFW_KEY_O])       cbcPtr->world->getCamera()->moveBackward();
-
-    if (keys[GLFW_KEY_T])       cbcPtr->world->setRenderMode(GL_TRIANGLES);
-    if (keys[GLFW_KEY_L])       cbcPtr->world->setRenderMode(GL_LINES);
-    if (keys[GLFW_KEY_P])       cbcPtr->world->setRenderMode(GL_POINTS);
-    if(keys[GLFW_KEY_H])        cbcPtr->world->displayText = true;
-    if(keys[GLFW_KEY_Q])        cbcPtr->world->displayText = false;
-
-    if(keys[GLFW_KEY_ESCAPE])   glfwSetWindowShouldClose(w, GL_TRUE);
 }
 
 static void mouseKeyCallback(GLFWwindow* w, int key, int action, int mode)

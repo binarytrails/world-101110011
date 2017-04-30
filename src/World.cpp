@@ -71,8 +71,19 @@ void World::initSound()
     {
         this->bgMusic.setBuffer(this->bgMusicBuffer);
         this->bgMusic.setLoop(true);
-        this->bgMusic.play();
+        this->toggleSound();
     }
+}
+
+void World::toggleSound()
+{
+    if (this->bgMusic.getStatus() == sf::SoundSource::Status::Paused ||
+        this->bgMusic.getStatus() == sf::SoundSource::Status::Stopped
+    )
+        this->bgMusic.play();
+    else
+        this->bgMusic.pause();
+    //std::cout << this->bgMusic.getStatus() << std::endl;
 }
 
 void World::setRenderMode(const GLenum mode)
@@ -289,10 +300,9 @@ void World::outputUI()
          this->gui->renderText("d:  move right", textXPos, textYPos, 0.3f,
             color, this->window);
 
-
         textYPos -= 60;
 
-         this->gui->renderText("q:  quit help screen", textXPos, textYPos, 0.3f,
+         this->gui->renderText("m:  toggle sound", textXPos, textYPos, 0.3f,
             color, this->window);
     }
 
