@@ -27,11 +27,6 @@ Terrain::~Terrain()
     delete this->elevation;
 }
 
-float Terrain::getElevation(const float x, const float z)
-{
-    return this->elevation->get(x, z);
-}
-
 GLenum Terrain::getRenderMode() const
 {
     return this->renderMode;
@@ -145,17 +140,21 @@ void Terrain::loadTexture(const std::string fpath)
     SOIL_free_image_data(image);
 }
 
+float Terrain::getElevation(const float x, const float z)
+{
+    return this->elevation->get(x, z);
+}
+
 void Terrain::build()
 {
     this->elevation = new TerrainHeight();
 
-    //this->genPlaneVertices(0, 0);
-    this->genTerrainVertices(0, 0, this->X_CELLS, this->Z_CELLS);
+    // For noise in vertex shader
+    this->genPlaneVertices(0, 0);
+    // For noise in c++ see: FIXME #3 to solve TerrainHeight
+    //this->genTerrainVertices(0, 0, this->X_CELLS, this->Z_CELLS);
 
     this->genVerticesI();
-
-    // FIXME adjusted for current terrain elevation
-    this->rotate(glm::vec3(12.5, 0, 0) / 20.0f);
 }
 
 void Terrain::addVertex(const float _x, const float _z, const bool elevate)
@@ -163,10 +162,7 @@ void Terrain::addVertex(const float _x, const float _z, const bool elevate)
     glm::vec3 v(_x, 0, _z);
 
     if (elevate)
-    {
-        // this->elevate->setAmplitude()
         v.y = this->elevation->get(v.x, v.z);
-    }
 
     //printf("terrain : push : vertex(%f, %f, %f)\n", v.x, v.y, v.z);
     this->vertices.push_back(v);
