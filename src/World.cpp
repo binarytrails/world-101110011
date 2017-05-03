@@ -71,7 +71,7 @@ void World::initSound()
     {
         this->bgMusic.setBuffer(this->bgMusicBuffer);
         this->bgMusic.setLoop(true);
-        this->toggleSound();
+        //this->toggleSound();
     }
 }
 
@@ -118,6 +118,7 @@ void World::centerCamera()
     eye.y = 5;
 
     this->camera->setEye(eye);
+    this->centerView = this->camera->getView();
 }
 
 /*! Binding of callbackContext with a World instance
@@ -162,9 +163,9 @@ void World::updateMVP()
     GLint projLoc = glGetUniformLocation(this->shader->programId, "projection");
 
     // send to shaders
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(this->model));
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(this->view));
-    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(this->projection));
+    //glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(this->model));
+    //glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(this->centerView));
+    //glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(this->projection));
 }
 
 void World::build()
@@ -190,7 +191,7 @@ void World::build()
     //
 	this->cloud = new Cloud(0, this->camera->getEye().y, 0,
                             this->TERRAIN_WIDTH, this->TERRAIN_WIDTH,
-                            1000, this->wind,
+                            2000, this->wind,
                             2); // snow or rain
 
     this->skybox = new Skybox();
@@ -212,27 +213,26 @@ void World::draw()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         this->shader->use();
-
-        this->skybox->renderSkybox(this->window, this->camera,
-                                   this->view, this->projection);
+        this->updateMVP();
 
         this->terrain->render(this->window, this->camera,
                               this->view, this->projection);
-
+/*
         this->forest->render(this->window, this->camera,
                              this->view, this->projection);
-
+*/
         this->cloud->render(this->window, this->camera,
                             this->view, this->projection);
+/*
+        this->skybox->renderSkybox(this->window, this->camera,
+                                   this->view, this->projection);
+*/
+        this->outputUI();
 
-	    this->outputUI();
-
-        this->controlCamPos();
+        //this->controlCamPos(); // WIP?
 
         // continuous rotation
         //this->rotate(glm::vec3(0, 0, 0));
-
-        this->updateMVP();
 
         // swap the screen buffers
         glfwSwapBuffers(this->window->get());
@@ -321,6 +321,7 @@ void World::controlCamPos()
 void World::rotate(const glm::vec3 axes)
 {
     glm::vec3 terrainSpin = axes / 20.0f;
+
     this->terrain->rotate(terrainSpin);
-    //this->forest->rotate(terrainSpin);
+    this->forest->rotate(terrainSpin);
 }

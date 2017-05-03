@@ -96,6 +96,9 @@ class World
         glm::mat4 view;
         glm::mat4 projection;
 
+        //! infinite terrain camera lock
+        glm::mat4 centerView;
+
         Terrain *terrain;
         Forest* forest;
         const uint16_t TERRAIN_WIDTH;
