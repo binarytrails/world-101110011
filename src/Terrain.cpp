@@ -169,14 +169,13 @@ void Terrain::addVertex(const float _x, const float _z, const bool elevate)
 }
 
 // curently one at the time
-bool Terrain::advance(const bool forward)
+bool Terrain::advance(const uint16_t xoff, const uint16_t zoff)
 {
     // TODO work in progress;
     return false;
 
-    this->x_offset += (forward) ? 1 : -1;
-    //this->x_offset = 0;
-    this->z_offset += (forward) ? 1 : -1;
+    this->x_offset += xoff;
+    this->z_offset += zoff;
 
     if (this->X_CELLS + this->x_offset <= 0 ||
         this->Z_CELLS + this->z_offset <= 0)

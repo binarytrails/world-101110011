@@ -50,17 +50,10 @@ void main()
 {
     gl_PointSize = 2.0;
 
-/*
     // noise is applied on non-normalized for default behavior
     vec3 p = _pos;
     p.y = noise(vec2(_pos.x, _pos.z));
     vec4 pos_mvp = projection * view * model * vec4(p, 1.0f);
-*/
-    /* noise is applied on normalized
-     * to create an illusion of an infinite terrain
-     */
-    vec4 pos_mvp = projection * view * model * vec4(_pos, 1.0f);
-    pos_mvp.y += noise(vec2(pos_mvp.x, pos_mvp.z));
 
     gl_Position = pos_mvp;
 

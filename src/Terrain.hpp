@@ -46,7 +46,7 @@ class Terrain : public Mesh
         void rotate(const glm::vec3 spin);
 
         //! TODO WIP method to generate more terrain on the same grid range
-        bool advance(const bool forward);
+        bool advance(const uint16_t xoff, const uint16_t zoff);
 
     private:
         //! Initializes the buffers for the shaders

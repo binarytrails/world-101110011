@@ -78,7 +78,6 @@ class World
         void updateMVP();
 
         Window *window;
-        Shader *shader;
         Camera *camera;
         Skybox *skybox;
         Cloud  *cloud;
@@ -244,20 +243,18 @@ static void mousePositionCallback(GLFWwindow* w, double xpos, double ypos)
 static void mouseScrollCallback(GLFWwindow *w, double xoff, double yoff)
 {
     CallbackContext* cbcPtr = getWindowContext(w);
-    /* TODO
-     *  Terrain::advance
-     *      1. detect direction
-     *      2. if going on positive x or z axis then
-     *              advance terrain in this direction
-     */
-    if (yoff > 0)
-    {
-        //cbcPtr->world->getTerrain()->advance(true);
+    
+    // Option A: move camera
+    /*
+    if (yoff > 0)    
         cbcPtr->world->getCamera()->moveForward();
-    }
+
     else if (yoff < 0)
-    {
-        //cbcPtr->world->getTerrain()->advance(false);
         cbcPtr->world->getCamera()->moveBackward();
-    }
+    */
+    
+    // Option B: don't move but advance the terrain for infinite effect
+    //           for different points, different height values will be
+    //           generated in the terrain vertex shader.
+    cbcPtr->world->getTerrain()->advance(xoff, yoff);
 }
